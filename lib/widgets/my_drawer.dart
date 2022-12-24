@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:users_app/global/global.dart';
+import 'package:users_app/models/user_model.dart';
 import 'package:users_app/splashScreen/splash_screen.dart';
 
-import '../mainScreens/about_screen.dart';
+import '../about/about_screen.dart';
 import '../mainScreens/profile_screen.dart';
 import '../mainScreens/trips_history_screen.dart';
 
@@ -125,7 +126,7 @@ class _MyDrawerState extends State<MyDrawer>
             onTap: ()
             {
               fAuth.signOut();
-              Navigator.push(context, MaterialPageRoute(builder: (c)=> const MySplashScreen()));
+              Navigator.push(context, MaterialPageRoute(builder: (c)=> MySplashScreen(userType: userModelCurrentInfo!.userType??"",)));
             },
             child: const ListTile(
               leading: Icon(Icons.logout, color: Colors.white54,),

@@ -10,6 +10,8 @@ import 'package:users_app/widgets/progress_dialog.dart';
 
 class SignUpScreen extends StatefulWidget
 {
+  const SignUpScreen({super.key});
+
   @override
   _SignUpScreenState createState() => _SignUpScreenState();
 }
@@ -77,14 +79,16 @@ class _SignUpScreenState extends State<SignUpScreen>
         "name": nameTextEditingController.text.trim(),
         "email": emailTextEditingController.text.trim(),
         "phone": phoneTextEditingController.text.trim(),
+        "userType":"customer",
       };
 
       DatabaseReference reference = FirebaseDatabase.instance.ref().child("users");
       reference.child(firebaseUser.uid).set(userMap);
 
       currentFirebaseUser = firebaseUser;
+
       Fluttertoast.showToast(msg: "Account has been Created.");
-      Navigator.push(context, MaterialPageRoute(builder: (c)=> MySplashScreen()));
+      Navigator.push(context, MaterialPageRoute(builder: (c)=> MySplashScreen(userType: "customer",)));
     }
     else
     {

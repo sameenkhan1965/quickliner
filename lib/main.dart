@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:users_app/infoHandler/app_info.dart';
 import 'package:users_app/splashScreen/splash_screen.dart';
+import 'package:users_app/widgets/providers/category_transport_provider.dart';
 
 void main() async
 {
@@ -11,18 +12,34 @@ void main() async
 
   runApp(
     MyApp(
-      child: ChangeNotifierProvider(
-        create: (context) => AppInfo(),
-        child: MaterialApp(
-          title: 'Drivers App',
-          theme: ThemeData(
-            primarySwatch: Colors.blue,
-          ),
-          home: const MySplashScreen(),
-          debugShowCheckedModeBanner: false,
-        ),
+      child: MultiProvider(
+        providers: [
+          ChangeNotifierProvider<TransportCategoryProvider>(create: (_)=>TransportCategoryProvider()),
+          ChangeNotifierProvider<AppInfo>(create: (_)=>AppInfo()),
+        ],
+        child:MaterialApp(
+                title: 'Drivers App',
+                theme: ThemeData(
+                  primarySwatch: Colors.blue,
+                ),
+                home: MySplashScreen(userType: "",),
+                debugShowCheckedModeBanner: false,
+              ),
       ),
     ),
+    // MyApp(
+    //   child: ChangeNotifierProvider(
+    //     create: (context) => AppInfo(),
+    //     child: MaterialApp(
+    //       title: 'Drivers App',
+    //       theme: ThemeData(
+    //         primarySwatch: Colors.blue,
+    //       ),
+    //       home: MySplashScreen(userType: "",),
+    //       debugShowCheckedModeBanner: false,
+    //     ),
+    //   ),
+    // ),
   );
 }
 

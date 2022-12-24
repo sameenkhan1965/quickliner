@@ -6,11 +6,13 @@ import 'package:users_app/global/global.dart';
 import 'package:users_app/mainScreens/main_screen.dart';
 import 'package:users_app/configuraton/configuration.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:users_app/widgets/ui/admin/dashboard/admin_dashboard.dart';
 
 
 class MySplashScreen extends StatefulWidget
 {
-  const MySplashScreen({Key? key}) : super(key: key);
+  final String userType;
+  MySplashScreen({required this.userType, Key? key}) : super(key: key);
 
   @override
   _MySplashScreenState createState() => _MySplashScreenState();
@@ -30,7 +32,7 @@ class _MySplashScreenState extends State<MySplashScreen>
       if(await fAuth.currentUser != null)
       {
         currentFirebaseUser = fAuth.currentUser;
-        Navigator.push(context, MaterialPageRoute(builder: (c)=> MainScreen()));
+        Navigator.push(context, MaterialPageRoute(builder: (c)=>widget.userType=="admin"?const AdminDashboard():const MainScreen()));
       }
       else
       {

@@ -505,10 +505,11 @@ class _RequestScreenState extends State<RequestScreen> {
 
 
       //dealy kr re restart 3 sec
-      Future.delayed(const Duration(milliseconds: 4000), ()
-      {
-        SystemNavigator.pop();//refresh our app
-      });
+      // Future.delayed(const Duration(milliseconds: 4000), ()
+      // {
+      //   Navigator.pop(context);
+      //   // SystemNavigator.pop();//refresh our app
+      // });
 
       return;
     }

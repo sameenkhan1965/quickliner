@@ -6,8 +6,9 @@ class UserModel
   String? name;
   String? id;
   String? email;
+  String? userType;
 
-  UserModel({this.phone, this.name, this.id, this.email,});
+  UserModel({this.phone, this.name, this.id, this.email,this.userType});
 
   UserModel.fromSnapshot(DataSnapshot snap)
   {
@@ -15,5 +16,6 @@ class UserModel
     name = (snap.value as dynamic)["name"];
     id = snap.key;
     email = (snap.value as dynamic)["email"];
+    userType = (snap.value as dynamic)["userType"];
   }
 }

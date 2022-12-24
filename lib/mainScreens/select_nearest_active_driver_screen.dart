@@ -92,7 +92,7 @@ class _SelectNearestActiveDriversScreenState extends State<SelectNearestActiveDr
                 leading: Padding(
                   padding: const EdgeInsets.only(top: 2.0),
                   child: Image.asset(
-                    "images/" + dList[index]["car_details"]["type"].toString() + ".png",
+                    "images/${dList[index]["car_details"]["type"]}.png",
                     width: 70,
                   ),
                 ),
