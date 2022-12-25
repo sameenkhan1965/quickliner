@@ -1,8 +1,11 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:users_app/global/global.dart';
 import 'package:users_app/infoHandler/app_info.dart';
 import 'package:users_app/splashScreen/splash_screen.dart';
+import 'package:users_app/widgets/providers/all_drivers_provider.dart';
 import 'package:users_app/widgets/providers/category_transport_provider.dart';
 
 void main() async
@@ -16,13 +19,14 @@ void main() async
         providers: [
           ChangeNotifierProvider<TransportCategoryProvider>(create: (_)=>TransportCategoryProvider()),
           ChangeNotifierProvider<AppInfo>(create: (_)=>AppInfo()),
+          ChangeNotifierProvider<AllDriversProvider>(create: (_)=>AllDriversProvider()),
         ],
         child:MaterialApp(
                 title: 'Drivers App',
                 theme: ThemeData(
                   primarySwatch: Colors.blue,
                 ),
-                home: MySplashScreen(userType: "",),
+                home: MySplashScreen(userType: userModelCurrentInfo?.userType??"",),
                 debugShowCheckedModeBanner: false,
               ),
       ),

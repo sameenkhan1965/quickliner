@@ -6,11 +6,13 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:users_app/assistants/assistant_methods.dart';
 import 'package:users_app/authentication/login_screen.dart';
+import 'package:users_app/global/colors.dart';
 import 'package:users_app/global/global.dart';
 import 'package:users_app/mainScreens/request_screen.dart';
 import 'package:users_app/widgets/my_drawer.dart';
 import 'package:users_app/configuraton/configuration.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:users_app/widgets/providers/all_drivers_provider.dart';
 import 'package:users_app/widgets/providers/category_transport_provider.dart';
 import 'package:users_app/widgets/ui/customer/car_pool/car_pool_widget.dart';
 
@@ -27,6 +29,7 @@ class _MainScreenState extends State<MainScreen> {
   @override
   void initState() {
     Provider.of<TransportCategoryProvider>(context,listen:false).getAllTransport();
+    Provider.of<AllDriversProvider>(context,listen:false).getAllDrivers(context);
     super.initState();
   }
 
@@ -97,8 +100,7 @@ class _MainScreenState extends State<MainScreen> {
                         itemCount: categories.length,
                         scrollDirection: Axis.horizontal,
                         itemBuilder: (context, index) {
-                          return getCategoriesContainer(value.allCategories[index].transportName,MaterialPageRoute(
-                              builder: (context) => CarPoolWidget()));
+                          return getCategoriesContainer(value.allCategories[index].transportName,value.allCategories[index].route);
                         }),
                   ),
                 ),
@@ -324,236 +326,17 @@ class _MainScreenState extends State<MainScreen> {
                     ),
                   ],
                 ),
+                Consumer<AllDriversProvider>(
+                  builder: (context,value,child)=>ListView.builder(
+                      shrinkWrap: true,
+                      itemCount: value.allDrivers.length,
+                      itemBuilder: (context, index) {
+                        return getDriverRow(name: value.allDrivers[index].name??"", carNo: value.allDrivers[index].car_number??"",carColor: value.allDrivers[index].car_color??"",carName: value.allDrivers[index].car_model??"",carType: value.allDrivers[index].car_type??"quick-van");
+                      }),
+                ),
 
                 //***************** Braodcasts *********************************
-                GestureDetector(
-                  onTap: () {
-                    //Navigator.push(context, MaterialPageRoute(builder: (context)=>Screen2()));
-                  },
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Expanded(
-                        flex: 1,
-                        child: Container(
-                          decoration: BoxDecoration(
-                            color: primaryGreen,
-                            borderRadius: BorderRadius.circular(20),
-                            boxShadow: shadowList,
-                          ),
-                          child: Align(
-                            child: Hero(
-                                tag: 1,
-                                child: Image.asset(
-                                  'images/quick-bolan.png',
-                                  fit: BoxFit.contain,
-                                  height: 50,
-                                )),
-                          ),
-                        ),
-                      ),
-                      Expanded(
-                        flex: 2,
-                        child: Container(
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            boxShadow: shadowList,
-                            borderRadius: BorderRadius.circular(20),
-                          ),
-                          child: const Text(
-                            "Abdur Rehman\n"
-                            "Carry Dabba"
-                            "\n(RLA-395)",
-                            textAlign: TextAlign.center,
-                            style: TextStyle(fontSize: 15),
-                          ),
-                        ),
-                      )
-                    ],
-                  ),
-                ),
-                GestureDetector(
-                  onTap: () {
-                    //Navigator.push(context, MaterialPageRoute(builder: (context)=>Screen2()));
-                  },
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Expanded(
-                        flex: 1,
-                        child: Container(
-                          decoration: BoxDecoration(
-                            color: primaryGreen,
-                            borderRadius: BorderRadius.circular(20),
-                            boxShadow: shadowList,
-                          ),
-                          child: Align(
-                            child: Hero(
-                                tag:2,
-                                child: Image.asset(
-                                  'images/quick-bolan.png',
-                                  fit: BoxFit.contain,
-                                  height: 50,
-                                )),
-                          ),
-                        ),
-                      ),
-                      Expanded(
-                        flex: 2,
-                        child: Container(
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            boxShadow: shadowList,
-                            borderRadius: BorderRadius.circular(20),
-                          ),
-                          child: const Text(
-                            "Abdur Rehman\n"
-                            "Carry Dabba"
-                            "\n(RLA-395)",
-                            textAlign: TextAlign.center,
-                            style: TextStyle(fontSize: 15),
-                          ),
-                        ),
-                      )
-                    ],
-                  ),
-                ),
-                GestureDetector(
-                  onTap: () {
-                    //Navigator.push(context, MaterialPageRoute(builder: (context)=>Screen2()));
-                  },
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Expanded(
-                        flex: 1,
-                        child: Container(
-                          decoration: BoxDecoration(
-                            color: primaryGreen,
-                            borderRadius: BorderRadius.circular(20),
-                            boxShadow: shadowList,
-                          ),
-                          child: Align(
-                            child: Hero(
-                                tag: 3,
-                                child: Image.asset(
-                                  'images/quick-bolan.png',
-                                  fit: BoxFit.contain,
-                                  height: 50,
-                                )),
-                          ),
-                        ),
-                      ),
-                      Expanded(
-                        flex: 2,
-                        child: Container(
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            boxShadow: shadowList,
-                            borderRadius: BorderRadius.circular(20),
-                          ),
-                          child: const Text(
-                            "Abdur Rehman\n"
-                                "Carry Dabba"
-                                "\n(RLA-395)",
-                            textAlign: TextAlign.center,
-                            style: TextStyle(fontSize: 15),
-                          ),
-                        ),
-                      )
-                    ],
-                  ),
-                ),
-                // Container(
-                //   height: 220,
-                //   margin: const EdgeInsets.only(left: 20, right: 20, top: 570),
-                //   child: Row(
-                //     children: [
-                //       Expanded(
-                //         child: Stack(
-                //           children: [
-                //             Container(
-                //               height: 170,
-                //               decoration: BoxDecoration(
-                //                 color: primaryGreen,
-                //                 borderRadius: BorderRadius.circular(20),
-                //                 boxShadow: shadowList,
-                //               ),
-                //               margin: const EdgeInsets.only(top: 5),
-                //             ),
-                //             Align(
-                //               child: Image.asset('images/mehranimg.png'),
-                //             )
-                //           ],
-                //         ),
-                //       ),
-                //       Expanded(
-                //           child: Container(
-                //         padding: const EdgeInsets.only(
-                //             right: 30, left: 20, top: 30, bottom: 40),
-                //         margin: const EdgeInsets.only(top: 0, bottom: 20),
-                //         decoration: BoxDecoration(
-                //             color: Colors.white,
-                //             boxShadow: shadowList,
-                //             borderRadius: const BorderRadius.only(
-                //                 topRight: Radius.circular(20),
-                //                 bottomRight: Radius.circular(20))),
-                //         child: const Text(
-                //           "Sameen Khan\n"
-                //           "Suzuki Mehran"
-                //           "\n(RUA-115)",
-                //           style: TextStyle(fontSize: 15),
-                //         ),
-                //       ))
-                //     ],
-                //   ),
-                // ),
-                // SizedBox(
-                //   height: 220,
-                //   child: Row(
-                //     children: [
-                //       Expanded(
-                //         child: Stack(
-                //           children: [
-                //             Container(
-                //               height: 170,
-                //               decoration: BoxDecoration(
-                //                 color: primaryGreen,
-                //                 borderRadius: BorderRadius.circular(20),
-                //                 boxShadow: shadowList,
-                //               ),
-                //               margin: const EdgeInsets.only(top: 5),
-                //             ),
-                //             Align(
-                //               child: Image.asset('images/carry-dabba.png'),
-                //             )
-                //           ],
-                //         ),
-                //       ),
-                //       Expanded(
-                //           child: Container(
-                //         margin: const EdgeInsets.only(top: 0, bottom: 20),
-                //         decoration: BoxDecoration(
-                //             color: Colors.white,
-                //             boxShadow: shadowList,
-                //             borderRadius: const BorderRadius.only(
-                //                 topRight: Radius.circular(20),
-                //                 bottomRight: Radius.circular(20))),
-                //         child: Text(
-                //           "Ali Raza\n"
-                //           "Carry Dabba"
-                //           "\n(LIA-335)",
-                //           textAlign: TextAlign.center,
-                //           style: TextStyle(fontSize: 15),
-                //         ),
-                //       ))
-                //     ],
-                //   ),
-                // ),
-                //
-                // const SizedBox(
-                //   height: 50,
-                // ),
+
                 //
                 // Container(
                 //   margin: const EdgeInsets.only(top: 100, left: 130),
@@ -605,8 +388,75 @@ class _MainScreenState extends State<MainScreen> {
         const SizedBox(
           height: 10,
         ),
-        Expanded(child: Text(categoryName)),
+        Expanded(child: Text(categoryName??"",textAlign: TextAlign.center,)),
       ],
+    );
+  }
+
+  Widget getDriverRow(
+      {required String name, required String carNo, required String carColor, required String carName,required carType})
+  {
+    return Container(
+      padding: const EdgeInsets.all(10.0),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Expanded(
+            flex: 1,
+            child: Container(
+              decoration: BoxDecoration(
+                color: carType=="quick-go"? AppColors().greenAccentColor: primaryGreen,
+                borderRadius: BorderRadius.circular(20),
+                boxShadow: shadowList,
+              ),
+              child: Align(
+                child: Image.asset(
+                  'images/${carType}.png',
+                  fit: BoxFit.contain,
+                  height: 50,
+                ),
+              ),
+            ),
+          ),
+          Expanded(
+            flex: 2,
+            child: Container(
+              padding: EdgeInsets.only(left: 2,right: 2,top: 15,bottom: 15),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                boxShadow: shadowList,
+                borderRadius: BorderRadius.circular(20),
+              ),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const Text("Captain Name",style: TextStyle(fontWeight: FontWeight.bold),),
+                      Text(name),
+                    ],
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const Text("Car Name",style: TextStyle(fontWeight: FontWeight.bold),),
+                      Text(carName),
+                    ],
+                  ), Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const Text("Car No",style: TextStyle(fontWeight: FontWeight.bold),),
+                      Text(carNo),
+                    ],
+                  ),
+
+                ],
+              ),
+            ),
+          )
+        ],
+      ),
     );
   }
 }
