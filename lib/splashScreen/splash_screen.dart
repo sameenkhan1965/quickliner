@@ -25,6 +25,7 @@ class _MySplashScreenState extends State<MySplashScreen>
 
   startTimer()
   {
+    print("::::: "+widget.userType);
     fAuth.currentUser != null ? AssistantMethods.readCurrentOnlineUserInfo() : null;
 
     Timer(const Duration(seconds: 3), () async

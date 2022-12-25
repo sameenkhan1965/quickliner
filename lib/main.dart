@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:users_app/global/global.dart';
 import 'package:users_app/infoHandler/app_info.dart';
 import 'package:users_app/splashScreen/splash_screen.dart';
+import 'package:users_app/widgets/providers/admin/admin_dashboard_provider.dart';
 import 'package:users_app/widgets/providers/all_drivers_provider.dart';
 import 'package:users_app/widgets/providers/category_transport_provider.dart';
 
@@ -20,11 +21,12 @@ void main() async
           ChangeNotifierProvider<TransportCategoryProvider>(create: (_)=>TransportCategoryProvider()),
           ChangeNotifierProvider<AppInfo>(create: (_)=>AppInfo()),
           ChangeNotifierProvider<AllDriversProvider>(create: (_)=>AllDriversProvider()),
+          ChangeNotifierProvider<AdminDashBoardProvider>(create: (_)=>AdminDashBoardProvider()),
         ],
         child:MaterialApp(
                 title: 'Drivers App',
                 theme: ThemeData(
-                  primarySwatch: Colors.blue,
+                  primarySwatch: Colors.teal,
                 ),
                 home: MySplashScreen(userType: userModelCurrentInfo?.userType??"",),
                 debugShowCheckedModeBanner: false,
