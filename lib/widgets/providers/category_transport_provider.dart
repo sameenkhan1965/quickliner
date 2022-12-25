@@ -13,7 +13,6 @@ class TransportCategoryProvider extends ChangeNotifier{
      TransportCategoryModel(transportImage: 'images/broadcast.png', transportName: 'View\n  Broadcasts'),
      TransportCategoryModel(transportImage: 'images/schedule.png', transportName: 'Schedule\nRide'),
    ]);
-   notifyListeners();
  }
 }
 
