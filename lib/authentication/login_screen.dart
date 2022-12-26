@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:users_app/authentication/signup_screen.dart';
 import 'package:users_app/configuraton/configuration.dart';
+import 'package:users_app/global/colors.dart';
 import 'package:users_app/global/global.dart';
 import 'package:users_app/splashScreen/splash_screen.dart';
 import 'package:users_app/widgets/progress_dialog.dart';
@@ -16,6 +17,8 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   TextEditingController emailTextEditingController = TextEditingController();
   TextEditingController passwordTextEditingController = TextEditingController();
+  bool isSecure=true;
+
 
   validateForm() {
     if (!emailTextEditingController.text.contains("@")) {
@@ -127,25 +130,35 @@ class _LoginScreenState extends State<LoginScreen> {
               TextField(
                 controller: passwordTextEditingController,
                 keyboardType: TextInputType.text,
-                obscureText: true,
+                obscureText: isSecure,
+
                 style: const TextStyle(color: Colors.white),
-                decoration: const InputDecoration(
+                decoration: InputDecoration(
                   labelText: "Password",
                   hintText: "Password",
-                  enabledBorder: UnderlineInputBorder(
+                  enabledBorder: const UnderlineInputBorder(
                     borderSide: BorderSide(color: Colors.white),
                   ),
-                  focusedBorder: UnderlineInputBorder(
+                  focusedBorder: const UnderlineInputBorder(
                     borderSide: BorderSide(color: Colors.white),
                   ),
-                  hintStyle: TextStyle(
+                  hintStyle: const TextStyle(
                     color: Colors.grey,
                     fontSize: 10,
                   ),
-                  labelStyle: TextStyle(
+                  labelStyle: const TextStyle(
                     color: Colors.white,
                     fontSize: 14,
                   ),
+                  suffixIcon:IconButton(
+                    onPressed:(){
+                      setState((){
+                        isSecure=!isSecure;
+                      });
+                    },
+                    icon: Icon(isSecure ? Icons.visibility_off:Icons.visibility_sharp,color: AppColors().whiteColor,),
+                  )
+
                 ),
               ),
               const SizedBox(
@@ -173,7 +186,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
                 onPressed: () {
                   Navigator.push(context,
-                      MaterialPageRoute(builder: (c) => SignUpScreen()));
+                      MaterialPageRoute(builder: (c) => const SignUpScreen()));
                 },
               ),
             ],

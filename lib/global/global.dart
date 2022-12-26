@@ -29,3 +29,13 @@ double getWidth(BuildContext context)
 {
   return MediaQuery.of(context).size.width;
 }
+
+BoxDecoration backGroundImage()
+{
+  return const BoxDecoration(
+    image: DecorationImage(
+      opacity: 0.3,
+      image: AssetImage('images/logo.png'),
+    ),
+  );
+}
