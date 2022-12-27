@@ -22,6 +22,8 @@ import 'package:users_app/models/active_nearby_available_drivers.dart';
 import 'package:users_app/widgets/pay_fare_amount_dialog.dart';
 import 'package:users_app/widgets/progress_dialog.dart';
 import 'package:users_app/configuraton/configuration.dart';
+import 'package:users_app/widgets/providers/car_pool_widget_controller.dart';
+import 'package:users_app/widgets/ui/customer/car_pool/car_pool_already_rides.dart';
 
 class CarPoolWidget extends StatefulWidget {
   const CarPoolWidget({super.key});
@@ -31,6 +33,8 @@ class CarPoolWidget extends StatefulWidget {
 }
 
 class _CarPoolWidgetState extends State<CarPoolWidget> {
+
+
   final Completer<GoogleMapController> _controllerGoogleMap = Completer();
   GoogleMapController? newGoogleMapController;
 
@@ -109,6 +113,7 @@ class _CarPoolWidgetState extends State<CarPoolWidget> {
     super.initState();
 
     checkIfLocationPermissionAllowed();
+
   }
 
   saveRideRequestInformation() {
@@ -648,7 +653,7 @@ class _CarPoolWidgetState extends State<CarPoolWidget> {
                             ),
                           ],
                         ),
-                        Spacer(),
+                        const Spacer(),
                         IconButton(
                             onPressed: noOfSeat<6 ? () {
                               setState(() {
@@ -674,24 +679,54 @@ class _CarPoolWidgetState extends State<CarPoolWidget> {
 
                     const SizedBox(height: 16.0),
 
-                    ElevatedButton(
-                      onPressed: () {
-                        if (Provider.of<AppInfo>(context, listen: false)
-                                .userDropOffLocation !=
-                            null) {
-                          saveRideRequestInformation();
-                        } else {
-                          Fluttertoast.showToast(
-                              msg: "Please select destination location");
-                        }
-                      },
-                      style: ElevatedButton.styleFrom(
-                          primary: primaryGreen,
-                          textStyle: const TextStyle(
-                              fontSize: 16, fontWeight: FontWeight.bold)),
-                      child: const Text(
-                        "Request a Ride",
-                      ),
+                    Row(
+                      mainAxisSize: MainAxisSize.min,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        ElevatedButton(
+                          onPressed: () {
+                              showDialog(context: context, builder: (context){
+                                return const AlertDialog(
+                                  contentPadding: EdgeInsets.all(0.0),
+                                  backgroundColor: Colors.transparent,
+                                  content: CarPoolAlreadyRides(),
+                                );
+                              });
+                              // Navigator.push(context, MaterialPageRoute(builder: (context)=>CarPoolAlreadyRides()));
+                              // saveRideRequestInformation();
+
+                          },
+                          style: ElevatedButton.styleFrom(
+                              primary: primaryGreen,
+                              textStyle: const TextStyle(
+                                  fontSize: 16, fontWeight: FontWeight.bold)),
+                          child: const Text(
+
+                            "Already \n Available Rides",
+                            textAlign: TextAlign.center,
+                          ),
+                        ),
+                        const SizedBox(width: 20,),
+                        ElevatedButton(
+                          onPressed: () {
+                            if (Provider.of<AppInfo>(context, listen: false)
+                                    .userDropOffLocation !=
+                                null) {
+                              saveRideRequestInformation();
+                            } else {
+                              Fluttertoast.showToast(
+                                  msg: "Please select destination location");
+                            }
+                          },
+                          style: ElevatedButton.styleFrom(
+                              primary: primaryGreen,
+                              textStyle: const TextStyle(
+                                  fontSize: 16, fontWeight: FontWeight.bold)),
+                          child: const Text(
+                            "Car Pool",
+                          ),
+                        ),
+                      ],
                     ),
                   ],
                 ),

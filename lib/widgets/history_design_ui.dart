@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:users_app/global/colors.dart';
 import 'package:users_app/models/trips_history_model.dart';
 
 
@@ -31,6 +32,8 @@ class _HistoryDesignUIWidgetState extends State<HistoryDesignUIWidget>
   @override
   Widget build(BuildContext context)
   {
+    print(widget.tripsHistoryModel!.car_details??"");
+    print(widget.tripsHistoryModel!.status??"");
     return Container(
       color: Colors.black54,
       child: Padding(
@@ -46,7 +49,7 @@ class _HistoryDesignUIWidgetState extends State<HistoryDesignUIWidget>
                 Padding(
                   padding: const EdgeInsets.only(left: 6.0),
                   child: Text(
-                    "Driver : " + widget.tripsHistoryModel!.driverName!,
+                    "Driver : ${widget.tripsHistoryModel!.driverName??" driver"}",
                     style: const TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
@@ -57,7 +60,7 @@ class _HistoryDesignUIWidgetState extends State<HistoryDesignUIWidget>
                 const SizedBox(width: 12,),
 
                 Text(
-                  "\$ " + widget.tripsHistoryModel!.fareAmount!,
+                  "\$ "'${widget.tripsHistoryModel!.fareAmount??"0"}',
                   style: const TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
@@ -80,7 +83,7 @@ class _HistoryDesignUIWidgetState extends State<HistoryDesignUIWidget>
                 const SizedBox(width: 12,),
 
                 Text(
-                  widget.tripsHistoryModel!.car_details!,
+                  widget.tripsHistoryModel!.car_details??"Car Detail",
                   style: const TextStyle(
                     fontSize: 16,
                     color: Colors.grey,
@@ -107,7 +110,7 @@ class _HistoryDesignUIWidgetState extends State<HistoryDesignUIWidget>
                 Expanded(
                   child: Container(
                     child: Text(
-                      widget.tripsHistoryModel!.originAddress!,
+                      widget.tripsHistoryModel!.originAddress??" address",
                       overflow: TextOverflow.ellipsis,
                       style: const TextStyle(
                         fontSize: 16,
@@ -136,11 +139,35 @@ class _HistoryDesignUIWidgetState extends State<HistoryDesignUIWidget>
                 Expanded(
                   child: Container(
                     child: Text(
-                      widget.tripsHistoryModel!.destinationAddress!,
+                      widget.tripsHistoryModel!.destinationAddress??"address",
                       overflow: TextOverflow.ellipsis,
                       style: const TextStyle(
                         fontSize: 16,
                       ),
+                    ),
+                  ),
+                ),
+
+              ],
+            ),
+
+            const SizedBox(height: 14,),
+
+            //icon + dropOff
+            Row(
+              children: [
+
+                Icon(Icons.event_seat,color: AppColors().whiteColor,),
+
+                const SizedBox(width: 12,),
+
+                Expanded(
+                  child: Text(
+                    widget.tripsHistoryModel!.seats??"0",
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(
+                      fontSize: 16,
+                      color: AppColors().whiteColor,
                     ),
                   ),
                 ),
@@ -156,7 +183,7 @@ class _HistoryDesignUIWidgetState extends State<HistoryDesignUIWidget>
               children: [
                 const Text(""),
                 Text(
-                  formatDateAndTime(widget.tripsHistoryModel!.time!),
+                  formatDateAndTime(widget.tripsHistoryModel!.time??DateTime.now().toString()),
                   style: const TextStyle(
                     color: Colors.grey,
                   ),

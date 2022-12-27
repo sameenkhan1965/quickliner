@@ -28,8 +28,10 @@ class _MainScreenState extends State<MainScreen> {
 
   @override
   void initState() {
-    Provider.of<TransportCategoryProvider>(context,listen:false).getAllTransport();
-    Provider.of<AllDriversProvider>(context,listen:false).getAllDrivers(context);
+    Provider.of<TransportCategoryProvider>(context, listen: false)
+        .getAllTransport();
+    Provider.of<AllDriversProvider>(context, listen: false)
+        .getAllDrivers(context);
     super.initState();
   }
 
@@ -55,7 +57,7 @@ class _MainScreenState extends State<MainScreen> {
             padding: const EdgeInsets.all(20.0),
             child: Column(
               mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 //custom hamburger button for drawer
                 Row(
@@ -95,12 +97,14 @@ class _MainScreenState extends State<MainScreen> {
                 SizedBox(
                   height: 100,
                   child: Consumer<TransportCategoryProvider>(
-                    builder: (context,value,child)=>ListView.builder(
+                    builder: (context, value, child) => ListView.builder(
                         shrinkWrap: true,
                         itemCount: categories.length,
                         scrollDirection: Axis.horizontal,
                         itemBuilder: (context, index) {
-                          return getCategoriesContainer(value.allCategories[index].transportName,value.allCategories[index].route);
+                          return getCategoriesContainer(
+                              value.allCategories[index].transportName,
+                              value.allCategories[index].route);
                         }),
                   ),
                 ),
@@ -228,7 +232,7 @@ class _MainScreenState extends State<MainScreen> {
                 //         ),
                 //         GestureDetector(
                 //           onTap: () {
-                            //  Navigator.push(context, MaterialPageRoute(builder: (context)=>GenerateRequest()));
+                //  Navigator.push(context, MaterialPageRoute(builder: (context)=>GenerateRequest()));
                 //           },
                 //           child: Padding(
                 //             padding: const EdgeInsets.only(top: 0, left: 24),
@@ -327,11 +331,17 @@ class _MainScreenState extends State<MainScreen> {
                   ],
                 ),
                 Consumer<AllDriversProvider>(
-                  builder: (context,value,child)=>ListView.builder(
+                  builder: (context, value, child) => ListView.builder(
                       shrinkWrap: true,
                       itemCount: value.allDrivers.length,
                       itemBuilder: (context, index) {
-                        return getDriverRow(name: value.allDrivers[index].name??"", carNo: value.allDrivers[index].car_number??"",carColor: value.allDrivers[index].car_color??"",carName: value.allDrivers[index].car_model??"",carType: value.allDrivers[index].car_type??"quick-van");
+                        return getDriverRow(
+                            name: value.allDrivers[index].name ?? "",
+                            carNo: value.allDrivers[index].car_number ?? "",
+                            carColor: value.allDrivers[index].car_color ?? "",
+                            carName: value.allDrivers[index].car_model ?? "",
+                            carType: value.allDrivers[index].car_type ??
+                                "quick-van");
                       }),
                 ),
 
@@ -358,24 +368,23 @@ class _MainScreenState extends State<MainScreen> {
     );
   }
 
-  Widget getCategoriesContainer(String categoryName,Route route) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        GestureDetector(
-          onTap: (){
-            Navigator.push(
-                context,
-                route);
-          },
-          child: Container(
-            decoration: BoxDecoration(
-                color: Colors.white,
-                boxShadow: shadowList,
-                borderRadius: BorderRadius.circular(10)),
-            child: Padding(
-              padding: const EdgeInsets.only(top: 8.0),
+  Widget getCategoriesContainer(String categoryName, Route route) {
+    return Container(
+      padding: EdgeInsets.only(left: 10),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          GestureDetector(
+            onTap: () {
+              Navigator.push(context, route);
+            },
+            child: Container(
+                padding: const EdgeInsets.only(top: 8.0),
+              decoration: BoxDecoration(
+                  color: Colors.white,
+                  boxShadow: shadowList,
+                  borderRadius: BorderRadius.circular(10)),
               child: Align(
                 child: Image.asset(
                   'images/logo.png',
@@ -384,18 +393,25 @@ class _MainScreenState extends State<MainScreen> {
               ),
             ),
           ),
-        ),
-        const SizedBox(
-          height: 10,
-        ),
-        Expanded(child: Text(categoryName??"",textAlign: TextAlign.center,)),
-      ],
+          const SizedBox(
+            height: 10,
+          ),
+          Expanded(
+              child: Text(
+            categoryName ?? "",
+            textAlign: TextAlign.center,
+          )),
+        ],
+      ),
     );
   }
 
   Widget getDriverRow(
-      {required String name, required String carNo, required String carColor, required String carName,required carType})
-  {
+      {required String name,
+      required String carNo,
+      required String carColor,
+      required String carName,
+      required carType}) {
     return Container(
       padding: const EdgeInsets.all(10.0),
       child: Row(
@@ -405,7 +421,9 @@ class _MainScreenState extends State<MainScreen> {
             flex: 1,
             child: Container(
               decoration: BoxDecoration(
-                color: carType=="quick-go"? AppColors().greenAccentColor: primaryGreen,
+                color: carType == "quick-go"
+                    ? AppColors().greenAccentColor
+                    : primaryGreen,
                 borderRadius: BorderRadius.circular(20),
                 boxShadow: shadowList,
               ),
@@ -421,7 +439,7 @@ class _MainScreenState extends State<MainScreen> {
           Expanded(
             flex: 2,
             child: Container(
-              padding: EdgeInsets.only(left: 2,right: 2,top: 15,bottom: 15),
+              padding: EdgeInsets.only(left: 2, right: 2, top: 15, bottom: 15),
               decoration: BoxDecoration(
                 color: Colors.white,
                 boxShadow: shadowList,
@@ -433,24 +451,33 @@ class _MainScreenState extends State<MainScreen> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      const Text("Captain Name",style: TextStyle(fontWeight: FontWeight.bold),),
+                      const Text(
+                        "Captain Name",
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
                       Text(name),
                     ],
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      const Text("Car Name",style: TextStyle(fontWeight: FontWeight.bold),),
+                      const Text(
+                        "Car Name",
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
                       Text(carName),
                     ],
-                  ), Row(
+                  ),
+                  Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      const Text("Car No",style: TextStyle(fontWeight: FontWeight.bold),),
+                      const Text(
+                        "Car No",
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
                       Text(carNo),
                     ],
                   ),
-
                 ],
               ),
             ),
