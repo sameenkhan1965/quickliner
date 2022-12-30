@@ -7,6 +7,7 @@ import 'package:users_app/infoHandler/app_info.dart';
 import 'package:users_app/splashScreen/splash_screen.dart';
 import 'package:users_app/widgets/providers/admin/admin_dashboard_provider.dart';
 import 'package:users_app/widgets/providers/admin/all_customer_provider.dart';
+import 'package:users_app/widgets/providers/admin/all_rides_widget_provider.dart';
 import 'package:users_app/widgets/providers/all_drivers_provider.dart';
 import 'package:users_app/widgets/providers/car_pool_widget_controller.dart';
 import 'package:users_app/widgets/providers/category_transport_provider.dart';
@@ -26,6 +27,7 @@ void main() async
           ChangeNotifierProvider<AdminDashBoardProvider>(create: (_)=>AdminDashBoardProvider()),
           ChangeNotifierProvider<AllCustomersProviders>(create: (_)=>AllCustomersProviders()),
           ChangeNotifierProvider<CarPoolWidgetController>(create: (_)=>CarPoolWidgetController()),
+          ChangeNotifierProvider<AllRidesWigetProvider>(create: (_)=>AllRidesWigetProvider()),
         ],
         child:MaterialApp(
                 title: 'Drivers App',

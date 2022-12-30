@@ -28,7 +28,7 @@ class _CarPoolAlreadyRidesState extends State<CarPoolAlreadyRides> {
         backgroundColor: Colors.transparent,
         appBar: AppBar(
           backgroundColor: Colors.black,
-          title: const Text("Solo Rides"),
+          title: const Text("Car Pool Rides"),
           leading: IconButton(
             icon: const Icon(Icons.close),
             onPressed: () {

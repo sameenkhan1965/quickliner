@@ -4,8 +4,10 @@ import 'package:users_app/global/global.dart';
 import 'package:users_app/widgets/my_drawer.dart';
 import 'package:users_app/widgets/providers/admin/admin_dashboard_provider.dart';
 import 'package:users_app/widgets/providers/admin/all_customer_provider.dart';
+import 'package:users_app/widgets/providers/admin/all_rides_widget_provider.dart';
 import 'package:users_app/widgets/providers/all_drivers_provider.dart';
 import 'package:users_app/widgets/ui/admin/admin_dashboard_driver/admin_dashboard_driver_widget.dart';
+import 'package:users_app/widgets/ui/admin/all_rides_filter/all_rides_widget.dart';
 
 class AdminDashboard extends StatefulWidget {
   const AdminDashboard({Key? key}) : super(key: key);
@@ -23,6 +25,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
         .getAllDrivers(context);
     Provider.of<AllCustomersProviders>(context, listen: false)
         .getAllCustomers(context);
+    Provider.of<AllRidesWigetProvider>(context,listen: false).getAllRides(context);
     super.initState();
   }
 
@@ -79,7 +82,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
 
   getGridView(BuildContext context) {
     return Consumer<AdminDashBoardProvider>(
-      builder: (context, value, child) => Row(
+      builder: (context, value, child) => Column(
         children: [
           Wrap(
             children: [
@@ -139,6 +142,36 @@ class _AdminDashboardState extends State<AdminDashboard> {
                       children: [
                         Text(value.dashboardList[1]),
                         Text('${customer.allCustomers.length}'),
+                      ],
+                    )),
+                  ),
+                ),
+              ),
+              Consumer<AllRidesWigetProvider>(
+                builder: (context, customer, child) => GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => AllRidesWidget()),
+                    );
+                  },
+                  child: Container(
+                    padding: const EdgeInsets.all(20.0),
+                    margin: const EdgeInsets.all(10.0),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10.0),
+                      image: const DecorationImage(
+                        opacity: 0.3,
+                        fit: BoxFit.fill,
+                        image: AssetImage('images/customer.png'),
+                      ),
+                      color: value.dashboardContainerColor[1],
+                    ),
+                    child: Center(child: Column(
+                      children: [
+                        Text(value.dashboardList[1]),
+                        Text('${customer.allRides.length}'),
                       ],
                     )),
                   ),

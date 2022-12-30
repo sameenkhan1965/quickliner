@@ -1,4 +1,7 @@
+import 'dart:convert';
+
 import 'package:firebase_database/firebase_database.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class TripsHistoryModel
 {
@@ -9,6 +12,8 @@ class TripsHistoryModel
   String? fareAmount;
   String? car_details;
   String? driverName;
+  dynamic? origin;
+  dynamic? destination;
 
   String? seats;
   String? rideType;
@@ -22,6 +27,8 @@ class TripsHistoryModel
     this.driverName,
     this.seats,
     this.rideType,
+    required this.origin,
+    required this.destination,
   });
 
   TripsHistoryModel.fromSnapshot(DataSnapshot dataSnapshot)
@@ -35,5 +42,22 @@ class TripsHistoryModel
     driverName = (dataSnapshot.value as Map)["driverName"];
     rideType = (dataSnapshot.value as Map)["rideType"];
     seats = (dataSnapshot.value as Map)["noOfSeats"];
+  }
+
+  TripsHistoryModel.fromDynamic(dynamic dataSnapshot)
+  {
+    print("Des");
+    // print(jsonDecode(dataSnapshot["destination"]));
+    time = dataSnapshot["time"];
+    originAddress = dataSnapshot["originAddress"];
+    destinationAddress = dataSnapshot["destinationAddress"];
+    status = dataSnapshot["status"];
+    fareAmount = dataSnapshot["fareAmount"];
+    car_details = dataSnapshot["car_details"];
+    driverName = dataSnapshot["driverName"];
+    rideType = dataSnapshot["rideType"];
+    seats = dataSnapshot["noOfSeats"];
+    destination= dataSnapshot["destination"];
+    origin= dataSnapshot["origin"];
   }
 }
