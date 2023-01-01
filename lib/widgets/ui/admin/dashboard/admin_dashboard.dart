@@ -170,7 +170,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
                     ),
                     child: Center(child: Column(
                       children: [
-                        Text(value.dashboardList[1]),
+                        Text(value.dashboardList[2]),
                         Text('${customer.allRides.length}'),
                       ],
                     )),

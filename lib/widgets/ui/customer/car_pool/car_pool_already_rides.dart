@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:users_app/global/colors.dart';
 import 'package:users_app/infoHandler/app_info.dart';
 import 'package:users_app/widgets/history_design_ui.dart';
 import 'package:users_app/widgets/providers/car_pool_widget_controller.dart';
@@ -54,7 +55,7 @@ class _CarPoolAlreadyRidesState extends State<CarPoolAlreadyRides> {
             itemCount: value.rides.length,
             physics: const ClampingScrollPhysics(),
             shrinkWrap: true,
-          ):Text("At this moment no active ride"),
+          ):Text("At this moment no active ride",style: TextStyle(color: AppColors().whiteColor),),
         ),
       ),
     );

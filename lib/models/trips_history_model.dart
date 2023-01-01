@@ -33,6 +33,8 @@ class TripsHistoryModel
 
   TripsHistoryModel.fromSnapshot(DataSnapshot dataSnapshot)
   {
+    print("dataSnapshot");
+    print(dataSnapshot.value);
     time = (dataSnapshot.value as Map)["time"];
     originAddress = (dataSnapshot.value as Map)["originAddress"];
     destinationAddress = (dataSnapshot.value as Map)["destinationAddress"];
@@ -47,7 +49,7 @@ class TripsHistoryModel
   TripsHistoryModel.fromDynamic(dynamic dataSnapshot)
   {
     print("Des");
-    // print(jsonDecode(dataSnapshot["destination"]));
+    print(dataSnapshot["destination"]);
     time = dataSnapshot["time"];
     originAddress = dataSnapshot["originAddress"];
     destinationAddress = dataSnapshot["destinationAddress"];

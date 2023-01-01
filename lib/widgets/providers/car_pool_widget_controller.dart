@@ -22,7 +22,7 @@ class CarPoolWidgetController extends ChangeNotifier{
         print("snap.snapshot.value");
         print(snap.snapshot.value);
         keys.forEach((key, value) {
-          TripsHistoryModel rideInfo = TripsHistoryModel.fromSnapshot(snap.snapshot);
+          TripsHistoryModel rideInfo = TripsHistoryModel.fromDynamic(value);
         print("RIDE INFO ::::::::::::::::::");
         print(rideInfo.seats??"");
           rides.add(rideInfo);

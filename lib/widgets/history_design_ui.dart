@@ -3,6 +3,8 @@ import 'package:intl/intl.dart';
 import 'package:users_app/global/colors.dart';
 import 'package:users_app/models/trips_history_model.dart';
 
+import 'package:url_launcher/url_launcher.dart' as launch;
+
 
 class HistoryDesignUIWidget extends StatefulWidget
 {
@@ -171,6 +173,9 @@ class _HistoryDesignUIWidgetState extends State<HistoryDesignUIWidget>
                     ),
                   ),
                 ),
+                Spacer(),
+                // IconButton(onPressed: (){
+                // }, icon: Icon(Icons.call,color: AppColors().whiteColor,)),
 
               ],
             ),
@@ -197,5 +202,12 @@ class _HistoryDesignUIWidgetState extends State<HistoryDesignUIWidget>
         ),
       ),
     );
+  }
+
+  getCall(String contactNo) {
+    launch.launchUrl(Uri(
+      scheme: 'tel',
+      path: contactNo,
+    ));
   }
 }
