@@ -685,14 +685,8 @@ class _CarPoolWidgetState extends State<CarPoolWidget> {
                       children: [
                         ElevatedButton(
                           onPressed: () {
-                              showDialog(context: context, builder: (context){
-                                return const AlertDialog(
-                                  contentPadding: EdgeInsets.all(0.0),
-                                  backgroundColor: Colors.transparent,
-                                  content: CarPoolAlreadyRides(),
-                                );
-                              });
-                              // Navigator.push(context, MaterialPageRoute(builder: (context)=>CarPoolAlreadyRides()));
+
+                              Navigator.push(context, MaterialPageRoute(builder: (context)=>CarPoolAlreadyRides()));
                               // saveRideRequestInformation();
 
                           },
