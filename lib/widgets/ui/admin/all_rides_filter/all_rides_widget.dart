@@ -81,7 +81,7 @@ class _AllRidesWidgetState extends State<AllRidesWidget>
         Navigator.push(context, MaterialPageRoute(builder: (context)=>RideDetail(tripsHistoryModel: tripsHistoryModel,)));
       },
       child: Container(
-        foregroundDecoration: BoxDecoration(
+        foregroundDecoration: const BoxDecoration(
           image: DecorationImage(
             opacity: 0.2,
             image:  AssetImage("images/logo.png"),
@@ -102,6 +102,7 @@ class _AllRidesWidgetState extends State<AllRidesWidget>
           // color: tripsHistoryModel.rideTyp,
         ),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(tripsHistoryModel.rideType ?? ""),
             Text(tripsHistoryModel.status ?? ""),
