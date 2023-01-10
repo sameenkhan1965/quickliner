@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:users_app/models/user_model.dart';
 
 import '../models/direction_details_info.dart';
@@ -38,4 +39,23 @@ BoxDecoration backGroundImage()
       image: AssetImage('images/logo.png'),
     ),
   );
+}
+
+showProgressPar({required BuildContext context})
+{
+  showDialog(context: context, builder: (context){
+    return Stack(
+      children: [
+        AlertDialog(
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Image.asset(""),
+              Text("LOADING"),
+            ],
+          ),
+        ),
+      ],
+    );
+  });
 }

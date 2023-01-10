@@ -12,6 +12,7 @@ class TransportCategoryProvider extends ChangeNotifier{
    allCategories.clear();
    allCategories.addAll([
      TransportCategoryModel(transportImage: 'images/solo.png', transportName: 'Car \n Pool',route: MaterialPageRoute(
+
          builder: (context) => CarPoolWidget())),
      TransportCategoryModel(transportImage: 'images/instant.png', transportName: 'Solo Ride',route: MaterialPageRoute(
          builder: (context) => RequestScreen())),

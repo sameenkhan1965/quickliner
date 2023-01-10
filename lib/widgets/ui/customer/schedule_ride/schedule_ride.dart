@@ -1104,6 +1104,7 @@ class _ScheduleRideState extends State<ScheduleRide> {
   dateTime=await showDatePicker(
         currentDate: date,
         context: context,
+        initialEntryMode: DatePickerEntryMode.calendarOnly,
         initialDate: DateTime.now(),
         firstDate: DateTime.now(),
         lastDate: DateTime(DateTime.now().year,DateTime.now().month+6,DateTime.now().day));

@@ -370,20 +370,30 @@ class _MainScreenState extends State<MainScreen> {
 
   Widget getCategoriesContainer(String categoryName, Route route) {
     return Container(
-      padding: EdgeInsets.only(left: 10),
+      padding: EdgeInsets.only(right: 20,left: 10),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisSize: MainAxisSize.min,
         children: [
           GestureDetector(
-            onTap: () {
-              Navigator.push(context, route);
-            },
+            onTap: () => Future.delayed(const Duration(milliseconds: 20), () {
+              Navigator.push(
+                context,
+                route,
+              );
+            }),
             child: Container(
-                padding: const EdgeInsets.only(top: 8.0),
+              padding: const EdgeInsets.only(top: 8.0),
               decoration: BoxDecoration(
                   color: Colors.white,
-                  boxShadow: shadowList,
+                  boxShadow: [
+                    BoxShadow(
+                      offset: Offset(0.2,0.8),
+                      color: Colors.black.withOpacity(0.4),
+                      blurRadius: 0.3,
+                      spreadRadius: 0.7,
+                    ),
+                  ],
                   borderRadius: BorderRadius.circular(10)),
               child: Align(
                 child: Image.asset(
