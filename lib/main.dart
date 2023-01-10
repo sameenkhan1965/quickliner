@@ -11,6 +11,7 @@ import 'package:users_app/widgets/providers/admin/all_rides_widget_provider.dart
 import 'package:users_app/widgets/providers/all_drivers_provider.dart';
 import 'package:users_app/widgets/providers/car_pool_widget_controller.dart';
 import 'package:users_app/widgets/providers/category_transport_provider.dart';
+import 'package:users_app/widgets/providers/schedule_ride_provider.dart';
 
 void main() async
 {
@@ -28,6 +29,7 @@ void main() async
           ChangeNotifierProvider<AllCustomersProviders>(create: (_)=>AllCustomersProviders()),
           ChangeNotifierProvider<CarPoolWidgetController>(create: (_)=>CarPoolWidgetController()),
           ChangeNotifierProvider<AllRidesWigetProvider>(create: (_)=>AllRidesWigetProvider()),
+          ChangeNotifierProvider<ScheduleRideProvider>(create: (_)=>ScheduleRideProvider()),
         ],
         child:MaterialApp(
                 title: 'Drivers App',

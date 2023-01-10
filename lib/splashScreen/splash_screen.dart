@@ -32,7 +32,10 @@ class _MySplashScreenState extends State<MySplashScreen>
     {
       if(await fAuth.currentUser != null)
       {
+        setState(() {
         currentFirebaseUser = fAuth.currentUser;
+
+        });
         Navigator.push(context, MaterialPageRoute(builder: (c)=>widget.userType=="admin"?const AdminDashboard():const MainScreen()));
       }
       else

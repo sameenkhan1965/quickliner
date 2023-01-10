@@ -21,10 +21,14 @@ import 'package:users_app/models/trips_history_model.dart';
 import 'package:url_launcher/url_launcher.dart' as launch;
 import 'package:users_app/widgets/pay_fare_amount_dialog.dart';
 
+import 'ui/chat/chat_design.dart';
+
 class HistoryDesignUIWidget extends StatefulWidget {
   TripsHistoryModel? tripsHistoryModel;
+  bool fromTripHistory;
+  bool chat;
 
-  HistoryDesignUIWidget({this.tripsHistoryModel});
+  HistoryDesignUIWidget({this.fromTripHistory=true, this.tripsHistoryModel,this.chat=false});
 
   @override
   State<HistoryDesignUIWidget> createState() => _HistoryDesignUIWidgetState();
@@ -230,7 +234,7 @@ class _HistoryDesignUIWidgetState extends State<HistoryDesignUIWidget> {
                   ),
                 ),
                 const Spacer(),
-                IconButton(
+                widget.fromTripHistory ? SizedBox() : IconButton(
                     onPressed: () {
                       showDialog(context: context, builder: (BuildContext context){
                         return StatefulBuilder(
@@ -315,6 +319,14 @@ class _HistoryDesignUIWidgetState extends State<HistoryDesignUIWidget> {
                       Icons.car_repair,
                       color: AppColors().whiteColor,
                     )),
+                widget.chat ?  IconButton(
+                    onPressed: () {
+                     Navigator.push(context, MaterialPageRoute(builder: (context)=>ChatDesign(tripsHistoryModel: widget.tripsHistoryModel!,)));
+                    },
+                    icon: Icon(
+                      Icons.message,
+                      color: AppColors().whiteColor,
+                    )):SizedBox(),
                 SizedBox(width: 20,),
                 IconButton(
                     onPressed: () {},
