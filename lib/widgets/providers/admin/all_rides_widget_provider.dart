@@ -38,3 +38,4 @@ class AllRidesWigetProvider extends ChangeNotifier{
     notifyListeners();
   }
 }
+

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:users_app/global/global.dart';
 import 'package:users_app/widgets/ui/admin/fare/broadcast.dart';
 import 'package:users_app/widgets/ui/admin/fare/carpool.dart';
 import 'package:users_app/widgets/ui/admin/fare/permanent.dart';
@@ -31,8 +32,12 @@ class _FareState extends State<Fare> {
                     Padding(
                         padding: EdgeInsets.all(20),
                         child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
+                          // mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
+                            IconButton(onPressed: (){
+                              Navigator.pop(context);
+                            }, icon: Icon(Icons.arrow_back)),
+                            SizedBox(width: getWidth(context)*0.3,),
                             Text(
                               "Fare",
                               style: TextStyle(
@@ -80,9 +85,6 @@ class _FareState extends State<Fare> {
                                         
                                       ],
                                     )
-                                    
-                                    
-                                    
                                     
                                     ),
                               

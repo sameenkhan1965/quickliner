@@ -8,8 +8,9 @@ class AllDriversProvider extends ChangeNotifier {
   List<DriverData> allDrivers = [];
 
   void getAllDrivers(context) {
-    allDrivers.clear();
-    FirebaseDatabase.instance.ref().child("drivers").once().then((snap) {
+    // allDrivers.clear();
+    FirebaseDatabase.instance.ref().child("drivers").
+    once().then((snap) {
       if (snap.snapshot.value != null) {
         Map keys = snap.snapshot.value as Map;
         keys.forEach((key, value) {

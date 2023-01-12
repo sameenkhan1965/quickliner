@@ -7,6 +7,7 @@ import 'package:users_app/widgets/providers/admin/admin_dashboard_provider.dart'
 import 'package:users_app/widgets/providers/admin/all_customer_provider.dart';
 import 'package:users_app/widgets/providers/admin/all_rides_widget_provider.dart';
 import 'package:users_app/widgets/providers/all_drivers_provider.dart';
+import 'package:users_app/widgets/ui/admin/Salary/salary.dart';
 import 'package:users_app/widgets/ui/admin/admin_dashboard_driver/admin_dashboard_driver_widget.dart';
 import 'package:users_app/widgets/ui/admin/all_rides_filter/all_rides_widget.dart';
 import 'package:users_app/widgets/ui/admin/fare/fares.dart';
@@ -124,7 +125,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
                                     allDrivers: drivers.allDrivers)));
                       },
                       child: Container(
-                        width: MediaQuery.of(context).size.width * 0.35,
+                        width: MediaQuery .of(context).size.width * 0.35,
           height: MediaQuery.of(context).size.height * 0.18,
           decoration:
               BoxDecoration(color: Colors.teal, borderRadius: BorderRadius.circular(35)),
@@ -193,7 +194,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
                       },
                       child: Container(
                        
-                          width: MediaQuery.of(context).size.width * 0.35,
+                        width: MediaQuery.of(context).size.width * 0.35,
                         height: MediaQuery.of(context).size.height * 0.18,
                       decoration:
                            BoxDecoration(color: Colors.grey, borderRadius: BorderRadius.circular(35)),
@@ -264,7 +265,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => AllRidesWidget()),
+                                builder: (context) => Salary()),
                         );
                       },
                       child: Container(

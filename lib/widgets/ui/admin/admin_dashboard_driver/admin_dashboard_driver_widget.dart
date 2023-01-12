@@ -16,8 +16,16 @@ class AdminDashboardDriverWidget extends StatefulWidget {
 
 class _AdminDashboardDriverWidgetState
     extends State<AdminDashboardDriverWidget> {
+
+      @override
+  void initState() {
+    // TODO: implement initState
+    getAllDriver();
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
+    
     return Scaffold(
       appBar: AppBar(
         title: const Text("Driver"),
@@ -36,7 +44,10 @@ class _AdminDashboardDriverWidgetState
         itemBuilder: (context, index) {
           return GestureDetector(
             onTap: (){
-              Navigator.push(context, MaterialPageRoute(builder: (context)=>DashboardDriverDetailWidget(driverData: widget.allDrivers[index],)));
+              Navigator.push(context,
+               MaterialPageRoute(builder: (context)=>
+               DashboardDriverDetailWidget(
+                driverData: widget.allDrivers[index],)));
             },
             child: getDriverRow(
                 name: widget.allDrivers[index].name ?? "",
@@ -44,6 +55,7 @@ class _AdminDashboardDriverWidgetState
                 carColor: widget.allDrivers[index].car_color ?? "",
                 carName: widget.allDrivers[index].car_model ?? "",
                 carType: widget.allDrivers[index].car_type ?? "quick-van"),
+                
           );
         });
   }

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:users_app/global/global.dart';
 
 class CarPOOLFare extends StatefulWidget {
   const CarPOOLFare({super.key});
@@ -33,10 +34,14 @@ class _CarPOOLFareState extends State<CarPOOLFare> {
                     Padding(
                         padding: EdgeInsets.all(20),
                         child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
+                          // mainAxisAlignment: MainAxisAlignment.center,
                           children: [
+                             IconButton(onPressed: (){
+                              Navigator.pop(context);
+                            }, icon: Icon(Icons.arrow_back)),
+                            SizedBox(width: getWidth(context)*0.2,),
                             Text(
-                              "Fare",
+                              "CarPool Fare",
                               style: TextStyle(
                                   color: Colors.black,
                                   fontWeight: FontWeight.normal,

@@ -20,6 +20,7 @@ String driverName="";
 String driverPhone="";
 double countRatingStars=0.0;
 String titleStarsRating="";
+var total_price;
 
 double getHeight(BuildContext context)
 {
