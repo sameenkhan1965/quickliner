@@ -10,7 +10,7 @@ List<Map> categories = [
   {'name': ' Solo\n Ride', 'iconPath': 'images/solo.png'},
   {'name': '     Generate\n     Request', 'iconPath': 'images/instant.png'},
   {'name': '     Permanent\n         Ride', 'iconPath': 'images/longterm.png'},
-  {'name': '       View\n  Broadcasts', 'iconPath': 'images/broadcast.png'},
+  {'name': '       View\n  Broadcasts', 'iconPath': 'images/time.png'},
   {'name': '    Schedule\n        Ride', 'iconPath':  'images/schedule.png'}
 ];
 

@@ -18,7 +18,7 @@ class TransportCategoryProvider extends ChangeNotifier{
          builder: (context) => RequestScreen())),
      TransportCategoryModel(transportImage:  'images/longterm.png', transportName: 'Permanent\nRide',route: MaterialPageRoute(
          builder: (context) => CarPoolWidget())),
-     TransportCategoryModel(transportImage: 'images/broadcast.png', transportName: 'View\n  Broadcasts',route: MaterialPageRoute(
+     TransportCategoryModel(transportImage: 'images/time.png', transportName: 'View\n  Broadcasts',route: MaterialPageRoute(
          builder: (context) => CarPoolWidget())),
      TransportCategoryModel(transportImage: 'images/schedule.png', transportName: 'Schedule\nRide',route: MaterialPageRoute(
          builder: (context) => ScheduleRide())),
