@@ -22,7 +22,8 @@ class AllCustomersProviders extends ChangeNotifier{
           print("value");
           print(value);
 
-          UserModel userModel = UserModel.fromSnapshot(snap.snapshot);
+          UserModel userModel = UserModel.fromSnapshot
+          (snap.snapshot);
           print("userINfo");
           print(userModel);
           allCustomers.add(userModel);

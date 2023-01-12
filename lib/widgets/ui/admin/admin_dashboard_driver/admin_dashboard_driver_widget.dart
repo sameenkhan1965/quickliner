@@ -20,7 +20,7 @@ class _AdminDashboardDriverWidgetState
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("All Drivers"),
+        title: const Text("Driver"),
       ),
       body: SingleChildScrollView(child: Column(children: [getAllDriver()])),
     );
@@ -81,13 +81,12 @@ class _AdminDashboardDriverWidgetState
           Expanded(
             flex: 2,
             child: Container(
-              padding:
-                  const EdgeInsets.only(left: 2, right: 2, top: 15, bottom: 15),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                boxShadow: shadowList,
-                borderRadius: BorderRadius.circular(20),
-              ),
+               padding: EdgeInsets.all(20),
+               decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.only(
+                                    topLeft: Radius.circular(60),
+                                    topRight: Radius.circular(60))),
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
@@ -125,8 +124,12 @@ class _AdminDashboardDriverWidgetState
               ),
             ),
           )
+     
+        
         ],
       ),
     );
+ 
   }
+
 }

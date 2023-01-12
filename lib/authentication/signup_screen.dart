@@ -82,7 +82,8 @@ class _SignUpScreenState extends State<SignUpScreen>
         "userType":"customer",
       };
 
-      DatabaseReference reference = FirebaseDatabase.instance.ref().child("users");
+      DatabaseReference reference = FirebaseDatabase.instance.ref().
+      child("users");
       reference.child(firebaseUser.uid).set(userMap);
 
       currentFirebaseUser = firebaseUser;

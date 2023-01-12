@@ -27,20 +27,21 @@ class _MyDrawerState extends State<MyDrawer>
   Widget build(BuildContext context)
   {
     return Drawer(
+      backgroundColor: Colors.teal,
       child: ListView(
         children: [
           //drawer header
           Container(
             height: 165,
-            color: Colors.grey,
+            color: Colors.white,
             child: DrawerHeader(
-              decoration: const BoxDecoration(color: Colors.black),
+              decoration: const BoxDecoration(color: Colors.teal),
               child: Row(
                 children: [
                   const Icon(
                     Icons.person,
                     size: 80,
-                    color: Colors.grey,
+                    color: Colors.white,
                   ),
 
                   const SizedBox(width: 16,),
@@ -52,7 +53,7 @@ class _MyDrawerState extends State<MyDrawer>
                         widget.name.toString(),
                         style: const TextStyle(
                           fontSize: 16,
-                          color: Colors.grey,
+                          color: Colors.white,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
@@ -61,7 +62,7 @@ class _MyDrawerState extends State<MyDrawer>
                         widget.email.toString(),
                         style: const TextStyle(
                           fontSize: 12,
-                          color: Colors.grey,
+                          color: Colors.white,
                         ),
                       ),
                     ],
@@ -74,21 +75,21 @@ class _MyDrawerState extends State<MyDrawer>
           const  SizedBox(height: 12.0,),
 
           //drawer body
-          GestureDetector(
-            onTap: ()
-            {
-              Navigator.push(context, MaterialPageRoute(builder: (c)=> TripsHistoryScreen()));
-            },
-            child: const ListTile(
-              leading: Icon(Icons.history, color: Colors.white54,),
-              title: Text(
-                "History",
-                style: TextStyle(
-                    color: Colors.white54
-                ),
-              ),
-            ),
-          ),
+          // GestureDetector(
+          //   onTap: ()
+          //   {
+          //     Navigator.push(context, MaterialPageRoute(builder: (c)=> TripsHistoryScreen()));
+          //   },
+          //   child: const ListTile(
+          //     leading: Icon(Icons.history, color: Colors.white54,),
+          //     title: Text(
+          //       "History",
+          //       style: TextStyle(
+          //           color: Colors.white
+          //       ),
+          //     ),
+          //   ),
+          // ),
 
           GestureDetector(
             onTap: ()
@@ -96,11 +97,11 @@ class _MyDrawerState extends State<MyDrawer>
               Navigator.push(context, MaterialPageRoute(builder: (c)=> ProfileScreen()));
             },
             child: const ListTile(
-              leading: Icon(Icons.person, color: Colors.white54,),
+              leading: Icon(Icons.person, color: Colors.white,),
               title: Text(
                 "Visit Profile",
                 style: TextStyle(
-                    color: Colors.white54
+                    color: Colors.white
                 ),
               ),
             ),
@@ -112,11 +113,11 @@ class _MyDrawerState extends State<MyDrawer>
               Navigator.push(context, MaterialPageRoute(builder: (c)=> AboutScreen()));
             },
             child: const ListTile(
-              leading: Icon(Icons.info, color: Colors.white54,),
+              leading: Icon(Icons.info, color: Colors.white,),
               title: Text(
                 "About",
                 style: TextStyle(
-                    color: Colors.white54
+                    color: Colors.white
                 ),
               ),
             ),
@@ -129,11 +130,11 @@ class _MyDrawerState extends State<MyDrawer>
               Navigator.push(context, MaterialPageRoute(builder: (c)=> MySplashScreen(userType: userModelCurrentInfo!.userType??"",)));
             },
             child: const ListTile(
-              leading: Icon(Icons.logout, color: Colors.white54,),
+              leading: Icon(Icons.logout, color: Colors.white,),
               title: Text(
                 "Sign Out",
                 style: TextStyle(
-                    color: Colors.white54
+                    color: Colors.white
                 ),
               ),
             ),
