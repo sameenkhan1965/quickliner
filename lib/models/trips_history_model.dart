@@ -12,6 +12,7 @@ class TripsHistoryModel
   String? fareAmount;
   String? car_details;
   String? driverName;
+  String? driverId;
   dynamic? origin;
   dynamic? destination;
 
@@ -29,6 +30,7 @@ class TripsHistoryModel
     this.rideType,
     required this.origin,
     required this.destination,
+    this.driverId="",
   });
 
   TripsHistoryModel.fromSnapshot(DataSnapshot dataSnapshot)
@@ -44,6 +46,7 @@ class TripsHistoryModel
     driverName = (dataSnapshot.value as Map)["driverName"];
     rideType = (dataSnapshot.value as Map)["rideType"];
     seats = (dataSnapshot.value as Map)["noOfSeats"];
+    driverId = (dataSnapshot.value as Map)["driverId"];
   }
 
   TripsHistoryModel.fromDynamic(dynamic dataSnapshot)
@@ -61,5 +64,6 @@ class TripsHistoryModel
     seats = dataSnapshot["noOfSeats"];
     destination= dataSnapshot["destination"];
     origin= dataSnapshot["origin"];
+    driverId=dataSnapshot["driverId"];
   }
 }

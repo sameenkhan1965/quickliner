@@ -48,6 +48,7 @@ class _CarPoolAlreadyRidesState extends State<CarPoolAlreadyRides> {
               return Card(
                 color: Colors.white54,
                 child: HistoryDesignUIWidget(
+                  fromTripHistory: false,
                   tripsHistoryModel: value.rides[i],
                 ),
               );

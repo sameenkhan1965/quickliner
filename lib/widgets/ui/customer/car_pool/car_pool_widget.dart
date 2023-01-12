@@ -503,7 +503,10 @@ class _CarPoolWidgetState extends State<CarPoolWidget> {
             onTap: () {
               //restart-refresh-minimize app progmatically
               // SystemNavigator.pop();
+              Future.delayed(Duration(milliseconds: 10),(){
+
               Navigator.pop(context);
+              });
             },
             child: const CircleAvatar(
               backgroundColor: Colors.grey,

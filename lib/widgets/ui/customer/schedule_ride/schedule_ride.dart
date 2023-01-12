@@ -17,12 +17,13 @@ import 'package:users_app/infoHandler/app_info.dart';
 import 'package:users_app/mainScreens/rate_driver_screen.dart';
 import 'package:users_app/mainScreens/search_places_screen.dart';
 import 'package:users_app/mainScreens/select_nearest_active_driver_screen.dart';
+import 'package:users_app/mainScreens/trips_history_screen.dart';
 import 'package:users_app/models/active_nearby_available_drivers.dart';
+import 'package:users_app/widgets/history_design_ui.dart';
 import 'package:users_app/widgets/pay_fare_amount_dialog.dart';
 import 'package:users_app/widgets/progress_dialog.dart';
 import 'package:users_app/configuraton/configuration.dart';
-
-
+import 'package:users_app/widgets/providers/schedule_ride_provider.dart';
 
 class ScheduleRide extends StatefulWidget {
   const ScheduleRide({super.key});
@@ -110,8 +111,9 @@ class _ScheduleRideState extends State<ScheduleRide> {
   @override
   void initState() {
     super.initState();
-
     checkIfLocationPermissionAllowed();
+    Provider.of<ScheduleRideProvider>(context, listen: false)
+        .getScheduleRide(context);
   }
 
   saveRideRequestInformation() {
@@ -153,9 +155,8 @@ class _ScheduleRideState extends State<ScheduleRide> {
       "driverId": "waiting",
       "rideType": "scheduleRide",
       "noOfSeats": '$noOfSeat',
-      "scheduleTime":'$time',
-      "scheduleDate":'$date',
-
+      "scheduleTime": '$time',
+      "scheduleDate": '$date',
     };
 
     referenceRideRequest!.set(userInformationMap);
@@ -471,127 +472,77 @@ class _ScheduleRideState extends State<ScheduleRide> {
   Widget build(BuildContext context) {
     createActiveNearByDriverIconMarker();
     return Scaffold(
-      body: Stack(children: [
-        GoogleMap(
-          padding: EdgeInsets.only(bottom: bottomPaddingOfMap),
-          mapType: MapType.normal,
-          myLocationEnabled: true,
-          zoomGesturesEnabled: true,
-          zoomControlsEnabled: true,
-          initialCameraPosition: _kGooglePlex,
-          polylines: polyLineSet,
-          markers: markersSet,
-          circles: circlesSet,
-          onMapCreated: (GoogleMapController controller) {
-            _controllerGoogleMap.complete(controller);
-            newGoogleMapController = controller;
+      body: Consumer<ScheduleRideProvider>(
+        builder: (context, scheduleRide, value) => Stack(children: [
+          GoogleMap(
+            padding: EdgeInsets.only(bottom: bottomPaddingOfMap),
+            mapType: MapType.normal,
+            myLocationEnabled: true,
+            zoomGesturesEnabled: true,
+            zoomControlsEnabled: true,
+            initialCameraPosition: _kGooglePlex,
+            polylines: polyLineSet,
+            markers: markersSet,
+            circles: circlesSet,
+            onMapCreated: (GoogleMapController controller) {
+              _controllerGoogleMap.complete(controller);
+              newGoogleMapController = controller;
 
-            //for black theme google map
-            // blackThemeGoogleMap();
+              //for black theme google map
+              // blackThemeGoogleMap();
 
-            setState(() {
-              bottomPaddingOfMap = 240;
-            });
+              setState(() {
+                bottomPaddingOfMap = 240;
+              });
 
-            locateUserPosition();
-          },
-        ),
-
-        Positioned(
-          top: 40,
-          left: 14,
-          child: GestureDetector(
-            onTap: () {
-              //restart-refresh-minimize app progmatically
-              // SystemNavigator.pop();
-              Navigator.pop(context);
+              locateUserPosition();
             },
-            child: const CircleAvatar(
-              backgroundColor: Colors.grey,
-              child: Icon(
-                Icons.close,
-                color: Colors.black54,
+          ),
+
+          Positioned(
+            top: 40,
+            left: 14,
+            child: GestureDetector(
+              onTap: () {
+                //restart-refresh-minimize app progmatically
+                // SystemNavigator.pop();
+                Navigator.pop(context);
+              },
+              child: const CircleAvatar(
+                backgroundColor: Colors.grey,
+                child: Icon(
+                  Icons.close,
+                  color: Colors.black54,
+                ),
               ),
             ),
           ),
-        ),
 
-        //ui for searching location
-        Positioned(
-          bottom: 0,
-          left: 0,
-          right: 0,
-          child: AnimatedSize(
-            curve: Curves.easeIn,
-            duration: const Duration(milliseconds: 120),
-            child: Container(
-              height: searchLocationContainerHeight,
-              decoration: const BoxDecoration(
-                color: Colors.black87,
-                borderRadius: BorderRadius.only(
-                  topRight: Radius.circular(20),
-                  topLeft: Radius.circular(20),
+          //ui for searching location
+          Positioned(
+            bottom: 0,
+            left: 0,
+            right: 0,
+            child: AnimatedSize(
+              curve: Curves.easeIn,
+              duration: const Duration(milliseconds: 120),
+              child: Container(
+                height: searchLocationContainerHeight,
+                decoration: const BoxDecoration(
+                  color: Colors.black87,
+                  borderRadius: BorderRadius.only(
+                    topRight: Radius.circular(20),
+                    topLeft: Radius.circular(20),
+                  ),
                 ),
-              ),
-              child: Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 24, vertical: 18),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    //from
-                    Row(
-                      children: [
-                        const Icon(
-                          Icons.add_location_alt_outlined,
-                          color: Colors.grey,
-                        ),
-                        const SizedBox(
-                          width: 12.0,
-                        ),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const Text(
-                              "From",
-                              style:
-                                  TextStyle(color: Colors.grey, fontSize: 12),
-                            ),
-                            Text(
-                              Provider.of<AppInfo>(context)
-                                          .userPickUpLocation !=
-                                      null
-                                  ? "${(Provider.of<AppInfo>(context).userPickUpLocation!.locationName!).substring(0, 24)}..."
-                                  : "not getting address",
-                              style: const TextStyle(
-                                  color: Colors.grey, fontSize: 14),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 10.0),
-                    const Divider(
-                      height: 1,
-                      thickness: 1,
-                      color: Colors.grey,
-                    ),
-                    const SizedBox(height: 16.0),
-                    //to
-                    GestureDetector(
-                      onTap: () async {
-                        //go to search places screen
-                        var responseFromSearchScreen = await Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (c) => SearchPlacesScreen()));
-
-                        if (responseFromSearchScreen == "obtainedDropoff") {
-                          //draw routes - draw polyline
-                          await drawPolyLineFromOriginToDestination();
-                        }
-                      },
-                      child: Row(
+                child: Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 24, vertical: 18),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      //from
+                      Row(
                         children: [
                           const Icon(
                             Icons.add_location_alt_outlined,
@@ -604,18 +555,16 @@ class _ScheduleRideState extends State<ScheduleRide> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               const Text(
-                                "To",
+                                "From",
                                 style:
                                     TextStyle(color: Colors.grey, fontSize: 12),
                               ),
                               Text(
                                 Provider.of<AppInfo>(context)
-                                            .userDropOffLocation !=
+                                            .userPickUpLocation !=
                                         null
-                                    ? Provider.of<AppInfo>(context)
-                                        .userDropOffLocation!
-                                        .locationName!
-                                    : "Where to go?",
+                                    ? "${(Provider.of<AppInfo>(context).userPickUpLocation!.locationName!).substring(0, 24)}..."
+                                    : "not getting address",
                                 style: const TextStyle(
                                     color: Colors.grey, fontSize: 14),
                               ),
@@ -623,148 +572,164 @@ class _ScheduleRideState extends State<ScheduleRide> {
                           ),
                         ],
                       ),
-                    ),
-                    const SizedBox(height: 10.0),
-                    const Divider(
-                      height: 1,
-                      thickness: 1,
-                      color: Colors.grey,
-                    ),
-                    const SizedBox(height: 16.0),
-                    Row(
-                      children: [
+                      const SizedBox(height: 10.0),
+                      const Divider(
+                        height: 1,
+                        thickness: 1,
+                        color: Colors.grey,
+                      ),
+                      const SizedBox(height: 16.0),
+                      //to
+                      GestureDetector(
+                        onTap: () async {
+                          //go to search places screen
+                          var responseFromSearchScreen = await Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (c) => SearchPlacesScreen()));
 
-                        const Text(
-                          "Pick Time",
-                          style:
-                          TextStyle(color: Colors.grey, fontSize: 12),
+                          if (responseFromSearchScreen == "obtainedDropoff") {
+                            //draw routes - draw polyline
+                            await drawPolyLineFromOriginToDestination();
+                          }
+                        },
+                        child: Row(
+                          children: [
+                            const Icon(
+                              Icons.add_location_alt_outlined,
+                              color: Colors.grey,
+                            ),
+                            const SizedBox(
+                              width: 12.0,
+                            ),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const Text(
+                                  "To",
+                                  style: TextStyle(
+                                      color: Colors.grey, fontSize: 12),
+                                ),
+                                Text(
+                                  Provider.of<AppInfo>(context)
+                                              .userDropOffLocation !=
+                                          null
+                                      ? Provider.of<AppInfo>(context)
+                                          .userDropOffLocation!
+                                          .locationName!
+                                      : "Where to go?",
+                                  style: const TextStyle(
+                                      color: Colors.grey, fontSize: 14),
+                                ),
+                              ],
+                            ),
+                          ],
                         ),
-                        const SizedBox(
-                          width: 12.0,
-                        ),
-                         GestureDetector(
-                          child: time!=null ? Text('${time?.hour} ${time?.minute}',style: TextStyle(color: AppColors().whiteColor),) : Icon(
-                            Icons.time_to_leave,
-                            color: Colors.white,
+                      ),
+                      const SizedBox(height: 10.0),
+                      const Divider(
+                        height: 1,
+                        thickness: 1,
+                        color: Colors.grey,
+                      ),
+                      const SizedBox(height: 16.0),
+                      Row(
+                        children: [
+                          const Text(
+                            "Pick Time",
+                            style: TextStyle(color: Colors.grey, fontSize: 12),
                           ),
-                          onTap: (){
-                            pickTime();
-                          },
-                        ),
-
-                        const Spacer(),
-                        const Text(
-                          "Pick Date",
-                          style:
-                          TextStyle(color: Colors.grey, fontSize: 12),
-                        ),
-                        const SizedBox(
-                          width: 12.0,
-                        ),
-                        GestureDetector(
-                          child: date!=null ? Text('${date!}'.substring(0,10),style: TextStyle(color: AppColors().whiteColor),) : Icon(
-                            Icons.time_to_leave,
-                            color: Colors.white,
+                          const SizedBox(
+                            width: 12.0,
                           ),
-                          onTap: (){
-                            pickDate();
-                          },
-                        ),
-                      ],
-                    ),
-
-                    const Divider(
-                      height: 1,
-                      thickness: 1,
-                      color: Colors.grey,
-                    ),
-
-                    const SizedBox(height: 16.0),
-
-                    Row(
-                      mainAxisSize: MainAxisSize.min,
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-
-                        ElevatedButton(
-                          onPressed: () {
-                            if (Provider.of<AppInfo>(context, listen: false)
-                                    .userDropOffLocation !=
-                                null) {
-                              saveRideRequestInformation();
-                            } else {
-                              Fluttertoast.showToast(
-                                  msg: "Please select destination location");
-                            }
-                          },
-                          style: ElevatedButton.styleFrom(
-                              primary: primaryGreen,
-                              textStyle: const TextStyle(
-                                  fontSize: 16, fontWeight: FontWeight.bold)),
-                          child: const Text(
-                            "Schedule Ride",
+                          GestureDetector(
+                            child: time != null
+                                ? Text(
+                                    '${time?.hour} ${time?.minute}',
+                                    style: TextStyle(
+                                        color: AppColors().whiteColor),
+                                  )
+                                : Icon(
+                                    Icons.time_to_leave,
+                                    color: Colors.white,
+                                  ),
+                            onTap: () {
+                              pickTime();
+                            },
                           ),
-                        ),
-                      ],
-                    ),
-                  ],
+                          const Spacer(),
+                          const Text(
+                            "Pick Date",
+                            style: TextStyle(color: Colors.grey, fontSize: 12),
+                          ),
+                          const SizedBox(
+                            width: 12.0,
+                          ),
+                          GestureDetector(
+                            child: date != null
+                                ? Text(
+                                    '${date!}'.substring(0, 10),
+                                    style: TextStyle(
+                                        color: AppColors().whiteColor),
+                                  )
+                                : Icon(
+                                    Icons.time_to_leave,
+                                    color: Colors.white,
+                                  ),
+                            onTap: () {
+                              pickDate();
+                            },
+                          ),
+                        ],
+                      ),
+
+                      const Divider(
+                        height: 1,
+                        thickness: 1,
+                        color: Colors.grey,
+                      ),
+
+                      const SizedBox(height: 16.0),
+
+                      Row(
+                        mainAxisSize: MainAxisSize.min,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          ElevatedButton(
+                            onPressed: () {
+                              if (Provider.of<AppInfo>(context, listen: false)
+                                      .userDropOffLocation !=
+                                  null) {
+                                saveRideRequestInformation();
+                              } else {
+                                Fluttertoast.showToast(
+                                    msg: "Please select destination location");
+                              }
+                            },
+                            style: ElevatedButton.styleFrom(
+                                primary: primaryGreen,
+                                textStyle: const TextStyle(
+                                    fontSize: 16, fontWeight: FontWeight.bold)),
+                            child: const Text(
+                              "Schedule Ride",
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
           ),
-        ),
 
-        //ui for waiting response from driver
-        Positioned(
-          bottom: 0,
-          left: 0,
-          right: 0,
-          child: Container(
-            height: waitingResponseFromDriverContainerHeight,
-            decoration: const BoxDecoration(
-              color: Colors.black87,
-              borderRadius: BorderRadius.only(
-                topRight: Radius.circular(20),
-                topLeft: Radius.circular(20),
-              ),
-            ),
-            child: Padding(
-              padding: const EdgeInsets.all(20.0),
-              child: Center(
-                child: AnimatedTextKit(
-                  animatedTexts: [
-                    FadeAnimatedText(
-                      'Waiting for Response\nfrom Driver',
-                      duration: const Duration(seconds: 6),
-                      textAlign: TextAlign.center,
-                      textStyle: const TextStyle(
-                          fontSize: 30.0,
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold),
-                    ),
-                    ScaleAnimatedText(
-                      'Please wait...',
-                      duration: const Duration(seconds: 10),
-                      textAlign: TextAlign.center,
-                      textStyle: const TextStyle(
-                          fontSize: 32.0,
-                          color: Colors.white,
-                          fontFamily: 'Canterbury'),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ),
-        ),
-
-        //ui for displaying assigned driver information
-        Positioned(
+          //ui for waiting response from driver
+          Positioned(
             bottom: 0,
             left: 0,
             right: 0,
             child: Container(
-              height: assignedDriverInfoContainerHeight,
+              height: waitingResponseFromDriverContainerHeight,
               decoration: const BoxDecoration(
                 color: Colors.black87,
                 borderRadius: BorderRadius.only(
@@ -773,105 +738,170 @@ class _ScheduleRideState extends State<ScheduleRide> {
                 ),
               ),
               child: Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 24,
-                  vertical: 20,
+                padding: const EdgeInsets.all(20.0),
+                child: Center(
+                  child: AnimatedTextKit(
+                    animatedTexts: [
+                      FadeAnimatedText(
+                        'Waiting for Response\nfrom Driver',
+                        duration: const Duration(seconds: 6),
+                        textAlign: TextAlign.center,
+                        textStyle: const TextStyle(
+                            fontSize: 30.0,
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold),
+                      ),
+                      ScaleAnimatedText(
+                        'Please wait...',
+                        duration: const Duration(seconds: 10),
+                        textAlign: TextAlign.center,
+                        textStyle: const TextStyle(
+                            fontSize: 32.0,
+                            color: Colors.white,
+                            fontFamily: 'Canterbury'),
+                      ),
+                    ],
+                  ),
                 ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    //status of ride
-                    Center(
-                      child: Text(
-                        driverRideStatus,
+              ),
+            ),
+          ),
+
+          //ui for displaying assigned driver information
+          Positioned(
+              bottom: 0,
+              left: 0,
+              right: 0,
+              child: Container(
+                height: assignedDriverInfoContainerHeight,
+                decoration: const BoxDecoration(
+                  color: Colors.black87,
+                  borderRadius: BorderRadius.only(
+                    topRight: Radius.circular(20),
+                    topLeft: Radius.circular(20),
+                  ),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 24,
+                    vertical: 20,
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      //status of ride
+                      Center(
+                        child: Text(
+                          driverRideStatus,
+                          style: const TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white54,
+                          ),
+                        ),
+                      ),
+
+                      const SizedBox(
+                        height: 20.0,
+                      ),
+
+                      const Divider(
+                        height: 2,
+                        thickness: 2,
+                        color: Colors.white54,
+                      ),
+
+                      const SizedBox(
+                        height: 20.0,
+                      ),
+
+                      //driver vehicle details
+                      Text(
+                        driverCarDetails,
+                        textAlign: TextAlign.center,
                         style: const TextStyle(
-                          fontSize: 18,
+                          fontSize: 16,
+                          color: Colors.white54,
+                        ),
+                      ),
+
+                      const SizedBox(
+                        height: 2.0,
+                      ),
+
+                      //driver name
+                      Text(
+                        driverName,
+                        textAlign: TextAlign.center,
+                        style: const TextStyle(
+                          fontSize: 20,
                           fontWeight: FontWeight.bold,
                           color: Colors.white54,
                         ),
                       ),
-                    ),
 
-                    const SizedBox(
-                      height: 20.0,
-                    ),
+                      const SizedBox(
+                        height: 20.0,
+                      ),
 
-                    const Divider(
-                      height: 2,
-                      thickness: 2,
-                      color: Colors.white54,
-                    ),
-
-                    const SizedBox(
-                      height: 20.0,
-                    ),
-
-                    //driver vehicle details
-                    Text(
-                      driverCarDetails,
-                      textAlign: TextAlign.center,
-                      style: const TextStyle(
-                        fontSize: 16,
+                      const Divider(
+                        height: 2,
+                        thickness: 2,
                         color: Colors.white54,
                       ),
-                    ),
 
-                    const SizedBox(
-                      height: 2.0,
-                    ),
-
-                    //driver name
-                    Text(
-                      driverName,
-                      textAlign: TextAlign.center,
-                      style: const TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white54,
+                      const SizedBox(
+                        height: 20.0,
                       ),
-                    ),
-
-                    const SizedBox(
-                      height: 20.0,
-                    ),
-
-                    const Divider(
-                      height: 2,
-                      thickness: 2,
-                      color: Colors.white54,
-                    ),
-
-                    const SizedBox(
-                      height: 20.0,
-                    ),
-                    //call driver button
-                    Center(
-                      child: ElevatedButton.icon(
-                        onPressed: () {
-
-                        },
-                        style: ElevatedButton.styleFrom(
-                          primary: Colors.teal,
-                        ),
-                        icon: const Icon(
-                          Icons.phone_android,
-                          color: Colors.black54,
-                          size: 22,
-                        ),
-                        label: const Text(
-                          "Call Driver",
-                          style: TextStyle(
+                      //call driver button
+                      Center(
+                        child: ElevatedButton.icon(
+                          onPressed: () {},
+                          style: ElevatedButton.styleFrom(
+                            primary: Colors.teal,
+                          ),
+                          icon: const Icon(
+                            Icons.phone_android,
                             color: Colors.black54,
-                            fontWeight: FontWeight.bold,
+                            size: 22,
+                          ),
+                          label: const Text(
+                            "Call Driver",
+                            style: TextStyle(
+                              color: Colors.black54,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-              ),
-            ))
-      ]),
+              )),
+
+          scheduleRide.scheduleRideList != null &&
+                  scheduleRide.scheduleRideList.isNotEmpty
+              ? Container(
+                  height: getHeight(context),
+                  color: AppColors().blackColor.withOpacity(0.3),
+                  child: Container(
+                    color: Colors.white,
+                    height: getHeight(context) * 0.7,
+                    margin: EdgeInsets.symmetric(
+                        vertical: getHeight(context) * 0.30,
+                        horizontal: getWidth(context) * 0.10),
+                    child: Stack(
+                      alignment: Alignment.center,
+                      children: [
+                        HistoryDesignUIWidget(tripsHistoryModel: scheduleRide.scheduleRideList[0],chat: true,),
+                        const Text("RIDE NOT ENDED",style: TextStyle(color: Colors.red,fontSize: 24),),
+                      ],
+                    ),
+                  ),
+                )
+              : SizedBox(),
+        ]),
+      ),
     );
   }
 
@@ -1101,25 +1131,28 @@ class _ScheduleRideState extends State<ScheduleRide> {
 
   pickDate() async {
     DateTime? dateTime;
-  dateTime=await showDatePicker(
+    dateTime = await showDatePicker(
         currentDate: date,
         context: context,
+        initialEntryMode: DatePickerEntryMode.calendarOnly,
         initialDate: DateTime.now(),
         firstDate: DateTime.now(),
-        lastDate: DateTime(DateTime.now().year,DateTime.now().month+6,DateTime.now().day));
-  setState(() {
-    date=dateTime;
-  });
-  return date;
+        lastDate: DateTime(
+            DateTime.now().year, DateTime.now().month + 6, DateTime.now().day));
+    setState(() {
+      date = dateTime;
+    });
+    return date;
   }
+
   pickTime() async {
     TimeOfDay? timeOfDay;
-    timeOfDay= await showTimePicker(
-      initialEntryMode: TimePickerEntryMode.dialOnly,
+    timeOfDay = await showTimePicker(
+        initialEntryMode: TimePickerEntryMode.dialOnly,
         context: context,
-      initialTime: TimeOfDay.now());
-    setState((){
-      time=timeOfDay;
+        initialTime: TimeOfDay.now());
+    setState(() {
+      time = timeOfDay;
     });
     return time;
   }
