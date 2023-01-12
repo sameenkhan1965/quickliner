@@ -51,6 +51,7 @@ dependencies:
   animated_text_kit: ^4.2.2
   url_launcher: ^6.1.7
 
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -75,6 +76,7 @@ flutter:
 
   assets:
     - images/
+
 
 
   # To add assets to your application, add an assets section, like this:

@@ -6,7 +6,7 @@ import 'package:users_app/authentication/signup_screen.dart';
 import 'package:users_app/configuraton/configuration.dart';
 import 'package:users_app/global/colors.dart';
 import 'package:users_app/global/global.dart';
-import 'package:users_app/splashScreen/splash_screen.dart';
+import 'package:users_app/splashScreen/splash_screen3.dart';
 import 'package:users_app/widgets/progress_dialog.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -63,12 +63,12 @@ class _LoginScreenState extends State<LoginScreen> {
           currentFirebaseUser = firebaseUser;
           Fluttertoast.showToast(msg: "Login Successful.");
           Navigator.push(context,
-              MaterialPageRoute(builder: (c) => MySplashScreen(userType: (snap.value as dynamic)["userType"],)));
+              MaterialPageRoute(builder: (c) => MySplashScreen3(userType: (snap.value as dynamic)["userType"],)));
         } else {
           Fluttertoast.showToast(msg: "No record exist with this email.");
           fAuth.signOut();
           Navigator.push(context,
-              MaterialPageRoute(builder: (c) => MySplashScreen(userType: (snap.value as dynamic)["userType"],)));
+              MaterialPageRoute(builder: (c) => MySplashScreen3(userType: (snap.value as dynamic)["userType"],)));
         }
       });
     } else {

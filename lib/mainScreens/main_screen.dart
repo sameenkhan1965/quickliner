@@ -1,7 +1,10 @@
 import 'dart:async';
 
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_geofire/flutter_geofire.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:users_app/assistants/assistant_methods.dart';
@@ -13,8 +16,12 @@ import 'package:users_app/widgets/my_drawer.dart';
 import 'package:users_app/configuraton/configuration.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:users_app/widgets/providers/all_drivers_provider.dart';
+import 'package:users_app/widgets/providers/broadcast_requests_provider.dart';
 import 'package:users_app/widgets/providers/category_transport_provider.dart';
 import 'package:users_app/widgets/ui/customer/car_pool/car_pool_widget.dart';
+
+import '../assistants/geofire_assistant.dart';
+import '../models/broadcast_model.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
@@ -25,13 +32,18 @@ class MainScreen extends StatefulWidget {
 
 class _MainScreenState extends State<MainScreen> {
   GlobalKey<ScaffoldState> sKey = GlobalKey<ScaffoldState>();
+  List<BroadcastData> NearbyBroadcastDataList = [];
+  Position? userCurrentPosition;
+
 
   @override
   void initState() {
     Provider.of<TransportCategoryProvider>(context, listen: false)
         .getAllTransport();
-    Provider.of<AllDriversProvider>(context, listen: false)
-        .getAllDrivers(context);
+    //Provider.of<AllDriversProvider>(context, listen: false)
+      //  .getAllDrivers(context);
+    Provider.of<BroadcastRequestProvider>(context, listen: false)
+     .getAllBroadcastRequests(context);
     super.initState();
   }
 
@@ -330,36 +342,21 @@ class _MainScreenState extends State<MainScreen> {
                     ),
                   ],
                 ),
-                Consumer<AllDriversProvider>(
+                Consumer<BroadcastRequestProvider>(
                   builder: (context, value, child) => ListView.builder(
                       shrinkWrap: true,
-                      itemCount: value.allDrivers.length,
+                      itemCount: value.allBroadcasts.length,
                       itemBuilder: (context, index) {
-                        return getDriverRow(
-                            name: value.allDrivers[index].name ?? "",
-                            carNo: value.allDrivers[index].car_number ?? "",
-                            carColor: value.allDrivers[index].car_color ?? "",
-                            carName: value.allDrivers[index].car_model ?? "",
-                            carType: value.allDrivers[index].car_type ??
-                                "quick-van");
+                        return getBroadcastRow(
+                            origin: value.allBroadcasts[index].originAddress ?? "",
+                            destination: value.allBroadcasts[index].destinationAddress1?? "",
+                            destination2: value.allBroadcasts[index].destinationAddress2 ?? "",
+                            seatNo: value.allBroadcasts[index].noOfSeats ?? "");
+
                       }),
                 ),
 
-                //***************** Braodcasts *********************************
 
-                //
-                // Container(
-                //   margin: const EdgeInsets.only(top: 100, left: 130),
-                //   height: 40,
-                //   child: const Text(
-                //     'Start Your Journey',
-                //     style: TextStyle(
-                //       fontWeight: FontWeight.bold,
-                //       fontSize: 18,
-                //       color: Colors.black,
-                //     ),
-                //   ),
-                // ),
               ],
             ),
           ),
@@ -406,32 +403,34 @@ class _MainScreenState extends State<MainScreen> {
     );
   }
 
-  Widget getDriverRow(
-      {required String name,
-      required String carNo,
-      required String carColor,
-      required String carName,
-      required carType}) {
+  Widget getBroadcastRow(
+      {required String origin,
+      required String destination,
+      required String destination2,
+      required String seatNo,
+      }) {
     return Container(
       padding: const EdgeInsets.all(10.0),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Expanded(
-            flex: 1,
+           // flex: 1,
             child: Container(
-              decoration: BoxDecoration(
+              padding: EdgeInsets.only(left: 22, right: 20, top: 15, bottom: 15),
+             /* decoration: BoxDecoration(
                 color: carType == "quick-go"
                     ? AppColors().greenAccentColor
                     : primaryGreen,
                 borderRadius: BorderRadius.circular(20),
                 boxShadow: shadowList,
-              ),
+              ),*/
               child: Align(
-                child: Image.asset(
-                  'images/${carType}.png',
+               child: Image.asset(
+               //   'images/${carType}.png',
+                 'images/logo.png',
                   fit: BoxFit.contain,
-                  height: 50,
+                  height:70,
                 ),
               ),
             ),
@@ -452,38 +451,50 @@ class _MainScreenState extends State<MainScreen> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       const Text(
-                        "Captain Name",
+                        "Pickup",
                         style: TextStyle(fontWeight: FontWeight.bold),
                       ),
-                      Text(name),
+                      Text(origin.substring(0, 14) + "..."),
                     ],
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       const Text(
-                        "Car Name",
+                        "1st Drop off",
                         style: TextStyle(fontWeight: FontWeight.bold),
                       ),
-                      Text(carName),
+                      Text(destination.substring(0, 4) + "..."),
                     ],
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       const Text(
-                        "Car No",
+                        "2nd Drop Off",
                         style: TextStyle(fontWeight: FontWeight.bold),
                       ),
-                      Text(carNo),
+                      Text(destination2.substring(0, 14) + "..."),
                     ],
                   ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const Text(
+                    "No Of Seats",
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                  Text(seatNo),
                 ],
               ),
+              ],
             ),
+          ),
           )
         ],
       ),
     );
   }
+
+
 }
