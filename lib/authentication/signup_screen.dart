@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:users_app/authentication/login_screen.dart';
 import 'package:users_app/global/global.dart';
-import 'package:users_app/splashScreen/splash_screen.dart';
+import 'package:users_app/splashScreen/splash_screen3.dart';
 import 'package:users_app/widgets/progress_dialog.dart';
 
 
@@ -398,7 +398,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
       currentFirebaseUser = firebaseUser;
 
       Fluttertoast.showToast(msg: "Account has been Created.");
-      Navigator.push(context, MaterialPageRoute(builder: (c)=> MySplashScreen(userType: "customer",)));
+      Navigator.push(context, MaterialPageRoute(builder: (c)=> MySplashScreen3(userType: "customer",)));
     }
     else
     {
