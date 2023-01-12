@@ -109,7 +109,7 @@ class _MySplashScreen2State extends State<MySplashScreen2>
                               padding: EdgeInsets.all(10.0),
                               height:50,
                               width: 260,
-                              decoration: BoxDecoration(color:Colors.white,
+                              decoration: BoxDecoration(color:primaryGreen,
                                 borderRadius: BorderRadius.circular(20),
                                 boxShadow: shadowList,
                               ),
