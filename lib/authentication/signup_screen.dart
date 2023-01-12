@@ -12,38 +12,348 @@ class SignUpScreen extends StatefulWidget
 {
   const SignUpScreen({super.key});
 
+
   @override
   _SignUpScreenState createState() => _SignUpScreenState();
 }
+class _SignUpScreenState extends State<SignUpScreen> {
 
-
-
-class _SignUpScreenState extends State<SignUpScreen>
-{
   TextEditingController nameTextEditingController = TextEditingController();
   TextEditingController emailTextEditingController = TextEditingController();
   TextEditingController phoneTextEditingController = TextEditingController();
   TextEditingController passwordTextEditingController = TextEditingController();
 
-
   validateForm()
   {
-    if(nameTextEditingController.text.length < 3)
+    if(nameTextEditingController.text.isEmpty && emailTextEditingController.text.isEmpty && phoneTextEditingController.text.isEmpty && passwordTextEditingController.text.isEmpty) {
+      showDialog(context: context,
+        builder: (context) => AlertDialog
+          (
+          title: Text('Required'),
+          content: Text(
+              'Fields can not be empty.'
+          ),
+          backgroundColor: Colors.white,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(30),
+          ),
+          actions: [
+            TextButton(
+
+                onPressed: () =>Navigator.pop(context) ,
+                child: Text('OK'))
+          ],
+        ),
+      );
+      //  Fluttertoast.showToast(msg: "Phone Number is required.");
+    }
+    else if(nameTextEditingController.text.isEmpty)
     {
-      Fluttertoast.showToast(msg: "name must be atleast 3 Characters.");
+      showDialog(context: context,
+        builder: (context) => AlertDialog
+          (
+          title: Text('Required'),
+          content: Text(
+              'Name can not be empty.'
+          ),
+          backgroundColor: Colors.white,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(30),
+          ),
+          actions: [
+            TextButton(
+                onPressed: () =>Navigator.pop(context) ,
+                child: Text('OK'))
+          ],
+        ),
+      );
+      //  Fluttertoast.showToast(msg: "Phone Number is required.");
+    }
+    else if(nameTextEditingController.text.length < 4)
+    {
+          showDialog(context: context,
+          builder: (context) => AlertDialog(
+          content: Text(
+          'Name must be atleast of 4 characters.'),
+          backgroundColor: Colors.white,
+          shape: RoundedRectangleBorder(
+          borderRadius:
+          BorderRadius.circular(30),
+          ),
+          actions: [
+          TextButton(
+          onPressed: () =>Navigator.pop(context) ,
+          child: Text('OK'))
+          ],
+          ),
+    );
+    }
+    /* if(nameTextEditingController!=RegExp(r"[A-Za-z]"))
+    {
+          showDialog(context: context,
+          builder: (context) => AlertDialog(
+          content: Text(
+          'Name Can only be Alphabets'),
+          backgroundColor: Colors.white,
+          shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(20),
+          ),
+          actions: [
+          TextButton(
+          onPressed: () =>Navigator.pop(context) ,
+          child: Text('OK'))
+          ],
+          ),
+    );
+    }
+   else if(nameTextEditingController.text.isNotEmpty || emailTextEditingController.text.isEmpty)
+    {
+      showDialog(context: context,
+        builder: (context) => AlertDialog
+          (
+          title: Text('Required'),
+          content: Text(
+              'Email can not be empty.'
+          ),
+          backgroundColor: Colors.white,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(30),
+          ),
+          actions: [
+            TextButton(
+                onPressed: () =>Navigator.pop(context) ,
+                child: Text('OK'))
+          ],
+        ),
+      );
+      //  Fluttertoast.showToast(msg: "Phone Number is required.");
+    }
+
+*/
+
+
+    else if(emailTextEditingController.text.isEmpty)
+    {
+      showDialog(context: context,
+        builder: (context) => AlertDialog
+          (
+          title: Text('Required'),
+          content: Text(
+              'Email can not be empty.'
+          ),
+          backgroundColor: Colors.white,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(30),
+          ),
+          actions: [
+            TextButton(
+                onPressed: () =>Navigator.pop(context) ,
+                child: Text('OK'))
+          ],
+        ),
+      );
+      //  Fluttertoast.showToast(msg: "Phone Number is required.");
     }
     else if(!emailTextEditingController.text.contains("@"))
     {
-      Fluttertoast.showToast(msg: "Email address is not Valid.");
+      showDialog(context: context,
+        builder: (context) => AlertDialog
+          (
+          title: Text('Invalid Email'),
+          content: Text(
+              'Enter Valid Email'
+          ),
+          backgroundColor: Colors.white,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(30),
+          ),
+          actions: [
+            TextButton(
+                onPressed: () =>Navigator.pop(context) ,
+                child: Text('OK'))
+
+          ],
+        ),
+      );
+      // Fluttertoast.showToast(msg: "Email address is not Valid.");
     }
+
     else if(phoneTextEditingController.text.isEmpty)
     {
-      Fluttertoast.showToast(msg: "Phone Number is required.");
+      showDialog(context: context,
+        builder: (context) => AlertDialog
+          (
+          title: Text('Required'),
+          content: Text(
+              'Phone number can not be empty.'
+          ),
+          backgroundColor: Colors.white,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(30),
+          ),
+          actions: [
+            TextButton(
+                onPressed: () =>Navigator.pop(context) ,
+                child: Text('OK'))
+          ],
+        ),
+      );
+      //  Fluttertoast.showToast(msg: "Phone Number is required.");
     }
-    else if(passwordTextEditingController.text.length < 6)
+    else if(passwordTextEditingController.text.isEmpty)
     {
-      Fluttertoast.showToast(msg: "Password must be atleast 6 Characters.");
+      showDialog(context: context,
+        builder: (context) => AlertDialog
+          (
+          title: Text('Required'),
+          content: Text(
+              'Password can not be empty.'
+          ),
+          backgroundColor: Colors.white,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(30),
+          ),
+          actions: [
+            TextButton(
+                onPressed: () =>Navigator.pop(context) ,
+                child: Text('OK'))
+          ],
+        ),
+      );
+      //  Fluttertoast.showToast(msg: "Phone Number is required.");
     }
+    else if(passwordTextEditingController != RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$'))
+    {
+      showDialog(context: context,
+        builder: (context) => AlertDialog
+          (
+          title: Text('Required'),
+          content: Text(
+              'Password should be of 8 character that contain at least one Upper case, one lower, one digit & one special character.'
+          ),
+          backgroundColor: Colors.white,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(30),
+          ),
+          actions: [
+            TextButton(
+                onPressed: () =>Navigator.pop(context) ,
+                child: Text('OK'))
+          ],
+        ),
+      );
+    }
+
+   /* else if(passwordTextEditingController != RegExp(r'(?=.*[a-z])'))
+    {
+      showDialog(context: context,
+        builder: (context) => AlertDialog
+          (
+          title: Text('Required'),
+          content: Text(
+              'Password should contain at least one lower case.'
+          ),
+          backgroundColor: Colors.white,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(30),
+          ),
+          actions: [
+            TextButton(
+                onPressed: () =>Navigator.pop(context) ,
+                child: Text('OK'))
+          ],
+        ),
+      );
+    }
+    else if(passwordTextEditingController != RegExp(r'(?=.*?[0-9])'))
+    {
+      showDialog(context: context,
+        builder: (context) => AlertDialog
+          (
+          title: Text('Required'),
+          content: Text(
+              'Password should contain at least one Digit.'
+          ),
+          backgroundColor: Colors.white,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(30),
+          ),
+          actions: [
+            TextButton(
+                onPressed: () =>Navigator.pop(context) ,
+                child: Text('OK'))
+          ],
+        ),
+      );
+    }
+    else if(passwordTextEditingController != RegExp(r'(?=.*?[!@#\$&*~])'))
+    {
+      showDialog(context: context,
+        builder: (context) => AlertDialog
+          (
+          title: Text('Required'),
+          content: Text(
+              'Password should contain at least one Special Character.'
+          ),
+          backgroundColor: Colors.white,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(30),
+          ),
+          actions: [
+            TextButton(
+                onPressed: () =>Navigator.pop(context) ,
+                child: Text('OK'))
+          ],
+        ),
+      );
+    }
+    else if(passwordTextEditingController != RegExp(r'.{8,}'))
+    {
+      showDialog(context: context,
+        builder: (context) => AlertDialog
+          (
+          title: Text('Required'),
+          content: Text(
+              'Password must be at least 8 characters in length.'
+          ),
+          backgroundColor: Colors.white,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(30),
+          ),
+          actions: [
+            TextButton(
+                onPressed: () =>Navigator.pop(context) ,
+                child: Text('OK'))
+          ],
+        ),
+      );
+    }
+   else if(phoneTextEditingController!=RegExp(r'^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$'))
+   {
+     showDialog(context: context,
+       builder: (context) => AlertDialog
+         (
+         content: Text(
+             'Enter numbers only'
+         ),
+         backgroundColor: Colors.white,
+         shape: RoundedRectangleBorder(
+           borderRadius: BorderRadius.circular(30),
+         ),
+         actions: [
+           TextButton(
+               onPressed: () =>Navigator.pop(context) ,
+               child: Text('OK'))
+         ],
+       ),
+     );
+     // Fluttertoast.showToast(msg: "Email address is not Valid.");
+   }
+
+*/
+
+
+
     else
     {
       saveUserInfoNow();
@@ -100,7 +410,7 @@ class _SignUpScreenState extends State<SignUpScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black,
+      backgroundColor: Colors.white,
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(16.0),
@@ -117,10 +427,10 @@ class _SignUpScreenState extends State<SignUpScreen>
               const SizedBox(height: 10,),
 
               const Text(
-                "Register as a User",
+                "Register Yourself",
                 style: TextStyle(
                   fontSize: 26,
-                  color: Colors.grey,
+                  color: Colors.black,
                   fontWeight: FontWeight.bold,
                 ),
               ),
@@ -131,8 +441,8 @@ class _SignUpScreenState extends State<SignUpScreen>
                     color: Colors.grey
                 ),
                 decoration: const InputDecoration(
-                  labelText: "Name",
-                  hintText: "Name",
+                  labelText: "Full Name",
+                  hintText: "Enter your Name",
                   enabledBorder: UnderlineInputBorder(
                     borderSide: BorderSide(color: Colors.grey),
                   ),
@@ -229,28 +539,30 @@ class _SignUpScreenState extends State<SignUpScreen>
                 ),
               ),
 
-              const SizedBox(height: 20,),
-
-              ElevatedButton(
-                onPressed: ()
-                {
-                  validateForm();
-                },
-                style: ElevatedButton.styleFrom(
-                  primary: Colors.lightGreenAccent,
-                ),
-                child: const Text(
-                  "Create Account",
-                  style: TextStyle(
-                    color: Colors.black54,
-                    fontSize: 18,
+              const SizedBox(
+                height: 20,
+              ),
+              SizedBox(
+                width: double.infinity,
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                      primary: Theme.of(context).primaryColor,
+                      elevation: 0,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30))),
+                  child: const Text(
+                    "Register",
+                    style:
+                    TextStyle(color: Colors.white, fontSize: 16),
                   ),
+                  onPressed: () {
+                    validateForm();
+                  },
                 ),
               ),
-
               TextButton(
                 child: const Text(
-                  "Already have an Account? Login Here",
+                  "Already have an Account? Login Now",
                   style: TextStyle(color: Colors.grey),
                 ),
                 onPressed: ()

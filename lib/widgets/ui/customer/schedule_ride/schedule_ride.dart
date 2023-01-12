@@ -329,9 +329,29 @@ class _ScheduleRideState extends State<ScheduleRide> {
         pLineCoOrdinatesList.clear();
       });
 
-      Fluttertoast.showToast(
-          msg:
-              "No Online Nearest Driver Available. Search Again after some time, Restarting App Now.");
+     /* AlertDialog(
+        title: Text('No Nearest Driver'),
+        content: Text('No Online Nearest Driver Available. Search Again after some time.'),
+        actions: [
+          TextButton(
+            style: TextButton.styleFrom(
+              textStyle: const TextStyle(fontSize: 20),
+            ),
+            onPressed: null,
+            child: const Text('Cancel'),
+          ),
+          TextButton(
+            style: TextButton.styleFrom(
+              textStyle: const TextStyle(fontSize: 20),
+            ),
+            onPressed: null,
+            child: const Text('Ok'),
+          ),
+        ],
+    */ // );
+     Fluttertoast.showToast(
+        msg:
+         "No Online Nearest Driver Available. Search Again after some time.");
 
       //dealy kr re restart 3 sec
       // Future.delayed(const Duration(milliseconds: 4000), ()

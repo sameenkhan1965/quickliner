@@ -181,7 +181,7 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
               TextButton(
                 child: const Text(
-                  "Do not have an Account? SignUp Here",
+                  "Do not have an Account? Register",
                   style: TextStyle(color: Colors.white),
                 ),
                 onPressed: () {
