@@ -218,7 +218,7 @@ class _HistoryDesignUIWidgetState extends State<HistoryDesignUIWidget> {
               children: [
                 Icon(
                   Icons.event_seat,
-                  color: AppColors().whiteColor,
+                  color: AppColors.whiteColor,
                 ),
                 const SizedBox(
                   width: 12,
@@ -229,7 +229,7 @@ class _HistoryDesignUIWidgetState extends State<HistoryDesignUIWidget> {
                     overflow: TextOverflow.ellipsis,
                     style: TextStyle(
                       fontSize: 16,
-                      color: AppColors().whiteColor,
+                      color: AppColors.whiteColor,
                     ),
                   ),
                 ),
@@ -281,14 +281,14 @@ class _HistoryDesignUIWidgetState extends State<HistoryDesignUIWidget> {
                                               noOfSeat++;
                                             });
                                           }:null,
-                                          icon: Icon(Icons.add,color:AppColors().blackColor)),
+                                          icon: Icon(Icons.add,color:AppColors.blackColor)),
                                       IconButton(
                                           onPressed: noOfSeat>1 ? () {
                                             setState(() {
                                               noOfSeat--;
                                             });
                                           }:null,
-                                          icon: Icon(Icons.remove,color:AppColors().blackColor,))
+                                          icon: Icon(Icons.remove,color:AppColors.blackColor,))
                                     ],
                                   ),
 
@@ -317,7 +317,7 @@ class _HistoryDesignUIWidgetState extends State<HistoryDesignUIWidget> {
                     },
                     icon: Icon(
                       Icons.car_repair,
-                      color: AppColors().whiteColor,
+                      color: AppColors.whiteColor,
                     )),
                 widget.chat ?  IconButton(
                     onPressed: () {
@@ -325,14 +325,14 @@ class _HistoryDesignUIWidgetState extends State<HistoryDesignUIWidget> {
                     },
                     icon: Icon(
                       Icons.message,
-                      color: AppColors().whiteColor,
+                      color: AppColors.whiteColor,
                     )):SizedBox(),
                 SizedBox(width: 20,),
                 IconButton(
                     onPressed: () {},
                     icon: Icon(
                       Icons.call,
-                      color: AppColors().whiteColor,
+                      color: AppColors.whiteColor,
                     )),
               ],
             ),
@@ -411,8 +411,8 @@ class _HistoryDesignUIWidgetState extends State<HistoryDesignUIWidget> {
       "driverId": "waiting",
       "rideType": "scheduleRide",
       "noOfSeats": '$noOfSeat',
-      "scheduleTime":'$time',
-      "scheduleDate":'$date',
+      "scheduleTime": "${time.toString()}",
+      "scheduleDate": DateFormat('yyyy-MM-dd').format(date!),
 
     };
 

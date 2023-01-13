@@ -7,9 +7,7 @@ import '../about/about_screen.dart';
 import '../mainScreens/profile_screen.dart';
 import '../mainScreens/trips_history_screen.dart';
 
-
-class MyDrawer extends StatefulWidget
-{
+class MyDrawer extends StatefulWidget {
   String? name;
   String? email;
 
@@ -19,13 +17,9 @@ class MyDrawer extends StatefulWidget
   _MyDrawerState createState() => _MyDrawerState();
 }
 
-
-
-class _MyDrawerState extends State<MyDrawer>
-{
+class _MyDrawerState extends State<MyDrawer> {
   @override
-  Widget build(BuildContext context)
-  {
+  Widget build(BuildContext context) {
     return Drawer(
       backgroundColor: Colors.teal,
       child: ListView(
@@ -43,23 +37,25 @@ class _MyDrawerState extends State<MyDrawer>
                     size: 80,
                     color: Colors.white,
                   ),
-
-                  const SizedBox(width: 16,),
-
+                  const SizedBox(
+                    width: 16,
+                  ),
                   Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        widget.name.toString(),
+                        userModelCurrentInfo?.name! ?? "Admin",
                         style: const TextStyle(
                           fontSize: 16,
                           color: Colors.white,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                      const SizedBox(height: 10,),
+                      const SizedBox(
+                        height: 10,
+                      ),
                       Text(
-                        widget.email.toString(),
+                        userModelCurrentInfo?.email! ?? "admin@gmail.com",
                         style: const TextStyle(
                           fontSize: 12,
                           color: Colors.white,
@@ -72,7 +68,9 @@ class _MyDrawerState extends State<MyDrawer>
             ),
           ),
 
-          const  SizedBox(height: 12.0,),
+          const SizedBox(
+            height: 12.0,
+          ),
 
           //drawer body
           // GestureDetector(
@@ -92,54 +90,60 @@ class _MyDrawerState extends State<MyDrawer>
           // ),
 
           GestureDetector(
-            onTap: ()
-            {
-              Navigator.push(context, MaterialPageRoute(builder: (c)=> ProfileScreen()));
+            onTap: () {
+              Navigator.push(
+                  context, MaterialPageRoute(builder: (c) => ProfileScreen()));
             },
             child: const ListTile(
-              leading: Icon(Icons.person, color: Colors.white,),
+              leading: Icon(
+                Icons.person,
+                color: Colors.white,
+              ),
               title: Text(
                 "Visit Profile",
-                style: TextStyle(
-                    color: Colors.white
-                ),
+                style: TextStyle(color: Colors.white),
               ),
             ),
           ),
 
           GestureDetector(
-            onTap: ()
-            {
-              Navigator.push(context, MaterialPageRoute(builder: (c)=> AboutScreen()));
+            onTap: () {
+              Navigator.push(
+                  context, MaterialPageRoute(builder: (c) => AboutScreen()));
             },
             child: const ListTile(
-              leading: Icon(Icons.info, color: Colors.white,),
+              leading: Icon(
+                Icons.info,
+                color: Colors.white,
+              ),
               title: Text(
                 "About",
-                style: TextStyle(
-                    color: Colors.white
-                ),
+                style: TextStyle(color: Colors.white),
               ),
             ),
           ),
 
           GestureDetector(
-            onTap: ()
-            {
+            onTap: () {
               fAuth.signOut();
-              Navigator.push(context, MaterialPageRoute(builder: (c)=> MySplashScreen3(userType: userModelCurrentInfo?.userType??"",)));
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (c) => MySplashScreen3(
+                            userType: userModelCurrentInfo?.userType ?? "",
+                          )));
             },
             child: const ListTile(
-              leading: Icon(Icons.logout, color: Colors.white,),
+              leading: Icon(
+                Icons.logout,
+                color: Colors.white,
+              ),
               title: Text(
                 "Sign Out",
-                style: TextStyle(
-                    color: Colors.white
-                ),
+                style: TextStyle(color: Colors.white),
               ),
             ),
           ),
-
         ],
       ),
     );

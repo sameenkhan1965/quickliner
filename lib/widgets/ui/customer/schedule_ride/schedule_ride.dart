@@ -4,10 +4,12 @@ import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_geofire/flutter_geofire.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:users_app/assistants/assistant_methods.dart';
 import 'package:users_app/assistants/geofire_assistant.dart';
@@ -17,13 +19,13 @@ import 'package:users_app/infoHandler/app_info.dart';
 import 'package:users_app/mainScreens/rate_driver_screen.dart';
 import 'package:users_app/mainScreens/search_places_screen.dart';
 import 'package:users_app/mainScreens/select_nearest_active_driver_screen.dart';
-import 'package:users_app/mainScreens/trips_history_screen.dart';
 import 'package:users_app/models/active_nearby_available_drivers.dart';
-import 'package:users_app/widgets/history_design_ui.dart';
 import 'package:users_app/widgets/pay_fare_amount_dialog.dart';
 import 'package:users_app/widgets/progress_dialog.dart';
-import 'package:users_app/configuraton/configuration.dart';
 import 'package:users_app/widgets/providers/schedule_ride_provider.dart';
+
+import 'myschedule_rides.dart';
+// import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 class ScheduleRide extends StatefulWidget {
   const ScheduleRide({super.key});
@@ -107,10 +109,22 @@ class _ScheduleRideState extends State<ScheduleRide> {
     initializeGeoFireListener();
     AssistantMethods.readTripsKeysForOnlineUser(context);
   }
-
+  final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+  FlutterLocalNotificationsPlugin();
+  final AndroidInitializationSettings initializationSettingsAndroid =
+  AndroidInitializationSettings('@mipmap/ic_launcher');
+  initilize() async {
+    final InitializationSettings initializationSettings =
+    InitializationSettings(
+      android: initializationSettingsAndroid,);
+    await flutterLocalNotificationsPlugin.initialize(initializationSettings);
+  }
   @override
   void initState() {
     super.initState();
+    // initilize();
+    // listner();
+    initilize();
     checkIfLocationPermissionAllowed();
     Provider.of<ScheduleRideProvider>(context, listen: false)
         .getScheduleRide(context);
@@ -155,18 +169,24 @@ class _ScheduleRideState extends State<ScheduleRide> {
       "driverId": "waiting",
       "rideType": "scheduleRide",
       "noOfSeats": '$noOfSeat',
-      "scheduleTime": '$time',
-      "scheduleDate": '$date',
+      "scheduleTime": "${DateFormat('hh:mm a').format(DateFormat("h:m").parse("${time?.hour}:${time?.minute}"))}",
+      "scheduleDate": DateFormat('yyyy-MM-dd').format(date!),
+      "fareAmount":"0",
+      "distance":tripDirectionDetailsInfo != null ? tripDirectionDetailsInfo!.distance_text! : "",
+      "duration": tripDirectionDetailsInfo != null ? tripDirectionDetailsInfo!.duration_text!:"",
+      "status":"initiate"
     };
-
+    // DateFormat("hh:mm").format(time!);
     referenceRideRequest!.set(userInformationMap);
 
     tripRideRequestInfoStreamSubscription =
         referenceRideRequest!.onValue.listen((eventSnap) async {
+
+
       if (eventSnap.snapshot.value == null) {
         return;
       }
-
+      print("event lisnter --->> ${(eventSnap.snapshot.value as Map)["scheduleTime"]} ${(eventSnap.snapshot.value as Map)["scheduleDate"]}");
       if ((eventSnap.snapshot.value as Map)["car_details"] != null) {
         setState(() {
           driverCarDetails =
@@ -206,11 +226,53 @@ class _ScheduleRideState extends State<ScheduleRide> {
 
         //status = accepted
         if (userRideRequestStatus == "accepted") {
-          updateArrivalTimeToUserPickupLocation(driverCurrentPositionLatLng);
-        }
 
+          DateTime dt = DateFormat("yyyy-MM-dd hh:mm a").parse('${(eventSnap.snapshot.value as Map)['scheduleDate']} ${(eventSnap.snapshot.value as Map)['scheduleTime']}');
+          DateTime dt2 = dt.subtract(Duration(minutes: 5));
+
+          flutterLocalNotificationsPlugin.schedule(1, "Schedule Ride is about to start", "The ride with ${driverName} is starting in 5 minutes", dt2,  const NotificationDetails(
+
+            // Android details
+            android: AndroidNotificationDetails('main_channel', 'Main Channel',
+                channelDescription: "quickliner",
+                importance: Importance.max,
+                priority: Priority.max),
+
+          ),
+          );
+          // DateTime dt = DateTime.parse('${(eventSnap.snapshot.value as Map)["scheduleDate"]} ${(eventSnap.snapshot.value as Map)["scheduleTime"]}:00');
+          // DateTime dt2 = dt.subtract(Duration(minutes: 5));
+        }
+        if (userRideRequestStatus == "started") {
+          flutterLocalNotificationsPlugin.schedule(1, "Schedule Ride is started", "The ride with ${driverName} is started", DateTime.now(),  const NotificationDetails(
+
+            // Android details
+            android: AndroidNotificationDetails('main_channel', 'Main Channel',
+                channelDescription: "quickliner",
+                importance: Importance.max,
+                priority: Priority.max),
+
+          ),
+          );
+          takeEffect=true;
+          showUIForAssignedDriverInfo();
+          updateArrivalTimeToUserPickupLocation(driverCurrentPositionLatLng);
+          setState(() {
+
+          });
+        }
         //status = arrived
         if (userRideRequestStatus == "arrived") {
+          flutterLocalNotificationsPlugin.schedule(1, "Your driver is here", "The driver (${driverName}) is arrived", DateTime.now(),  const NotificationDetails(
+
+            // Android details
+            android: AndroidNotificationDetails('main_channel', 'Main Channel',
+                channelDescription: "quickliner",
+                importance: Importance.max,
+                priority: Priority.max),
+
+          ),
+          );
           setState(() {
             driverRideStatus = "Driver has Arrived";
           });
@@ -329,29 +391,9 @@ class _ScheduleRideState extends State<ScheduleRide> {
         pLineCoOrdinatesList.clear();
       });
 
-     /* AlertDialog(
-        title: Text('No Nearest Driver'),
-        content: Text('No Online Nearest Driver Available. Search Again after some time.'),
-        actions: [
-          TextButton(
-            style: TextButton.styleFrom(
-              textStyle: const TextStyle(fontSize: 20),
-            ),
-            onPressed: null,
-            child: const Text('Cancel'),
-          ),
-          TextButton(
-            style: TextButton.styleFrom(
-              textStyle: const TextStyle(fontSize: 20),
-            ),
-            onPressed: null,
-            child: const Text('Ok'),
-          ),
-        ],
-    */ // );
-     Fluttertoast.showToast(
-        msg:
-         "No Online Nearest Driver Available. Search Again after some time.");
+      Fluttertoast.showToast(
+          msg:
+              "No Online Nearest Driver Available. Search Again after some time, Restarting App Now.");
 
       //dealy kr re restart 3 sec
       // Future.delayed(const Duration(milliseconds: 4000), ()
@@ -360,7 +402,7 @@ class _ScheduleRideState extends State<ScheduleRide> {
       //   // SystemNavigator.pop();//refresh our app
       // });
 
-      return;
+      return false;
     }
 
     //active driver available
@@ -420,6 +462,128 @@ class _ScheduleRideState extends State<ScheduleRide> {
         }
       });
     }
+  }
+  var takeEffect=false;
+
+  listner(){
+    var d = Provider.of<ScheduleRideProvider>(context, listen: false)
+        .onValue();
+
+    tripRideRequestInfoStreamSubscription =
+        d.listen((eventSnap) async {
+
+
+          if (eventSnap.snapshot.value == null) {
+            return;
+          }
+          (eventSnap.snapshot.value as Map).forEach((key, value) async {
+            final currentMessage = Map<String, dynamic>.from(value);
+            if(currentMessage["rideType"]=="scheduleRide" && currentMessage["status"]!="ended")
+            {
+              print("i am in listner--->> ${currentMessage["status"]}");
+              if (currentMessage["car_details"] != null) {
+                setState(() {
+                  driverCarDetails =
+                      currentMessage["car_details"].toString();
+                });
+              }
+
+              if (currentMessage["driverPhone"] != null) {
+                setState(() {
+                  driverPhone =
+                      currentMessage["driverPhone"].toString();
+                });
+              }
+
+              if (currentMessage["driverName"] != null) {
+                setState(() {
+                  driverName =
+                      currentMessage["driverName"].toString();
+                });
+              }
+
+              if (currentMessage["status"] != null) {
+                userRideRequestStatus =
+                    currentMessage["status"].toString();
+              }
+
+              if (currentMessage["driverLocation"] != null) {
+                double driverCurrentPositionLat = double.parse(
+                    currentMessage["driverLocation"]["latitude"]
+                        .toString());
+                double driverCurrentPositionLng = double.parse(
+                    currentMessage["driverLocation"]["longitude"]
+                        .toString());
+
+                LatLng driverCurrentPositionLatLng =
+                LatLng(driverCurrentPositionLat, driverCurrentPositionLng);
+
+                //status = accepted
+                if (userRideRequestStatus == "accepted") {
+                  // DateTime dt = DateTime.parse('${currentMessage["scheduleDate"]} ${(eventSnap.snapshot.value as Map)["scheduleTime"]}:00');
+                  // DateTime dt2 = dt.subtract(Duration(minutes: 5));
+                }
+                if (userRideRequestStatus == "started") {
+                  takeEffect=true;
+                  showUIForAssignedDriverInfo();
+                  updateArrivalTimeToUserPickupLocation(driverCurrentPositionLatLng);
+                  setState(() {
+
+                  });
+                }
+                //status = arrived
+                if (userRideRequestStatus == "arrived") {
+                  setState(() {
+                    driverRideStatus = "Driver has Arrived";
+                  });
+                }
+
+                //status = ontrip
+                if (userRideRequestStatus == "ontrip") {
+                  updateReachingTimeToUserDropOffLocation(driverCurrentPositionLatLng);
+                }
+                //status = ended
+                if (userRideRequestStatus == "ended") {
+                  if ((eventSnap.snapshot.value as Map)["fareAmount"] != null) {
+                    double fareAmount = double.parse(
+                        (eventSnap.snapshot.value as Map)["fareAmount"].toString());
+
+                    var response = await showDialog(
+                      context: context,
+                      barrierDismissible: false,
+                      builder: (BuildContext c) => PayFareAmountDialog(
+                        fareAmount: fareAmount,
+                      ),
+                    );
+
+                    if (response == "cashPayed") {
+                      //user can rate the driver now
+                      if ((eventSnap.snapshot.value as Map)["driverId"] != null) {
+                        String assignedDriverId =
+                        (eventSnap.snapshot.value as Map)["driverId"].toString();
+
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (c) => RateDriverScreen(
+                                  assignedDriverId: assignedDriverId,
+                                )));
+
+                        referenceRideRequest!.onDisconnect();
+                        tripRideRequestInfoStreamSubscription!.cancel();
+                      }
+                    }
+                  }
+                }
+              }
+
+
+
+            }
+
+          });
+
+        });
   }
 
   showUIForAssignedDriverInfo() {
@@ -490,10 +654,24 @@ class _ScheduleRideState extends State<ScheduleRide> {
 
   @override
   Widget build(BuildContext context) {
+
+    // print("here is data ${scheduleRide.scheduleRideList[0]}");
     createActiveNearByDriverIconMarker();
     return Scaffold(
+      appBar: AppBar(
+        elevation: 0,
+        backgroundColor: AppColors.primaryColor,
+        title: Text("Schedule Ride"),
+      ),
       body: Consumer<ScheduleRideProvider>(
-        builder: (context, scheduleRide, value) => Stack(children: [
+        builder: (context, scheduleRide, value) {
+          print("schedule==>> ${scheduleRide.scheduleRideList}");
+        return scheduleRide.wait?const Center(child:CircularProgressIndicator()):
+        !scheduleRide.wait && scheduleRide.scheduleRideList.length>0 && takeEffect==false?ScheduledRidesTabPage(
+            scheduleTrip: scheduleRide.scheduleRideList[0],
+
+            chat: true):
+        Stack(children: [
           GoogleMap(
             padding: EdgeInsets.only(bottom: bottomPaddingOfMap),
             mapType: MapType.normal,
@@ -518,27 +696,7 @@ class _ScheduleRideState extends State<ScheduleRide> {
               locateUserPosition();
             },
           ),
-
-          Positioned(
-            top: 40,
-            left: 14,
-            child: GestureDetector(
-              onTap: () {
-                //restart-refresh-minimize app progmatically
-                // SystemNavigator.pop();
-                Navigator.pop(context);
-              },
-              child: const CircleAvatar(
-                backgroundColor: Colors.grey,
-                child: Icon(
-                  Icons.close,
-                  color: Colors.black54,
-                ),
-              ),
-            ),
-          ),
-
-          //ui for searching location
+          /// ui for searching location
           Positioned(
             bottom: 0,
             left: 0,
@@ -549,7 +707,7 @@ class _ScheduleRideState extends State<ScheduleRide> {
               child: Container(
                 height: searchLocationContainerHeight,
                 decoration: const BoxDecoration(
-                  color: Colors.black87,
+                  color: AppColors.primaryColor,
                   borderRadius: BorderRadius.only(
                     topRight: Radius.circular(20),
                     topLeft: Radius.circular(20),
@@ -566,7 +724,7 @@ class _ScheduleRideState extends State<ScheduleRide> {
                         children: [
                           const Icon(
                             Icons.add_location_alt_outlined,
-                            color: Colors.grey,
+                            color: AppColors.whiteColor,
                           ),
                           const SizedBox(
                             width: 12.0,
@@ -577,7 +735,7 @@ class _ScheduleRideState extends State<ScheduleRide> {
                               const Text(
                                 "From",
                                 style:
-                                    TextStyle(color: Colors.grey, fontSize: 12),
+                                    TextStyle(color: AppColors.whiteColor, fontSize: 12),
                               ),
                               Text(
                                 Provider.of<AppInfo>(context)
@@ -586,7 +744,7 @@ class _ScheduleRideState extends State<ScheduleRide> {
                                     ? "${(Provider.of<AppInfo>(context).userPickUpLocation!.locationName!).substring(0, 24)}..."
                                     : "not getting address",
                                 style: const TextStyle(
-                                    color: Colors.grey, fontSize: 14),
+                                    color: AppColors.whiteColor, fontSize: 14),
                               ),
                             ],
                           ),
@@ -596,7 +754,7 @@ class _ScheduleRideState extends State<ScheduleRide> {
                       const Divider(
                         height: 1,
                         thickness: 1,
-                        color: Colors.grey,
+                        color:AppColors.whiteColor,
                       ),
                       const SizedBox(height: 16.0),
                       //to
@@ -628,7 +786,7 @@ class _ScheduleRideState extends State<ScheduleRide> {
                                 const Text(
                                   "To",
                                   style: TextStyle(
-                                      color: Colors.grey, fontSize: 12),
+                                      color: AppColors.whiteColor, fontSize: 12),
                                 ),
                                 Text(
                                   Provider.of<AppInfo>(context)
@@ -639,7 +797,7 @@ class _ScheduleRideState extends State<ScheduleRide> {
                                           .locationName!
                                       : "Where to go?",
                                   style: const TextStyle(
-                                      color: Colors.grey, fontSize: 14),
+                                      color: AppColors.whiteColor, fontSize: 14),
                                 ),
                               ],
                             ),
@@ -653,21 +811,24 @@ class _ScheduleRideState extends State<ScheduleRide> {
                         color: Colors.grey,
                       ),
                       const SizedBox(height: 16.0),
+                      /// pick data and time here
                       Row(
                         children: [
                           const Text(
                             "Pick Time",
-                            style: TextStyle(color: Colors.grey, fontSize: 12),
+                            style: TextStyle(color: AppColors.whiteColor, fontSize: 12),
                           ),
                           const SizedBox(
                             width: 12.0,
                           ),
+
+                          /// pick time is here
                           GestureDetector(
                             child: time != null
                                 ? Text(
                                     '${time?.hour} ${time?.minute}',
                                     style: TextStyle(
-                                        color: AppColors().whiteColor),
+                                        color: AppColors.whiteColor),
                                   )
                                 : Icon(
                                     Icons.time_to_leave,
@@ -680,21 +841,23 @@ class _ScheduleRideState extends State<ScheduleRide> {
                           const Spacer(),
                           const Text(
                             "Pick Date",
-                            style: TextStyle(color: Colors.grey, fontSize: 12),
+                            style: TextStyle(color: AppColors.whiteColor, fontSize: 12),
                           ),
                           const SizedBox(
                             width: 12.0,
                           ),
+
+                          /// pick date
                           GestureDetector(
                             child: date != null
                                 ? Text(
                                     '${date!}'.substring(0, 10),
-                                    style: TextStyle(
-                                        color: AppColors().whiteColor),
+                                    style: const TextStyle(
+                                        color: AppColors.whiteColor),
                                   )
-                                : Icon(
+                                : const Icon(
                                     Icons.time_to_leave,
-                                    color: Colors.white,
+                                    color:AppColors.whiteColor,
                                   ),
                             onTap: () {
                               pickDate();
@@ -706,7 +869,7 @@ class _ScheduleRideState extends State<ScheduleRide> {
                       const Divider(
                         height: 1,
                         thickness: 1,
-                        color: Colors.grey,
+                        color: AppColors.whiteColor,
                       ),
 
                       const SizedBox(height: 16.0),
@@ -715,23 +878,38 @@ class _ScheduleRideState extends State<ScheduleRide> {
                         mainAxisSize: MainAxisSize.min,
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          ElevatedButton(
-                            onPressed: () {
-                              if (Provider.of<AppInfo>(context, listen: false)
-                                      .userDropOffLocation !=
-                                  null) {
-                                saveRideRequestInformation();
-                              } else {
-                                Fluttertoast.showToast(
-                                    msg: "Please select destination location");
-                              }
-                            },
-                            style: ElevatedButton.styleFrom(
-                                primary: primaryGreen,
-                                textStyle: const TextStyle(
-                                    fontSize: 16, fontWeight: FontWeight.bold)),
-                            child: const Text(
-                              "Schedule Ride",
+                          Container(
+                            height:50,
+                            width: 200,
+                            child: ElevatedButton(
+                              onPressed: () {
+                                if (Provider.of<AppInfo>(context, listen: false)
+                                        .userDropOffLocation !=
+                                    null) {
+                                  saveRideRequestInformation();
+                                } else {
+                                  Fluttertoast.showToast(
+                                      msg: "Please select destination location");
+                                }
+                              },
+                              style: ElevatedButton.styleFrom(
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10)
+                                ),
+                                  primary: AppColors.whiteColor,
+                                  textStyle: const TextStyle(
+                                      fontSize: 16, fontWeight: FontWeight.bold,
+                                  color: AppColors.primaryColor)),
+                              child: const Center(
+                                child: Text(
+                                  "Schedule Ride",
+                                  style: TextStyle(
+                                    color: AppColors.primaryColor,
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: 15
+                                  ),
+                                ),
+                              ),
                             ),
                           ),
                         ],
@@ -743,7 +921,7 @@ class _ScheduleRideState extends State<ScheduleRide> {
             ),
           ),
 
-          //ui for waiting response from driver
+          ///ui for waiting response from driver
           Positioned(
             bottom: 0,
             left: 0,
@@ -751,7 +929,7 @@ class _ScheduleRideState extends State<ScheduleRide> {
             child: Container(
               height: waitingResponseFromDriverContainerHeight,
               decoration: const BoxDecoration(
-                color: Colors.black87,
+                color:AppColors.primaryColor,
                 borderRadius: BorderRadius.only(
                   topRight: Radius.circular(20),
                   topLeft: Radius.circular(20),
@@ -787,7 +965,7 @@ class _ScheduleRideState extends State<ScheduleRide> {
             ),
           ),
 
-          //ui for displaying assigned driver information
+          ///ui for displaying assigned driver information
           Positioned(
               bottom: 0,
               left: 0,
@@ -795,7 +973,7 @@ class _ScheduleRideState extends State<ScheduleRide> {
               child: Container(
                 height: assignedDriverInfoContainerHeight,
                 decoration: const BoxDecoration(
-                  color: Colors.black87,
+                  color: AppColors.primaryColor,
                   borderRadius: BorderRadius.only(
                     topRight: Radius.circular(20),
                     topLeft: Radius.circular(20),
@@ -816,7 +994,7 @@ class _ScheduleRideState extends State<ScheduleRide> {
                           style: const TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.bold,
-                            color: Colors.white54,
+                            color: AppColors.whiteColor,
                           ),
                         ),
                       ),
@@ -828,7 +1006,7 @@ class _ScheduleRideState extends State<ScheduleRide> {
                       const Divider(
                         height: 2,
                         thickness: 2,
-                        color: Colors.white54,
+                        color: AppColors.whiteColor,
                       ),
 
                       const SizedBox(
@@ -841,7 +1019,7 @@ class _ScheduleRideState extends State<ScheduleRide> {
                         textAlign: TextAlign.center,
                         style: const TextStyle(
                           fontSize: 16,
-                          color: Colors.white54,
+                          color:AppColors.whiteColor,
                         ),
                       ),
 
@@ -856,7 +1034,7 @@ class _ScheduleRideState extends State<ScheduleRide> {
                         style: const TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.bold,
-                          color: Colors.white54,
+                          color: AppColors.whiteColor,
                         ),
                       ),
 
@@ -867,29 +1045,38 @@ class _ScheduleRideState extends State<ScheduleRide> {
                       const Divider(
                         height: 2,
                         thickness: 2,
-                        color: Colors.white54,
+                        color: AppColors.whiteColor,
                       ),
 
                       const SizedBox(
                         height: 20.0,
                       ),
-                      //call driver button
+                      /// call driver button
                       Center(
-                        child: ElevatedButton.icon(
-                          onPressed: () {},
-                          style: ElevatedButton.styleFrom(
-                            primary: Colors.teal,
-                          ),
-                          icon: const Icon(
-                            Icons.phone_android,
-                            color: Colors.black54,
-                            size: 22,
-                          ),
-                          label: const Text(
-                            "Call Driver",
-                            style: TextStyle(
-                              color: Colors.black54,
-                              fontWeight: FontWeight.bold,
+                        child: Container(
+                          height: 50,
+                          width: 150,
+                          child: ElevatedButton.icon(
+                            onPressed: () {},
+                            style: ElevatedButton.styleFrom(
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10)
+                              ),
+                              primary: AppColors.whiteColor,
+                            ),
+                            icon: const Icon(
+                              Icons.phone_android,
+                              color:AppColors.primaryColor,
+                              size: 22,
+                            ),
+                            label: const Center(
+                              child: Text(
+                                "Call Driver",
+                                style: TextStyle(
+                                  color: AppColors.primaryColor,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
                             ),
                           ),
                         ),
@@ -899,28 +1086,8 @@ class _ScheduleRideState extends State<ScheduleRide> {
                 ),
               )),
 
-          scheduleRide.scheduleRideList != null &&
-                  scheduleRide.scheduleRideList.isNotEmpty
-              ? Container(
-                  height: getHeight(context),
-                  color: AppColors().blackColor.withOpacity(0.3),
-                  child: Container(
-                    color: Colors.white,
-                    height: getHeight(context) * 0.7,
-                    margin: EdgeInsets.symmetric(
-                        vertical: getHeight(context) * 0.30,
-                        horizontal: getWidth(context) * 0.10),
-                    child: Stack(
-                      alignment: Alignment.center,
-                      children: [
-                        HistoryDesignUIWidget(tripsHistoryModel: scheduleRide.scheduleRideList[0],chat: true,),
-                        const Text("RIDE NOT ENDED",style: TextStyle(color: Colors.red,fontSize: 24),),
-                      ],
-                    ),
-                  ),
-                )
-              : SizedBox(),
-        ]),
+        ]);
+        }
       ),
     );
   }

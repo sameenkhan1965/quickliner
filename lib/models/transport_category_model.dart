@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class TransportCategoryModel{
   String transportName;
   String transportImage;
-  Route route;
+  var route;
 
   TransportCategoryModel({required this.transportImage,required this.transportName,required this.route});
 }

@@ -9,9 +9,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:users_app/splashScreen/splash_screen3.dart';
 import 'package:users_app/widgets/ui/admin/dashboard/admin_dashboard.dart';
 
-
-class MySplashScreen2 extends StatefulWidget
-{
+class MySplashScreen2 extends StatefulWidget {
   final String userType;
   MySplashScreen2({required this.userType, Key? key}) : super(key: key);
 
@@ -19,21 +17,20 @@ class MySplashScreen2 extends StatefulWidget
   _MySplashScreen2State createState() => _MySplashScreen2State();
 }
 
+class _MySplashScreen2State extends State<MySplashScreen2> {
+  startTimer() {
+    print("::::: " + widget.userType);
+    fAuth.currentUser != null
+        ? AssistantMethods.readCurrentOnlineUserInfo()
+        : null;
 
-
-class _MySplashScreen2State extends State<MySplashScreen2>
-{
-
-  startTimer()
-  {
-    print("::::: "+widget.userType);
-    fAuth.currentUser != null ? AssistantMethods.readCurrentOnlineUserInfo() : null;
-
-    Timer(const Duration(seconds: 5), () async
-    {
-
-        Navigator.push(context, MaterialPageRoute(builder: (c)=> MySplashScreen3(userType: userModelCurrentInfo?.userType??"",)));
-
+    Timer(const Duration(seconds: 5), () async {
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (c) => MySplashScreen3(
+                    userType: userModelCurrentInfo?.userType ?? "",
+                  )));
     });
   }
 
@@ -45,22 +42,22 @@ class _MySplashScreen2State extends State<MySplashScreen2>
   }
 
   @override
-  Widget build(BuildContext context)
-  {
+  Widget build(BuildContext context) {
     return Material(
       child: Container(
         color: primaryGreen,
         child: Center(
-        child:
-        Container(color: Colors.white,
+          child: Container(
+            color: Colors.white,
             alignment: Alignment.center,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-
-                SizedBox(height: 270,width:260,
-                  child:  Image.asset("images/earn.png"),
+                SizedBox(
+                  height: 270,
+                  width: 260,
+                  child: Image.asset("images/earn.png"),
                 ),
                 const DefaultTextStyle(
                     style: TextStyle(
@@ -70,10 +67,7 @@ class _MySplashScreen2State extends State<MySplashScreen2>
                       color: Color(0xFF121212),
                       fontFamily: "myFont1",
                     ),
-                    child: Text(
-                        "Earn More"
-                    )
-                ),
+                    child: Text("Earn More")),
                 Container(
                   padding: EdgeInsets.symmetric(horizontal: 24, vertical: 8),
                   child: const DefaultTextStyle(
@@ -85,17 +79,14 @@ class _MySplashScreen2State extends State<MySplashScreen2>
                         fontFamily: "myFont2",
                       ),
                       textAlign: TextAlign.center,
-                      child: Text(
-                          "Want to earn more??"
-                              "\n Get notified with multiple ride requests., "
-                              "including permanent contractual rides.  "
-                      )
-
-                  ),
+                      child: Text("Want to earn more??"
+                          "\n Get notified with multiple ride requests., "
+                          "including permanent contractual rides.  ")),
                 ),
                 GestureDetector(
-                  onTap: (){
-                    Navigator.push(context, MaterialPageRoute(builder: (context)=>LoginScreen()));
+                  onTap: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => LoginScreen()));
                   },
                   child: Container(
                     height: 120,
@@ -107,9 +98,10 @@ class _MySplashScreen2State extends State<MySplashScreen2>
                           children: [
                             Container(
                               padding: EdgeInsets.all(10.0),
-                              height:50,
+                              height: 50,
                               width: 260,
-                              decoration: BoxDecoration(color:primaryGreen,
+                              decoration: BoxDecoration(
+                                color: primaryGreen,
                                 borderRadius: BorderRadius.circular(20),
                                 boxShadow: shadowList,
                               ),
@@ -117,23 +109,19 @@ class _MySplashScreen2State extends State<MySplashScreen2>
                               child: Text(
                                 " Skip",
                                 textAlign: TextAlign.center,
-                                style: TextStyle(fontSize: 20,
-                                    color: Colors.white
-                                ),
+                                style: TextStyle(
+                                    fontSize: 20, color: Colors.white),
                               ),
                             ),
                           ],
                         ),
                       ],
-
                     ),
                   ),
                 )
               ],
             ),
-
           ),
-
         ),
       ),
     );

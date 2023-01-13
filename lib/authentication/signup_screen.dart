@@ -71,22 +71,22 @@ class _SignUpScreenState extends State<SignUpScreen> {
     }
     else if(nameTextEditingController.text.length < 4)
     {
-          showDialog(context: context,
-          builder: (context) => AlertDialog(
+      showDialog(context: context,
+        builder: (context) => AlertDialog(
           content: Text(
-          'Name must be atleast of 4 characters.'),
+              'Name must be atleast of 4 characters.'),
           backgroundColor: Colors.white,
           shape: RoundedRectangleBorder(
-          borderRadius:
-          BorderRadius.circular(30),
+            borderRadius:
+            BorderRadius.circular(30),
           ),
           actions: [
-          TextButton(
-          onPressed: () =>Navigator.pop(context) ,
-          child: Text('OK'))
+            TextButton(
+                onPressed: () =>Navigator.pop(context) ,
+                child: Text('OK'))
           ],
-          ),
-    );
+        ),
+      );
     }
     /* if(nameTextEditingController!=RegExp(r"[A-Za-z]"))
     {
@@ -222,7 +222,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
       );
       //  Fluttertoast.showToast(msg: "Phone Number is required.");
     }
-   /* else if(passwordTextEditingController != RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$'))
+    /* else if(passwordTextEditingController != RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$'))
     {
       showDialog(context: context,
         builder: (context) => AlertDialog
@@ -243,7 +243,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
         ),
       );
     */ //}
-     //}
+    //}
     else
     {
       saveUserInfoNow();
@@ -330,7 +330,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
           ],
         ),
       );
-     // Navigator.pop(context);
+      // Navigator.pop(context);
       //Fluttertoast.showToast(msg: "Account has not been Created.");
     }
   }

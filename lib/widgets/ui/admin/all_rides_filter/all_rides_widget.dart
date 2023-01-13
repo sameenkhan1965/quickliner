@@ -112,13 +112,7 @@ class _AllRidesWidgetState extends State<AllRidesWidget>
         Navigator.push(context, MaterialPageRoute(builder: (context)=>RideDetail(tripsHistoryModel: tripsHistoryModel,)));
       },
       child: Container(
-        foregroundDecoration: const BoxDecoration(
-          image: DecorationImage(
-            opacity: 0.2,
-            image:  AssetImage("images/logo.png"),
-
-          ),
-        ),
+        
         margin: const EdgeInsets.symmetric(
           vertical: 5.0,
           horizontal: 2.0,
@@ -127,7 +121,7 @@ class _AllRidesWidgetState extends State<AllRidesWidget>
         width: double.infinity,
         decoration: BoxDecoration(
           border: Border.all(
-            color: AppColors().primaryColor,
+            color: AppColors.primaryColor,
           ),
           borderRadius: BorderRadius.circular(10.0),
           // color: tripsHistoryModel.rideTyp,
@@ -150,7 +144,7 @@ class _AllRidesWidgetState extends State<AllRidesWidget>
 
       padding: const EdgeInsets.symmetric(vertical: 5.0, horizontal: 10.0),
       decoration: BoxDecoration(
-        color: AppColors().primaryColor,
+        color: AppColors.primaryColor,
         borderRadius: BorderRadius.circular(10.0),
       ),
       child: Text(title),

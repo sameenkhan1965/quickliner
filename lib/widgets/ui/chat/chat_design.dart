@@ -1,9 +1,8 @@
-import 'package:firebase_core/firebase_core.dart';
+
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:users_app/global/colors.dart';
 import 'package:users_app/global/global.dart';
-import 'package:users_app/mainScreens/trips_history_screen.dart';
 import 'package:users_app/models/trips_history_model.dart';
 
 class ChatDesign extends StatefulWidget {
@@ -42,7 +41,7 @@ class _ChatDesignState extends State<ChatDesign> {
                   child: TextField(
                     decoration:InputDecoration(
                         filled: true,
-                        fillColor: AppColors().blackColor.withOpacity(0.2),
+                        fillColor: AppColors.blackColor.withOpacity(0.2),
                         border: InputBorder.none,
                         suffixIcon: IconButton(
                           icon: Icon(Icons.send),

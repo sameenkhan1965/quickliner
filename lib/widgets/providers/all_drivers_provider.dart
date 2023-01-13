@@ -19,7 +19,6 @@ class AllDriversProvider extends ChangeNotifier {
         keys.forEach((key, value) {
           print("value");
           print(value);
-
           DriverData driverInfo = DriverData.fromSnapshot(value);
           print("driverInfo");
           print(driverInfo);

@@ -263,10 +263,39 @@ class _BroadcastFareState extends State<BroadcastFare> {
                                                           ),
                                                       ),
                                                     ),
-                                                    IconButton(
+                                                   
+                                                  ],
+                                                ),
+                                              ),
+                                            ),
+                                              SizedBox(height: 20,),
+                                            
+                                             ElevatedButton(
+                                              child: Text("Add"),
                                                       
                                                       onPressed: (){
-                                                        
+                                                         if( petrolPrice.text.isEmpty&& moneyPerKM.text.isEmpty&&noofSeatsController.text.isEmpty){
+                                          showDialog(context: context,
+        builder: (context) => AlertDialog
+          (
+          title: Text('Required'),
+          content: Text(
+              'Fields can not be empty.'
+          ),
+          backgroundColor: Colors.white,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(30),
+          ),
+          actions: [
+            TextButton(
+
+                onPressed: () =>Navigator.pop(context) ,
+                child: Text('OK'))
+          ],
+        ),
+
+      );}
+      else{
                                                         distance= int.parse(distancePerkm.text);
                                                         petrol= int.parse(petrolPrice.text);
                                                         money=int.parse(moneyPerKM.text);
@@ -295,23 +324,18 @@ User? firebaseUser;
       reference.set(fareMap);
          setState(() {
                                
-                             }); 
+                             });} 
                                                              // Navigator.push(context,
                                                       //  MaterialPageRoute(builder: ((context) => 
                                                       //  BroadcastFare())));
 
-                                                    }, icon: Icon(Icons.send))
+                                                    }, )
                                                    
-                                                    
-                                                  ],
-                                                ),
-                                              ),
-                                            ),
-                                              SizedBox(height: 20,),
+                                                    ,
                                             Container(
          
-            width: MediaQuery.of(context).size.width * 0.35,
-          height: MediaQuery.of(context).size.height * 0.18,
+            width: MediaQuery.of(context).size.width * 0.95,
+          height: MediaQuery.of(context).size.height * 0.08,
         decoration:
              BoxDecoration(color: Colors.teal, borderRadius: BorderRadius.circular(35)),
           

@@ -1,4 +1,3 @@
-import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:users_app/global/global.dart';
@@ -10,10 +9,6 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
-
-  bool isEdit=false;
-  TextEditingController phoneController=TextEditingController();
-  TextEditingController emailController=TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,7 +19,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
           children: [
             //name
             Text(
-              userModelCurrentInfo!.name!,
+              userModelCurrentInfo?.name! ?? "Admin",
               style: const TextStyle(
                 fontSize: 50.0,
                 color: Colors.white,
@@ -47,34 +42,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
             ),
 
             //phone
-            isEdit==false? InfoDesignUIWidget(
-              textInfo: userModelCurrentInfo!.phone!,
+            InfoDesignUIWidget(
+              textInfo: userModelCurrentInfo?.phone! ?? "",
               iconData: Icons.phone_iphone,
-            ):Card(
-              color: Colors.white54,
-      margin: const EdgeInsets.symmetric(vertical: 12, horizontal: 24),
-              child: TextFormField(
-                controller: phoneController,
-                decoration: InputDecoration(
-                  hintText: "Phone Number",
-                  border: InputBorder.none,focusedBorder: InputBorder.none
-                ),
-              )),
+            ),
 
             //email
-           isEdit==false? InfoDesignUIWidget(
-              textInfo: userModelCurrentInfo!.email!,
+            InfoDesignUIWidget(
+              textInfo: userModelCurrentInfo?.email! ?? "",
               iconData: Icons.email,
-            ):Card(
-              color: Colors.white54,
-      margin: const EdgeInsets.symmetric(vertical: 12, horizontal: 24),
-              child: TextFormField(
-                  controller: emailController,
-                  decoration: InputDecoration(
-                    hintText: "Email",
-                    border: InputBorder.none,focusedBorder: InputBorder.none
-                  ),
-                ),
             ),
 
             const SizedBox(
@@ -84,43 +60,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
             ElevatedButton(
               onPressed: () {
                 // SystemNavigator.pop();
-                // Navigator.pop(context);
-                setState(() {
-                  isEdit = true;
-                });
+                Navigator.pop(context);
               },
               style: ElevatedButton.styleFrom(
                 primary: Colors.white54,
               ),
               child: const Text(
-                "Edit",
-                style: TextStyle(color: Colors.white),
-              ),
-            ),
-            ElevatedButton(
-              onPressed: () async{
-                // SystemNavigator.pop();
-                // Navigator.pop(context);
-                // setState(() {
-                //   isEdit = true;
-                // });
-
-                DatabaseReference ref = FirebaseDatabase.instance.ref("users/0VjuccLQB6R50vy0DhjVPK7Pi0w1");
-                await ref.update({
-                "phone": phoneController.text,
-                "email":emailController.text
-
-                });
-
-                setState(() {
-                  isEdit=false;
-                });
-              },
-              style: ElevatedButton.styleFrom(
-                primary: Colors.white54,
-              ),
-              child: const Text(
-                "Save",
+                "Close",
                 style: TextStyle(color: Colors.white),
               ),
             )

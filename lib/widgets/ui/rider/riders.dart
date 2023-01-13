@@ -121,7 +121,7 @@ UserModel? userModelCurrentInfo;
             const EdgeInsets.only(left: 10, right: 10, top: 15, bottom: 15),
         decoration: BoxDecoration(
           color:  usertype == "admin"
-              ? AppColors().primaryColor
+              ? AppColors.primaryColor
               : usertype=="customer"?Colors.amberAccent:Colors.grey,
           boxShadow: shadowList,
           borderRadius: BorderRadius.circular(20),

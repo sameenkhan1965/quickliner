@@ -121,11 +121,11 @@ class _LoginScreenState extends State<LoginScreen> {
         });
 
     final User? firebaseUser = (await fAuth
-            .signInWithEmailAndPassword(
+        .signInWithEmailAndPassword(
       email: emailTextEditingController.text.trim(),
       password: passwordTextEditingController.text.trim(),
     )
-            .catchError((msg) {
+        .catchError((msg) {
       Navigator.pop(context);
       showDialog(context: context,
         builder: (context) => AlertDialog
@@ -145,13 +145,13 @@ class _LoginScreenState extends State<LoginScreen> {
           ],
         ),
       );
-   //   Fluttertoast.showToast(msg: "Error: " + msg.toString());
+      //   Fluttertoast.showToast(msg: "Error: " + msg.toString());
     }))
         .user;
 
     if (firebaseUser != null) {
       DatabaseReference driversRef =
-          FirebaseDatabase.instance.ref().child("users");
+      FirebaseDatabase.instance.ref().child("users");
 
       driversRef.child(firebaseUser.uid).once().then((driverKey) {
         final snap = driverKey.snapshot;
@@ -238,7 +238,7 @@ class _LoginScreenState extends State<LoginScreen> {
               const SizedBox(
                 height: 30,
               ), //Padding(
-            //    padding: const EdgeInsets.all(20.0),
+              //    padding: const EdgeInsets.all(20.0),
               //  child: Image.asset("images/earn.png"),
               // ),
               SizedBox(height: 280,width:260,
@@ -286,30 +286,30 @@ class _LoginScreenState extends State<LoginScreen> {
                 style: const TextStyle(color: Colors.black
                 ),
                 decoration: InputDecoration(
-                  labelText: "Password",
-                  hintText: "Password",
-                  enabledBorder: const UnderlineInputBorder(
-                    borderSide: BorderSide(color: Colors.black),
-                  ),
-                  focusedBorder: const UnderlineInputBorder(
-                    borderSide: BorderSide(color: Colors.black),
-                  ),
-                  hintStyle: const TextStyle(
-                    color: Colors.grey,
-                    fontSize: 10,
-                  ),
-                  labelStyle: const TextStyle(
-                    color: Colors.grey,
-                    fontSize: 14,
-                  ),
-                  suffixIcon:IconButton(
-                    onPressed:(){
-                      setState((){
-                        isSecure=!isSecure;
-                      });
-                    },
-                    icon: Icon(isSecure ? Icons.visibility_off:Icons.visibility_sharp,color: AppColors().whiteColor,),
-                  )
+                    labelText: "Password",
+                    hintText: "Password",
+                    enabledBorder: const UnderlineInputBorder(
+                      borderSide: BorderSide(color: Colors.black),
+                    ),
+                    focusedBorder: const UnderlineInputBorder(
+                      borderSide: BorderSide(color: Colors.black),
+                    ),
+                    hintStyle: const TextStyle(
+                      color: Colors.grey,
+                      fontSize: 10,
+                    ),
+                    labelStyle: const TextStyle(
+                      color: Colors.grey,
+                      fontSize: 14,
+                    ),
+                    suffixIcon:IconButton(
+                      onPressed:(){
+                        setState((){
+                          isSecure=!isSecure;
+                        });
+                      },
+                      icon: Icon(isSecure ? Icons.visibility_off:Icons.visibility_sharp,color: AppColors.whiteColor,),
+                    )
 
                 ),
               ),

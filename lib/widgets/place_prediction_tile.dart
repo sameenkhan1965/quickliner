@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:users_app/assistants/request_assistant.dart';
+import 'package:users_app/global/colors.dart';
 import 'package:users_app/global/map_key.dart';
 import 'package:users_app/infoHandler/app_info.dart';
 import 'package:users_app/models/directions.dart';
@@ -58,44 +59,51 @@ class PlacePredictionTileDesign extends StatelessWidget
         getPlaceDirectionDetails(predictedPlaces!.place_id, context);
       },
       style: ElevatedButton.styleFrom(
-        primary: Colors.white24,
+        primary: AppColors.whiteColor,
       ),
-      child: Padding(
-        padding: const EdgeInsets.all(4.0),
-        child: Row(
-          children: [
-            const Icon(
-              Icons.add_location,
-              color: Colors.grey,
-            ),
-            const SizedBox(width: 14.0,),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const SizedBox(height: 8.0,),
-                  Text(
-                    predictedPlaces!.main_text!,
-                    overflow: TextOverflow.ellipsis,
-                    style: const TextStyle(
-                      fontSize: 16.0,
-                      color: Colors.white54,
-                    ),
-                  ),
-                  const SizedBox(height: 2.0,),
-                  Text(
-                    predictedPlaces!.secondary_text!,
-                    overflow: TextOverflow.ellipsis,
-                    style: const TextStyle(
-                      fontSize: 12.0,
-                      color: Colors.white54,
-                    ),
-                  ),
-                  const SizedBox(height: 8.0,),
-                ],
+      child: Card(
+        margin: EdgeInsets.all(10),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10)
+        ),
+        elevation: 4,
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Row(
+            children: [
+              const Icon(
+                Icons.add_location,
+                color: AppColors.blackColor,
               ),
-            ),
-          ],
+              const SizedBox(width: 14.0,),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const SizedBox(height: 8.0,),
+                    Text(
+                      predictedPlaces!.main_text!,
+                      overflow: TextOverflow.ellipsis,
+                      style: const TextStyle(
+                        fontSize: 16.0,
+                        color:AppColors.blackColor,
+                      ),
+                    ),
+                    const SizedBox(height: 2.0,),
+                    Text(
+                      predictedPlaces!.secondary_text!,
+                      overflow: TextOverflow.ellipsis,
+                      style: const TextStyle(
+                        fontSize: 12.0,
+                        color: AppColors.blackColor,
+                      ),
+                    ),
+                    const SizedBox(height: 8.0,),
+                  ],
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
