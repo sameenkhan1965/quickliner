@@ -118,7 +118,7 @@ class _MySplashScreen2State extends State<MySplashScreen2>
                                 " Skip",
                                 textAlign: TextAlign.center,
                                 style: TextStyle(fontSize: 20,
-                                    color: primaryGreen
+                                    color: Colors.white
                                 ),
                               ),
                             ),

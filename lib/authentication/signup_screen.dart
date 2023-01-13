@@ -222,7 +222,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
       );
       //  Fluttertoast.showToast(msg: "Phone Number is required.");
     }
-    else if(passwordTextEditingController != RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$'))
+   /* else if(passwordTextEditingController != RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$'))
     {
       showDialog(context: context,
         builder: (context) => AlertDialog
@@ -242,118 +242,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
           ],
         ),
       );
-    }
-
-   /* else if(passwordTextEditingController != RegExp(r'(?=.*[a-z])'))
-    {
-      showDialog(context: context,
-        builder: (context) => AlertDialog
-          (
-          title: Text('Required'),
-          content: Text(
-              'Password should contain at least one lower case.'
-          ),
-          backgroundColor: Colors.white,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(30),
-          ),
-          actions: [
-            TextButton(
-                onPressed: () =>Navigator.pop(context) ,
-                child: Text('OK'))
-          ],
-        ),
-      );
-    }
-    else if(passwordTextEditingController != RegExp(r'(?=.*?[0-9])'))
-    {
-      showDialog(context: context,
-        builder: (context) => AlertDialog
-          (
-          title: Text('Required'),
-          content: Text(
-              'Password should contain at least one Digit.'
-          ),
-          backgroundColor: Colors.white,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(30),
-          ),
-          actions: [
-            TextButton(
-                onPressed: () =>Navigator.pop(context) ,
-                child: Text('OK'))
-          ],
-        ),
-      );
-    }
-    else if(passwordTextEditingController != RegExp(r'(?=.*?[!@#\$&*~])'))
-    {
-      showDialog(context: context,
-        builder: (context) => AlertDialog
-          (
-          title: Text('Required'),
-          content: Text(
-              'Password should contain at least one Special Character.'
-          ),
-          backgroundColor: Colors.white,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(30),
-          ),
-          actions: [
-            TextButton(
-                onPressed: () =>Navigator.pop(context) ,
-                child: Text('OK'))
-          ],
-        ),
-      );
-    }
-    else if(passwordTextEditingController != RegExp(r'.{8,}'))
-    {
-      showDialog(context: context,
-        builder: (context) => AlertDialog
-          (
-          title: Text('Required'),
-          content: Text(
-              'Password must be at least 8 characters in length.'
-          ),
-          backgroundColor: Colors.white,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(30),
-          ),
-          actions: [
-            TextButton(
-                onPressed: () =>Navigator.pop(context) ,
-                child: Text('OK'))
-          ],
-        ),
-      );
-    }
-   else if(phoneTextEditingController!=RegExp(r'^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$'))
-   {
-     showDialog(context: context,
-       builder: (context) => AlertDialog
-         (
-         content: Text(
-             'Enter numbers only'
-         ),
-         backgroundColor: Colors.white,
-         shape: RoundedRectangleBorder(
-           borderRadius: BorderRadius.circular(30),
-         ),
-         actions: [
-           TextButton(
-               onPressed: () =>Navigator.pop(context) ,
-               child: Text('OK'))
-         ],
-       ),
-     );
-     // Fluttertoast.showToast(msg: "Email address is not Valid.");
-   }
-
-*/
-
-
-
+    */ //}
+     //}
     else
     {
       saveUserInfoNow();
@@ -398,12 +288,49 @@ class _SignUpScreenState extends State<SignUpScreen> {
       currentFirebaseUser = firebaseUser;
 
       Fluttertoast.showToast(msg: "Account has been Created.");
+      showDialog(context: context,
+        builder: (context) => AlertDialog
+          (
+          title: Text('Required'),
+          content: Text(
+              'Account has not been Created.'
+          ),
+          backgroundColor: Colors.white,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(30),
+          ),
+          actions: [
+            TextButton(
+                onPressed: () =>Navigator.pop(context) ,
+                child: Text('OK'))
+          ],
+        ),
+      );
+
       Navigator.push(context, MaterialPageRoute(builder: (c)=> MySplashScreen3(userType: "customer",)));
     }
     else
     {
-      Navigator.pop(context);
-      Fluttertoast.showToast(msg: "Account has not been Created.");
+      showDialog(context: context,
+        builder: (context) => AlertDialog
+          (
+          title: Text('Required'),
+          content: Text(
+              'Account has not been Created.'
+          ),
+          backgroundColor: Colors.white,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(30),
+          ),
+          actions: [
+            TextButton(
+                onPressed: () =>Navigator.pop(context) ,
+                child: Text('OK'))
+          ],
+        ),
+      );
+     // Navigator.pop(context);
+      //Fluttertoast.showToast(msg: "Account has not been Created.");
     }
   }
 
@@ -417,11 +344,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
           child: Column(
             children: [
 
-              const SizedBox(height: 10,),
+              const SizedBox(height: 5,),
 
               Padding(
-                padding: const EdgeInsets.all(20.0),
-                child: Image.asset("images/logo.png"),
+                padding: const EdgeInsets.all(0.0),
+                child: Image.asset("images/Order ride.png"),
               ),
 
               const SizedBox(height: 10,),

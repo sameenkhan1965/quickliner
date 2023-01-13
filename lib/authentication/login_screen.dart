@@ -21,11 +21,91 @@ class _LoginScreenState extends State<LoginScreen> {
 
 
   validateForm() {
-    if (!emailTextEditingController.text.contains("@")) {
-      Fluttertoast.showToast(msg: "Email address is not Valid.");
-    } else if (passwordTextEditingController.text.isEmpty) {
-      Fluttertoast.showToast(msg: "Password is required.");
-    } else {
+    if(emailTextEditingController.text.isEmpty && passwordTextEditingController.text.isEmpty) {
+      showDialog(context: context,
+        builder: (context) => AlertDialog
+          (
+          title: Text('Required'),
+          content: Text(
+              'Fields can not be empty.'
+          ),
+          backgroundColor: Colors.white,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(30),
+          ),
+          actions: [
+            TextButton(
+
+                onPressed: () =>Navigator.pop(context) ,
+                child: Text('OK'))
+          ],
+        ),
+      );
+      //  Fluttertoast.showToast(msg: "Phone Number is required.");
+    }
+    else if(!emailTextEditingController.text.contains("@"))
+    {
+      showDialog(context: context,
+        builder: (context) => AlertDialog
+          (
+          title: Text('Invalid Email'),
+          content: Text(
+              'Enter Valid Email'
+          ),
+          backgroundColor: Colors.white,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(30),
+          ),
+          actions: [
+            TextButton(
+                onPressed: () =>Navigator.pop(context) ,
+                child: Text('OK'))
+
+          ],
+        ),
+      );
+      // Fluttertoast.showToast(msg: "Email address is not Valid.");
+    }
+    else if (passwordTextEditingController.text.isEmpty) {
+      showDialog(context: context,
+        builder: (context) => AlertDialog
+          (
+          content: Text(
+              'Password Cannot be empty'
+          ),
+          backgroundColor: Colors.white,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(30),
+          ),
+          actions: [
+            TextButton(
+                onPressed: () =>Navigator.pop(context) ,
+                child: Text('OK'))
+
+          ],
+        ),
+      );
+    }
+    else if (emailTextEditingController.text.isEmpty) {
+      showDialog(context: context,
+        builder: (context) => AlertDialog
+          (
+          content: Text(
+              'Email Cannot be empty'
+          ),
+          backgroundColor: Colors.white,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(30),
+          ),
+          actions: [
+            TextButton(
+                onPressed: () =>Navigator.pop(context) ,
+                child: Text('OK'))
+
+          ],
+        ),
+      );
+    }else {
       loginUserNow();
     }
   }
@@ -47,7 +127,25 @@ class _LoginScreenState extends State<LoginScreen> {
     )
             .catchError((msg) {
       Navigator.pop(context);
-      Fluttertoast.showToast(msg: "Error: " + msg.toString());
+      showDialog(context: context,
+        builder: (context) => AlertDialog
+          (
+          content: Text(
+              'Incorrect Password'
+          ),
+          backgroundColor: Colors.white,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(30),
+          ),
+          actions: [
+            TextButton(
+                onPressed: () =>Navigator.pop(context) ,
+                child: Text('OK'))
+
+          ],
+        ),
+      );
+   //   Fluttertoast.showToast(msg: "Error: " + msg.toString());
     }))
         .user;
 
@@ -61,11 +159,45 @@ class _LoginScreenState extends State<LoginScreen> {
         print((snap.value as dynamic)["userType"]);
         if (snap.value != null) {
           currentFirebaseUser = firebaseUser;
-          Fluttertoast.showToast(msg: "Login Successful.");
+          showDialog(context: context,
+            builder: (context) => AlertDialog
+              (
+              content: Text(
+                  'Login Successfully'
+              ),
+              backgroundColor: Colors.white,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(30),
+              ),
+              actions: [
+                TextButton(
+                    onPressed: () =>Navigator.pop(context) ,
+                    child: Text('OK'))
+
+              ],
+            ),
+          );
           Navigator.push(context,
               MaterialPageRoute(builder: (c) => MySplashScreen3(userType: (snap.value as dynamic)["userType"],)));
         } else {
-          Fluttertoast.showToast(msg: "No record exist with this email.");
+          showDialog(context: context,
+            builder: (context) => AlertDialog
+              (
+              content: Text(
+                  'No record with this email'
+              ),
+              backgroundColor: Colors.white,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(30),
+              ),
+              actions: [
+                TextButton(
+                    onPressed: () =>Navigator.pop(context) ,
+                    child: Text('OK'))
+
+              ],
+            ),
+          );
           fAuth.signOut();
           Navigator.push(context,
               MaterialPageRoute(builder: (c) => MySplashScreen3(userType: (snap.value as dynamic)["userType"],)));
@@ -73,14 +205,31 @@ class _LoginScreenState extends State<LoginScreen> {
       });
     } else {
       Navigator.pop(context);
-      Fluttertoast.showToast(msg: "Error Occurred during Login.");
+      showDialog(context: context,
+        builder: (context) => AlertDialog
+          (
+          content: Text(
+              'Error occured during login'
+          ),
+          backgroundColor: Colors.white,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(30),
+          ),
+          actions: [
+            TextButton(
+                onPressed: () =>Navigator.pop(context) ,
+                child: Text('OK'))
+
+          ],
+        ),
+      );
     }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: primaryGreen,
+      backgroundColor: Colors.white,
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(20.0),
@@ -88,41 +237,43 @@ class _LoginScreenState extends State<LoginScreen> {
             children: [
               const SizedBox(
                 height: 30,
-              ),
-              Padding(
-                padding: const EdgeInsets.all(20.0),
-                child: Image.asset("images/logo.png"),
+              ), //Padding(
+            //    padding: const EdgeInsets.all(20.0),
+              //  child: Image.asset("images/earn.png"),
+              // ),
+              SizedBox(height: 280,width:260,
+                child:  Image.asset("images/earn.png"),
               ),
               const SizedBox(
-                height: 10,
+                height: 40,
               ),
               const Text(
                 "Login as a User",
                 style: TextStyle(
                   fontSize: 26,
-                  color: Colors.white,
+                  color: Colors.black,
                   fontWeight: FontWeight.bold,
                 ),
               ),
               TextField(
                 controller: emailTextEditingController,
                 keyboardType: TextInputType.emailAddress,
-                style: const TextStyle(color: Colors.white),
+                style: const TextStyle(color: Colors.black),
                 decoration: const InputDecoration(
                   labelText: "Email",
                   hintText: "Email",
                   enabledBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(color: Colors.white),
+                    borderSide: BorderSide(color: Colors.black),
                   ),
                   focusedBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(color: Colors.white),
+                    borderSide: BorderSide(color: Colors.black),
                   ),
                   hintStyle: TextStyle(
-                    color: Colors.white,
+                    color: Colors.grey,
                     fontSize: 10,
                   ),
                   labelStyle: TextStyle(
-                    color: Colors.white,
+                    color: Colors.black,
                     fontSize: 14,
                   ),
                 ),
@@ -132,22 +283,23 @@ class _LoginScreenState extends State<LoginScreen> {
                 keyboardType: TextInputType.text,
                 obscureText: isSecure,
 
-                style: const TextStyle(color: Colors.white),
+                style: const TextStyle(color: Colors.black
+                ),
                 decoration: InputDecoration(
                   labelText: "Password",
                   hintText: "Password",
                   enabledBorder: const UnderlineInputBorder(
-                    borderSide: BorderSide(color: Colors.white),
+                    borderSide: BorderSide(color: Colors.black),
                   ),
                   focusedBorder: const UnderlineInputBorder(
-                    borderSide: BorderSide(color: Colors.white),
+                    borderSide: BorderSide(color: Colors.black),
                   ),
                   hintStyle: const TextStyle(
                     color: Colors.grey,
                     fontSize: 10,
                   ),
                   labelStyle: const TextStyle(
-                    color: Colors.white,
+                    color: Colors.grey,
                     fontSize: 14,
                   ),
                   suffixIcon:IconButton(
@@ -162,27 +314,31 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
               ),
               const SizedBox(
-                height: 20,
+                height: 30,
               ),
-              ElevatedButton(
-                onPressed: () {
-                  validateForm();
-                },
-                style: ElevatedButton.styleFrom(
-                  primary: Colors.white,
-                ),
-                child: const Text(
-                  "Login",
-                  style: TextStyle(
-                    color: Colors.black54,
-                    fontSize: 18,
+
+              SizedBox(
+                width: double.infinity,
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                      primary: Theme.of(context).primaryColor,
+                      elevation: 0,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30))),
+                  child: const Text(
+                    "Login",
+                    style:
+                    TextStyle(color: Colors.white, fontSize: 16),
                   ),
+                  onPressed: () {
+                    validateForm();
+                  },
                 ),
               ),
               TextButton(
                 child: const Text(
                   "Do not have an Account? Register",
-                  style: TextStyle(color: Colors.white),
+                  style: TextStyle(color: Colors.grey),
                 ),
                 onPressed: () {
                   Navigator.push(context,
