@@ -50,7 +50,7 @@ class _MyDrawerState extends State<MyDrawer>
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        widget.name.toString(),
+                        userModelCurrentInfo?.name!??"Admin",
                         style: const TextStyle(
                           fontSize: 16,
                           color: Colors.white,
@@ -59,7 +59,7 @@ class _MyDrawerState extends State<MyDrawer>
                       ),
                       const SizedBox(height: 10,),
                       Text(
-                        widget.email.toString(),
+                         userModelCurrentInfo?.email!??"admin@gmail.com",
                         style: const TextStyle(
                           fontSize: 12,
                           color: Colors.white,

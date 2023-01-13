@@ -112,13 +112,7 @@ class _AllRidesWidgetState extends State<AllRidesWidget>
         Navigator.push(context, MaterialPageRoute(builder: (context)=>RideDetail(tripsHistoryModel: tripsHistoryModel,)));
       },
       child: Container(
-        foregroundDecoration: const BoxDecoration(
-          image: DecorationImage(
-            opacity: 0.2,
-            image:  AssetImage("images/logo.png"),
-
-          ),
-        ),
+        
         margin: const EdgeInsets.symmetric(
           vertical: 5.0,
           horizontal: 2.0,

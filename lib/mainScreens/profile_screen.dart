@@ -24,7 +24,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
           children: [
             //name
             Text(
-              userModelCurrentInfo!.name!,
+              userModelCurrentInfo?.name!??"Admin",
               style: const TextStyle(
                 fontSize: 50.0,
                 color: Colors.white,
@@ -48,7 +48,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
             //phone
             isEdit==false? InfoDesignUIWidget(
-              textInfo: userModelCurrentInfo!.phone!,
+              textInfo: userModelCurrentInfo?.phone!??"",
               iconData: Icons.phone_iphone,
             ):Card(
               color: Colors.white54,
@@ -63,7 +63,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
             //email
            isEdit==false? InfoDesignUIWidget(
-              textInfo: userModelCurrentInfo!.email!,
+              textInfo: userModelCurrentInfo?.email!??"",
               iconData: Icons.email,
             ):Card(
               color: Colors.white54,

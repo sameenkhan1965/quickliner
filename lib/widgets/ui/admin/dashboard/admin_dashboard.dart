@@ -9,6 +9,7 @@ import 'package:users_app/widgets/providers/admin/all_rides_widget_provider.dart
 import 'package:users_app/widgets/providers/all_drivers_provider.dart';
 import 'package:users_app/widgets/ui/admin/Salary/salary.dart';
 import 'package:users_app/widgets/ui/admin/admin_dashboard_driver/admin_dashboard_driver_widget.dart';
+import 'package:users_app/widgets/ui/admin/admin_dashboard_driver/admin_driver.dart';
 import 'package:users_app/widgets/ui/admin/all_rides_filter/all_rides_widget.dart';
 import 'package:users_app/widgets/ui/admin/fare/fares.dart';
 import 'package:users_app/widgets/ui/rider/riders.dart';
