@@ -122,7 +122,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => AdminDashboardDriverWidget(
+                                builder: (context) => DriverDashboard(
                                     allDrivers: drivers.allDrivers)));
                       },
                       child: Container(
