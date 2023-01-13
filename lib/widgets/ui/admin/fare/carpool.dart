@@ -15,7 +15,7 @@ class CarPOOLFare extends StatefulWidget {
 
 class _CarPOOLFareState extends State<CarPOOLFare> {
 
-  var totalPrice, money, petrol, distance,noOfSeats, percent, discount;
+  var totalPrice=0, money, petrol, distance,noOfSeats, percent, discount;
   TextEditingController petrolPrice=TextEditingController();
   TextEditingController moneyPerKM=TextEditingController();
   TextEditingController distancePerkm=TextEditingController();
