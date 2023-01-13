@@ -556,7 +556,7 @@ class _CarPoolWidgetState extends State<CarPoolWidget> {
                     ///  from
                     Row(
                       children: [
-                        const Icon(
+                         Icon(
                           Icons.add_location_alt_outlined,
                           color: AppColors.whiteColor,
                         ),
@@ -566,7 +566,7 @@ class _CarPoolWidgetState extends State<CarPoolWidget> {
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            const Text(
+                             Text(
                               "From",
                               style:
                                   TextStyle(color:AppColors.whiteColor, fontSize: 12),
@@ -577,7 +577,7 @@ class _CarPoolWidgetState extends State<CarPoolWidget> {
                                       null
                                   ? "${(Provider.of<AppInfo>(context).userPickUpLocation!.locationName!).substring(0, 24)}..."
                                   : "not getting address",
-                              style: const TextStyle(
+                              style:  TextStyle(
                                   color: AppColors.whiteColor, fontSize: 14),
                             ),
                           ],
@@ -585,7 +585,7 @@ class _CarPoolWidgetState extends State<CarPoolWidget> {
                       ],
                     ),
                      SizedBox(height: size.height*0.010),
-                    const Divider(
+                     Divider(
                       height: 1,
                       thickness: 1,
                       color: AppColors.whiteColor,
@@ -607,7 +607,7 @@ class _CarPoolWidgetState extends State<CarPoolWidget> {
                       },
                       child: Row(
                         children: [
-                          const Icon(
+                           Icon(
                             Icons.add_location_alt_outlined,
                             color: AppColors.whiteColor,
                           ),
@@ -617,7 +617,7 @@ class _CarPoolWidgetState extends State<CarPoolWidget> {
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              const Text(
+                               Text(
                                 "To",
                                 style:
                                     TextStyle(color:AppColors.whiteColor,fontSize: 12),
@@ -630,7 +630,7 @@ class _CarPoolWidgetState extends State<CarPoolWidget> {
                                         .userDropOffLocation!
                                         .locationName!
                                     : "Where to go?",
-                                style: const TextStyle(
+                                style:  TextStyle(
                                     color: AppColors.whiteColor, fontSize: 14),
                               ),
                             ],
@@ -639,7 +639,7 @@ class _CarPoolWidgetState extends State<CarPoolWidget> {
                       ),
                     ),
                     SizedBox(height: size.height*0.010),
-                    const Divider(
+                     Divider(
                       height: 1,
                       thickness: 1,
                       color: AppColors.whiteColor,
@@ -647,7 +647,7 @@ class _CarPoolWidgetState extends State<CarPoolWidget> {
                     SizedBox(height: size.height*0.010),
                     Row(
                       children: [
-                        const Icon(
+                         Icon(
                           Icons.event_seat,
                           color: AppColors.whiteColor,
                         ),
@@ -657,14 +657,14 @@ class _CarPoolWidgetState extends State<CarPoolWidget> {
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            const Text(
+                             Text(
                               "No of Seats",
                               style:
                                   TextStyle(color:AppColors.whiteColor,fontSize: 12),
                             ),
                             Text(
                               '${noOfSeat}',
-                              style: const TextStyle(
+                              style:  TextStyle(
                                   color: AppColors.whiteColor, fontSize: 14),
                             ),
                           ],
@@ -687,7 +687,7 @@ class _CarPoolWidgetState extends State<CarPoolWidget> {
                       ],
                     ),
 
-                    const Divider(
+                     Divider(
                       height: 1,
                       thickness: 1,
                       color: AppColors.whiteColor,
@@ -750,10 +750,10 @@ class _CarPoolWidgetState extends State<CarPoolWidget> {
                                     borderRadius: BorderRadius.circular(10)
                                 ),
                                 primary: Colors.white,
-                                textStyle:  const TextStyle(
+                                textStyle:   TextStyle(
                                     color: AppColors.primaryColor,
                                     fontSize: 15, fontWeight: FontWeight.bold)),
-                            child: const Text(
+                            child:  Text(
                               "Create Ride ",
                               style:TextStyle(
                                   color: AppColors.primaryColor,

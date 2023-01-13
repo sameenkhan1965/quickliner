@@ -59,7 +59,7 @@ class _PermanentRideMainState extends State<PermanentRideMain> {
                     borderRadius: BorderRadius.circular(10)
                 ),
                 primary: Colors.white,
-                textStyle:  const TextStyle(
+                textStyle:   TextStyle(
                     color: AppColors.primaryColor,
                     fontSize: 15, fontWeight: FontWeight.bold)),
 

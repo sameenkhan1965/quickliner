@@ -558,7 +558,7 @@ class _PermanentWidgetState extends State<PermanentWidget> {
                     ///  from
                     Row(
                       children: [
-                        const Icon(
+                         Icon(
                           Icons.add_location_alt_outlined,
                           color: AppColors.whiteColor,
                         ),
@@ -568,7 +568,7 @@ class _PermanentWidgetState extends State<PermanentWidget> {
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            const Text(
+                             Text(
                               "From",
                               style:
                               TextStyle(color:AppColors.whiteColor, fontSize: 12),
@@ -579,7 +579,7 @@ class _PermanentWidgetState extends State<PermanentWidget> {
                                   null
                                   ? "${(Provider.of<AppInfo>(context).userPickUpLocation!.locationName!).substring(0, 24)}..."
                                   : "not getting address",
-                              style: const TextStyle(
+                              style:  TextStyle(
                                   color: AppColors.whiteColor, fontSize: 14),
                             ),
                           ],
@@ -587,7 +587,7 @@ class _PermanentWidgetState extends State<PermanentWidget> {
                       ],
                     ),
                     SizedBox(height: size.height*0.010),
-                    const Divider(
+                     Divider(
                       height: 1,
                       thickness: 1,
                       color: AppColors.whiteColor,
@@ -609,7 +609,7 @@ class _PermanentWidgetState extends State<PermanentWidget> {
                       },
                       child: Row(
                         children: [
-                          const Icon(
+                           Icon(
                             Icons.add_location_alt_outlined,
                             color: AppColors.whiteColor,
                           ),
@@ -619,7 +619,7 @@ class _PermanentWidgetState extends State<PermanentWidget> {
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              const Text(
+                               Text(
                                 "To",
                                 style:
                                 TextStyle(color:AppColors.whiteColor,fontSize: 12),
@@ -632,7 +632,7 @@ class _PermanentWidgetState extends State<PermanentWidget> {
                                     .userDropOffLocation!
                                     .locationName!
                                     : "Where to go?",
-                                style: const TextStyle(
+                                style:  TextStyle(
                                     color: AppColors.whiteColor, fontSize: 14),
                               ),
                             ],
@@ -641,7 +641,7 @@ class _PermanentWidgetState extends State<PermanentWidget> {
                       ),
                     ),
                     SizedBox(height: size.height*0.010),
-                    const Divider(
+                     Divider(
                       height: 1,
                       thickness: 1,
                       color: AppColors.whiteColor,
@@ -649,24 +649,24 @@ class _PermanentWidgetState extends State<PermanentWidget> {
                     SizedBox(height: size.height*0.010),
                     Row(
                       children: [
-                        const Icon(
+                         Icon(
                           Icons.event_seat,
                           color: AppColors.whiteColor,
                         ),
-                        const SizedBox(
+                         SizedBox(
                           width: 12.0,
                         ),
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            const Text(
+                             Text(
                               "No of Seats",
                               style:
                               TextStyle(color:AppColors.whiteColor,fontSize: 12),
                             ),
                             Text(
                               '${noOfSeat}',
-                              style: const TextStyle(
+                              style:  TextStyle(
                                   color: AppColors.whiteColor, fontSize: 14),
                             ),
                           ],
@@ -689,7 +689,7 @@ class _PermanentWidgetState extends State<PermanentWidget> {
                       ],
                     ),
 
-                    const Divider(
+                     Divider(
                       height: 1,
                       thickness: 1,
                       color: AppColors.whiteColor,

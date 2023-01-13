@@ -6,7 +6,7 @@ import 'package:users_app/authentication/signup_screen.dart';
 import 'package:users_app/configuraton/configuration.dart';
 import 'package:users_app/global/colors.dart';
 import 'package:users_app/global/global.dart';
-import 'package:users_app/splashScreen/splash_screen.dart';
+import 'package:users_app/splashScreen/splash_screen3.dart';
 import 'package:users_app/widgets/progress_dialog.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -17,14 +17,74 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   TextEditingController emailTextEditingController = TextEditingController();
   TextEditingController passwordTextEditingController = TextEditingController();
-  bool isSecure=true;
-
+  bool isSecure = true;
 
   validateForm() {
-    if (!emailTextEditingController.text.contains("@")) {
-      Fluttertoast.showToast(msg: "Email address is not Valid.");
+    if (emailTextEditingController.text.isEmpty &&
+        passwordTextEditingController.text.isEmpty) {
+      showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: Text('Required'),
+          content: Text('Fields can not be empty.'),
+          backgroundColor: Colors.white,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(30),
+          ),
+          actions: [
+            TextButton(
+                onPressed: () => Navigator.pop(context), child: Text('OK'))
+          ],
+        ),
+      );
+      //  Fluttertoast.showToast(msg: "Phone Number is required.");
+    } else if (!emailTextEditingController.text.contains("@")) {
+      showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: Text('Invalid Email'),
+          content: Text('Enter Valid Email'),
+          backgroundColor: Colors.white,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(30),
+          ),
+          actions: [
+            TextButton(
+                onPressed: () => Navigator.pop(context), child: Text('OK'))
+          ],
+        ),
+      );
+      // Fluttertoast.showToast(msg: "Email address is not Valid.");
     } else if (passwordTextEditingController.text.isEmpty) {
-      Fluttertoast.showToast(msg: "Password is required.");
+      showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          content: Text('Password Cannot be empty'),
+          backgroundColor: Colors.white,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(30),
+          ),
+          actions: [
+            TextButton(
+                onPressed: () => Navigator.pop(context), child: Text('OK'))
+          ],
+        ),
+      );
+    } else if (emailTextEditingController.text.isEmpty) {
+      showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          content: Text('Email Cannot be empty'),
+          backgroundColor: Colors.white,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(30),
+          ),
+          actions: [
+            TextButton(
+                onPressed: () => Navigator.pop(context), child: Text('OK'))
+          ],
+        ),
+      );
     } else {
       loginUserNow();
     }
@@ -47,7 +107,21 @@ class _LoginScreenState extends State<LoginScreen> {
     )
             .catchError((msg) {
       Navigator.pop(context);
-      Fluttertoast.showToast(msg: "Error: " + msg.toString());
+      showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          content: Text('Incorrect Password'),
+          backgroundColor: Colors.white,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(30),
+          ),
+          actions: [
+            TextButton(
+                onPressed: () => Navigator.pop(context), child: Text('OK'))
+          ],
+        ),
+      );
+      //   Fluttertoast.showToast(msg: "Error: " + msg.toString());
     }))
         .user;
 
@@ -61,19 +135,66 @@ class _LoginScreenState extends State<LoginScreen> {
         print((snap.value as dynamic)["userType"]);
         if (snap.value != null) {
           currentFirebaseUser = firebaseUser;
-          Fluttertoast.showToast(msg: "Login Successful.");
-          Navigator.push(context,
-              MaterialPageRoute(builder: (c) => MySplashScreen(userType: (snap.value as dynamic)["userType"],)));
+          showDialog(
+            context: context,
+            builder: (context) => AlertDialog(
+              content: Text('Login Successfully'),
+              backgroundColor: Colors.white,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(30),
+              ),
+              actions: [
+                TextButton(
+                    onPressed: () => Navigator.pop(context), child: Text('OK'))
+              ],
+            ),
+          );
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (c) => MySplashScreen3(
+                        userType: (snap.value as dynamic)["userType"],
+                      )));
         } else {
-          Fluttertoast.showToast(msg: "No record exist with this email.");
+          showDialog(
+            context: context,
+            builder: (context) => AlertDialog(
+              content: Text('No record with this email'),
+              backgroundColor: Colors.white,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(30),
+              ),
+              actions: [
+                TextButton(
+                    onPressed: () => Navigator.pop(context), child: Text('OK'))
+              ],
+            ),
+          );
           fAuth.signOut();
-          Navigator.push(context,
-              MaterialPageRoute(builder: (c) => MySplashScreen(userType: (snap.value as dynamic)["userType"],)));
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (c) => MySplashScreen3(
+                        userType: (snap.value as dynamic)["userType"],
+                      )));
         }
       });
     } else {
       Navigator.pop(context);
-      Fluttertoast.showToast(msg: "Error Occurred during Login.");
+      showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          content: Text('Error occured during login'),
+          backgroundColor: Colors.white,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(30),
+          ),
+          actions: [
+            TextButton(
+                onPressed: () => Navigator.pop(context), child: Text('OK'))
+          ],
+        ),
+      );
     }
   }
 
@@ -131,35 +252,37 @@ class _LoginScreenState extends State<LoginScreen> {
                 controller: passwordTextEditingController,
                 keyboardType: TextInputType.text,
                 obscureText: isSecure,
-
                 style: const TextStyle(color: Colors.white),
                 decoration: InputDecoration(
-                  labelText: "Password",
-                  hintText: "Password",
-                  enabledBorder: const UnderlineInputBorder(
-                    borderSide: BorderSide(color: Colors.white),
-                  ),
-                  focusedBorder: const UnderlineInputBorder(
-                    borderSide: BorderSide(color: Colors.white),
-                  ),
-                  hintStyle: const TextStyle(
-                    color: Colors.grey,
-                    fontSize: 10,
-                  ),
-                  labelStyle: const TextStyle(
-                    color: Colors.white,
-                    fontSize: 14,
-                  ),
-                  suffixIcon:IconButton(
-                    onPressed:(){
-                      setState((){
-                        isSecure=!isSecure;
-                      });
-                    },
-                    icon: Icon(isSecure ? Icons.visibility_off:Icons.visibility_sharp,color: AppColors.whiteColor,),
-                  )
-
-                ),
+                    labelText: "Password",
+                    hintText: "Password",
+                    enabledBorder: const UnderlineInputBorder(
+                      borderSide: BorderSide(color: Colors.white),
+                    ),
+                    focusedBorder: const UnderlineInputBorder(
+                      borderSide: BorderSide(color: Colors.white),
+                    ),
+                    hintStyle: const TextStyle(
+                      color: Colors.grey,
+                      fontSize: 10,
+                    ),
+                    labelStyle: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 14,
+                    ),
+                    suffixIcon: IconButton(
+                      onPressed: () {
+                        setState(() {
+                          isSecure = !isSecure;
+                        });
+                      },
+                      icon: Icon(
+                        isSecure
+                            ? Icons.visibility_off
+                            : Icons.visibility_sharp,
+                        color: AppColors.whiteColor,
+                      ),
+                    )),
               ),
               const SizedBox(
                 height: 20,
@@ -186,7 +309,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
                 onPressed: () {
                   Navigator.push(context,
-                      MaterialPageRoute(builder: (c) => const SignUpScreen()));
+                      MaterialPageRoute(builder: (c) =>  SignUpScreen()));
                 },
               ),
             ],

@@ -5,20 +5,19 @@ import 'package:provider/provider.dart';
 import 'package:users_app/configuraton/configuration.dart';
 import 'package:users_app/global/colors.dart';
 import 'package:users_app/global/global.dart';
-import 'package:users_app/models/drivers_model.dart';
 import 'package:users_app/models/user_model.dart';
 import 'package:users_app/widgets/providers/admin/all_customer_provider.dart';
 
 
-class DriverDashboard extends StatefulWidget {
-  final List<DriverData> allDrivers;
-   DriverDashboard({super.key, required this.allDrivers});
+class Rider extends StatefulWidget {
+  final List<UserModel> allrider;
+   Rider({super.key, required this.allrider});
 
   @override
-  State<DriverDashboard> createState() => _DriverDashboardState();
+  State<Rider> createState() => _RiderState();
 }
 
-class _DriverDashboardState extends State<DriverDashboard> {
+class _RiderState extends State<Rider> {
 UserModel? userModelCurrentInfo;
   @override
   void initState() {
@@ -52,7 +51,7 @@ UserModel? userModelCurrentInfo;
                             }, icon: Icon(Icons.arrow_back)),
                             SizedBox(width: getWidth(context)*0.25,),
                             Text(
-                              "Driver",
+                              "Rider",
                               style: TextStyle(
                                   color: Colors.black,
                                   fontWeight: FontWeight.normal,
@@ -94,36 +93,36 @@ UserModel? userModelCurrentInfo;
   getAllCustomers() {
     return ListView.builder(
         shrinkWrap: true,
-        itemCount: widget.allDrivers.length,
+        itemCount: widget.allrider.length,
         physics: const ScrollPhysics(
           parent: ScrollPhysics(),
         ),
         itemBuilder: (context, index) {
           return getDriverRow(
-                  clr: Colors.teal,
-                    name: widget.allDrivers[index].name ?? "Ali",
-                    carNo: widget.allDrivers[index].car_number ?? "34er",
-                    carColor: widget.allDrivers[index].car_color ?? "blue",
-                    carName: widget.allDrivers[index].car_model ?? "BMW",
-                    carType: widget.allDrivers[index].car_type ?? "quick-van");
+            clr: Colors.teal,
+              name: widget.allrider[index].name ?? "",
+              email: widget.allrider[index].email ?? "",
+              phone: widget.allrider[index].phone ?? "",
+              carName: widget.allrider[index].id ?? "",
+              usertype: widget.allrider[index].userType ?? "");
         });
   }
 
   Widget getDriverRow(
       {required String name,
-      required String carNo,
-      required String carColor,
+      required String email,
+      required String phone,
       required String carName,
-      required carType, Color? clr}) {
+      required usertype, Color? clr}) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Container(
         padding:
             const EdgeInsets.only(left: 10, right: 10, top: 15, bottom: 15),
         decoration: BoxDecoration(
-          color:  carType == "quick-go"
+          color:  usertype == "admin"
               ? AppColors.primaryColor
-              : carType=="quick-bolan"?Colors.amberAccent:Colors.grey,
+              : usertype=="customer"?Colors.amberAccent:Colors.grey,
           boxShadow: shadowList,
           borderRadius: BorderRadius.circular(20),
         ),
@@ -134,20 +133,20 @@ UserModel? userModelCurrentInfo;
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 const Text(
-                  "Car Name",
+                  "Rider Name",
                   style: TextStyle(fontWeight: FontWeight.bold),
                 ),
-                Text(carName),
+                Text(name),
               ],
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 const Text(
-                  "Car No",
+                  "Phone",
                   style: TextStyle(fontWeight: FontWeight.bold),
                 ),
-                Text(carNo),
+                Text(phone),
               ],
             ),
              Row(
@@ -157,17 +156,17 @@ UserModel? userModelCurrentInfo;
                   "User Type",
                   style: TextStyle(fontWeight: FontWeight.bold),
                 ),
-                Text(carType),
+                Text(usertype),
               ],
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 const Text(
-                  "car color",
+                  "Email",
                   style: TextStyle(fontWeight: FontWeight.bold),
                 ),
-                Text(carColor),
+                Text(email),
               ],
             ),
           ],
