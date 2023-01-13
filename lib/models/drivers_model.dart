@@ -11,6 +11,7 @@ class DriverData
   String? car_model;
   String? car_number;
   String? car_type;
+  String? Earning;
 
   DriverData({
     this.id,
@@ -21,6 +22,7 @@ class DriverData
     this.car_model,
     this.car_number,
     this.car_type,
+    this.Earning
   });
   DriverData.fromSnapshot(dynamic snap)
   {
@@ -32,6 +34,7 @@ class DriverData
     car_model = snap["car_details"]["car_model"];
     car_number = snap["car_details"]["car_number"];
     car_type = snap["car_details"]["type"];
+    Earning = snap["earnings"];
 
   }
 }

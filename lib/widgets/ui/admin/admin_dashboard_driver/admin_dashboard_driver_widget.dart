@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:users_app/configuraton/configuration.dart';
 import 'package:users_app/global/colors.dart';
+import 'package:users_app/global/global.dart';
 import 'package:users_app/models/drivers_model.dart';
 import 'package:users_app/widgets/ui/admin/admin_dashboard_driver/admin_dashboard_driver_detail_widget.dart';
 
 class AdminDashboardDriverWidget extends StatefulWidget {
   final List<DriverData> allDrivers;
-  const AdminDashboardDriverWidget({required this.allDrivers, Key? key})
+  const AdminDashboardDriverWidget({required this.allDrivers,
+   Key? key})
       : super(key: key);
 
   @override
@@ -16,22 +18,65 @@ class AdminDashboardDriverWidget extends StatefulWidget {
 
 class _AdminDashboardDriverWidgetState
     extends State<AdminDashboardDriverWidget> {
-
-      @override
-  void initState() {
-    // TODO: implement initState
-    getAllDriver();
-    super.initState();
-  }
   @override
   Widget build(BuildContext context) {
-    
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("Driver"),
-      ),
-      body: SingleChildScrollView(child: Column(children: [getAllDriver()])),
+      // appBar: AppBar(
+      //   title: const Text("All Drivers"),
+      // ),
+      body: Container(
+              width: double.infinity,
+              decoration: BoxDecoration(color: Colors.teal),
+              child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                        padding: EdgeInsets.all(20),
+                        child: Row(
+                          // mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                             IconButton(onPressed: (){
+                              Navigator.pop(context);
+                            }, icon: Icon(Icons.arrow_back)),
+                            SizedBox(width: getWidth(context)*0.25,),
+                            Text(
+                              "Driver",
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.normal,
+                                  fontSize: 30),
+                            )
+                          ],
+                        )),
+                    SizedBox(height: MediaQuery.of(context).size.height * 0.05),
+                    Expanded(
+                        child: Container(
+                            // height: MediaQuery.of(con/text).size.height * 0.50,
+                            decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.only(
+                                    topLeft: Radius.circular(60),
+                                    topRight: Radius.circular(60))),
+                            child: Padding(
+                                padding: EdgeInsets.all(20),
+                                child: SizedBox(
+                                  width: MediaQuery.of(context).size.width,
+                                  height: MediaQuery.of(context).size.height *
+                                      0.65,
+                                  child: SingleChildScrollView(
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceAround,
+                                      children: [
+getAllDriver()
+                                      ])
+                                  ))
+  
+                            
+              )))]))
     );
+  
+  
   }
 
   getAllDriver() {
@@ -44,18 +89,15 @@ class _AdminDashboardDriverWidgetState
         itemBuilder: (context, index) {
           return GestureDetector(
             onTap: (){
-              Navigator.push(context,
-               MaterialPageRoute(builder: (context)=>
-               DashboardDriverDetailWidget(
-                driverData: widget.allDrivers[index],)));
+              Navigator.push(context, MaterialPageRoute(builder: (context)=>DashboardDriverDetailWidget(driverData: widget.allDrivers[index],)));
             },
             child: getDriverRow(
+              clr: Colors.teal,
                 name: widget.allDrivers[index].name ?? "",
                 carNo: widget.allDrivers[index].car_number ?? "",
                 carColor: widget.allDrivers[index].car_color ?? "",
                 carName: widget.allDrivers[index].car_model ?? "",
                 carType: widget.allDrivers[index].car_type ?? "quick-van"),
-                
           );
         });
   }
@@ -65,7 +107,7 @@ class _AdminDashboardDriverWidgetState
       required String carNo,
       required String carColor,
       required String carName,
-      required carType}) {
+      required carType, Color? clr}) {
     return Container(
       padding: const EdgeInsets.all(10.0),
       child: Row(
@@ -90,15 +132,19 @@ class _AdminDashboardDriverWidgetState
               ),
             ),
           ),
+          SizedBox(width: getWidth(context)*0.015,),
           Expanded(
             flex: 2,
             child: Container(
-               padding: EdgeInsets.all(20),
-               decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.only(
-                                    topLeft: Radius.circular(60),
-                                    topRight: Radius.circular(60))),
+              padding:
+                  const EdgeInsets.only(left: 10, right: 10, top: 15, bottom: 15),
+              decoration: BoxDecoration(
+                color:  carType == "quick-go"
+                    ? AppColors().primaryColor
+                    : carType=="quick-bolan"?Colors.amberAccent:Colors.grey,
+                boxShadow: shadowList,
+                borderRadius: BorderRadius.circular(20),
+              ),
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
@@ -135,13 +181,11 @@ class _AdminDashboardDriverWidgetState
                 ],
               ),
             ),
-          )
-     
-        
+          ),
+          
         ],
       ),
     );
- 
   }
 
 }

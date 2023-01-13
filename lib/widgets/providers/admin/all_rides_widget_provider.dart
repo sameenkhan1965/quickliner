@@ -9,6 +9,8 @@ class AllRidesWigetProvider extends ChangeNotifier{
     "Solo Ride",
     "Car Pool",
     "Permanent Request",
+    "Schedule",
+    "Broad Cast"
   ];
 
   void getAllRides(context)

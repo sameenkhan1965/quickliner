@@ -45,8 +45,8 @@ class _AdminDashboardState extends State<AdminDashboard> {
             canvasColor: Colors.black,
           ),
           child: MyDrawer(
-            name: userModelCurrentInfo!.name,
-            email: userModelCurrentInfo!.email,
+            name: userModelCurrentInfo?.name,
+            email: userModelCurrentInfo?.email,
           ),
         ),
       ),
@@ -220,8 +220,8 @@ class _AdminDashboardState extends State<AdminDashboard> {
                     ),
                   ),
                 
-                Consumer<AllRidesWigetProvider>(
-                    builder: (context, customer, child) => GestureDetector(
+                
+                    GestureDetector(
                       onTap: () {
                         Navigator.push(
                             context,
@@ -257,15 +257,16 @@ class _AdminDashboardState extends State<AdminDashboard> {
                     
                     
                     ),
-                  ),
+                  
                 
-                 Consumer<AllRidesWigetProvider>(
-                    builder: (context, customer, child) => GestureDetector(
+                 Consumer<AllDriversProvider>(
+                    builder: (context, allderiver, child) => GestureDetector(
                       onTap: () {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => Salary()),
+                                builder: (context) => Salary(
+                                   allDrivers: allderiver.allDrivers)),
                         );
                       },
                       child: Container(

@@ -127,7 +127,7 @@ class _MyDrawerState extends State<MyDrawer>
             onTap: ()
             {
               fAuth.signOut();
-              Navigator.push(context, MaterialPageRoute(builder: (c)=> MySplashScreen3(userType: userModelCurrentInfo!.userType??"",)));
+              Navigator.push(context, MaterialPageRoute(builder: (c)=> MySplashScreen3(userType: userModelCurrentInfo?.userType??"",)));
             },
             child: const ListTile(
               leading: Icon(Icons.logout, color: Colors.white,),

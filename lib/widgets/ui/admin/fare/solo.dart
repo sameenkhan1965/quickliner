@@ -66,124 +66,122 @@ class _FareWidgetsState extends State<FareWidgets> {
                                   height:
                                       MediaQuery.of(context).size.height * 0.65,
                                   child: SingleChildScrollView(
-                                    child: Form(
-
-                                      child: Column(
-                                        mainAxisAlignment: MainAxisAlignment.center,
-                                        children: [
-                                          Text(
-                                                                  "Solo Fare",
-                                                                  style: TextStyle(
-                                                                      color: Colors.black,
-                                                                      fontWeight: FontWeight.normal,
-                                                                      fontSize: 30),
-                                                                ),
-                                                                SizedBox(height: getHeight(context)*0.1,),
-                                          Container(
-                                            width: MediaQuery.of(context)
-                                                    .size
-                                                    .width *
-                                                0.95,
-                                            height: MediaQuery.of(context)
-                                                    .size
-                                                    .height *
-                                                0.10,
-                                            decoration: BoxDecoration(
-                                                color: Colors.teal,
-                                                
+                                    child: Column(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: [
+                                        Text(
+                                                                "Solo Fare",
+                                                                style: TextStyle(
+                                                                    color: Colors.black,
+                                                                    fontWeight: FontWeight.normal,
+                                                                    fontSize: 30),
+                                                              ),
+                                                              SizedBox(height: getHeight(context)*0.1,),
+                                        Container(
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
+                                              0.95,
+                                          height: MediaQuery.of(context)
+                                                  .size
+                                                  .height *
+                                              0.10,
+                                          decoration: BoxDecoration(
+                                              color: Colors.teal,
+                                              
+                                              ),
+                                          child: Container(
+                                            height: 100,
+                                            width: 150,
+                                            child: Padding(
+                                              padding: const EdgeInsets.only(top:18.0, left: 10),
+                                              child: TextFormField(
+                                                controller: petrolPrice,
+                                                  keyboardType: TextInputType.number,
+                                                  decoration:
+                                                      InputDecoration(
+                                                    hintText: "Enter petrol Price",
+                                                    border: InputBorder.none
+                                                  
+                                                  
+                                                  ),
+                                                  onEditingComplete: () => petrol=petrolPrice.text as int,
+                                                  style: TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      fontSize: 18),
                                                 ),
-                                            child: Container(
-                                              height: 100,
-                                              width: 150,
-                                              child: Padding(
-                                                padding: const EdgeInsets.only(top:18.0, left: 10),
-                                                child: TextFormField(
-                                                  controller: petrolPrice,
+                                            ),
+                                          ),
+                                        ),
+                                        
+                                        
+                                        SizedBox(
+                                          height: 10,
+                                        ),
+                                        Container(
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
+                                              0.95,
+                                          height: MediaQuery.of(context)
+                                                  .size
+                                                  .height *
+                                              0.10,
+                                          decoration: BoxDecoration(
+                                            color: Colors.amberAccent,
+                                          ),
+                                          child: Padding(
+                                            padding: const EdgeInsets.all(10.0),
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .start,
+                                              children: [
+                                                SizedBox(
+                                                  width:
+                                                      MediaQuery.of(context)
+                                                              .size
+                                                              .width *
+                                                          0.29,
+                                                  height:
+                                                      MediaQuery.of(context)
+                                                              .size
+                                                              .height *
+                                                          0.08,
+                                                  child: TextFormField(
+                                                    
+                                                    controller: moneyPerKM,
+                                                    onEditingComplete: () => money=moneyPerKM.text as int,
                                                     keyboardType: TextInputType.number,
                                                     decoration:
                                                         InputDecoration(
-                                                      hintText: "Enter petrol Price",
+                                                      hintText: "Money Per km",
                                                       border: InputBorder.none
                                                     
                                                     
                                                     ),
-                                                    onEditingComplete: () => petrol=petrolPrice.text as int,
                                                     style: TextStyle(
                                                         fontWeight:
                                                             FontWeight.bold,
                                                         fontSize: 18),
                                                   ),
-                                              ),
+                                                
+                                                
+                                                ),
+                                               
+                                               
+                                              ],
                                             ),
                                           ),
-                                          
-                                          
-                                          SizedBox(
-                                            height: 10,
-                                          ),
-                                          Container(
-                                            width: MediaQuery.of(context)
-                                                    .size
-                                                    .width *
-                                                0.95,
-                                            height: MediaQuery.of(context)
-                                                    .size
-                                                    .height *
-                                                0.10,
-                                            decoration: BoxDecoration(
-                                              color: Colors.amberAccent,
-                                            ),
-                                            child: Padding(
-                                              padding: const EdgeInsets.all(10.0),
-                                              child: Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .start,
-                                                children: [
-                                                  SizedBox(
-                                                    width:
-                                                        MediaQuery.of(context)
-                                                                .size
-                                                                .width *
-                                                            0.29,
-                                                    height:
-                                                        MediaQuery.of(context)
-                                                                .size
-                                                                .height *
-                                                            0.08,
-                                                    child: TextFormField(
-                                                      
-                                                      controller: moneyPerKM,
-                                                      onEditingComplete: () => money=moneyPerKM.text as int,
-                                                      keyboardType: TextInputType.number,
-                                                      decoration:
-                                                          InputDecoration(
-                                                        hintText: "Money Per km",
-                                                        border: InputBorder.none
-                                                      
-                                                      
-                                                      ),
-                                                      style: TextStyle(
-                                                          fontWeight:
-                                                              FontWeight.bold,
-                                                          fontSize: 18),
-                                                    ),
+                                        ),
+                                         Center(
+                                           child: ElevatedButton(
+                                                  child: Text("Add"),
+                                                  onPressed: (){
                                                   
-                                                  
-                                                  ),
-                                                 
-                                                 
-                                                ],
-                                              ),
-                                            ),
-                                          ),
-                                           Center(
-                                             child: ElevatedButton(
-                                                    child: Text("Add"),
-                                                    onPressed: (){
-                                                    
-                                                    if( petrolPrice.text.isEmpty&& moneyPerKM.text.isEmpty){
-                                            showDialog(context: context,
+                                                  if( petrolPrice.text.isEmpty&& moneyPerKM.text.isEmpty){
+                                          showDialog(context: context,
         builder: (context) => AlertDialog
           (
           title: Text('Required'),
@@ -204,79 +202,78 @@ class _FareWidgetsState extends State<FareWidgets> {
 
       );}
       else{
-                                                      petrol= int.parse(petrolPrice.text);
-                                                      money=int.parse(moneyPerKM.text);
-                                                      totalPrice= money*petrol;
-                                                      print("Total: $totalPrice");
+                                                    petrol= int.parse(petrolPrice.text);
+                                                    money=int.parse(moneyPerKM.text);
+                                                    totalPrice= money*petrol;
+                                                    print("Total: $totalPrice");
                                     
-                                                      Map fareMap =
-                                          {
-                                            "fare_type":"solo",
-                                            "petrol_price": petrolPrice.text.trim(),
-                                            "money_per_km": moneyPerKM.text.trim(),
-                                            "total_price":totalPrice
-                                          };
+                                                    Map fareMap =
+                                        {
+                                          "fare_type":"solo",
+                                          "petrol_price": petrolPrice.text.trim(),
+                                          "money_per_km": moneyPerKM.text.trim(),
+                                          "total_price":totalPrice
+                                        };
                                     
-                                          DatabaseReference reference = FirebaseDatabase.instance.ref().
-                                          child("Fare").ref.child('Solo');
-                                          reference.set(fareMap).then((value){
-                                            return 
-                                            showDialog(context: context, builder: (context){
-                                              return AlertDialog(
-                                                shape: RoundedRectangleBorder(
+                                        DatabaseReference reference = FirebaseDatabase.instance.ref().
+                                        child("Fare").ref.child('Solo');
+                                        reference.set(fareMap).then((value){
+                                          return 
+                                          showDialog(context: context, builder: (context){
+                                            return AlertDialog(
+                                              shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(30),
                                 ),
-                                                title: Text("Successfully Added Solo Fare"),
-                                                actions: [
-                                                  Center(child: ElevatedButton(onPressed: (){Navigator.pop(context);}, child: Text("OK")))
-                                                ],
-                                              );
-                                            });
+                                              title: Text("Successfully Added Solo Fare"),
+                                              actions: [
+                                                Center(child: ElevatedButton(onPressed: (){Navigator.pop(context);}, child: Text("OK")))
+                                              ],
+                                            );
                                           });
-                                          setState(() {
-                                                                 
-                                                                   }); 
+                                        });
+                                        setState(() {
+                                                               
+                                                                 }); 
       }
-                                          
-                                                                                              // Navigator.push(context,
-                                                    //  MaterialPageRoute(builder: ((context) => 
-                                                    //  FareWidgets())));
+                                        
+                                                                                            // Navigator.push(context,
+                                                  //  MaterialPageRoute(builder: ((context) => 
+                                                  //  FareWidgets())));
                                     
   }),
-                                           ),
-                                               
-                                                
-                                          SizedBox(height: 20,),
-                                          Container(
+                                         ),
                                              
-                                                width: MediaQuery.of(context).size.width * 0.95,
-                                              height: MediaQuery.of(context).size.height * 0.08,
-                                            decoration:
-                                                 BoxDecoration(color: Colors.teal,
-                                                  ),
                                               
-                                              child: Padding(
-                                                padding: const EdgeInsets.all(10.0),
-                                                child: Row(
-                                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                children: [
-                                                  Text("Total Price",
-                                                    style: GoogleFonts.poppins(
-                                                    fontWeight: FontWeight.w700
-                                                  ),
-                                                  ),
-                                                  Text(totalPrice.toString(),
-                                                    style: GoogleFonts.poppins(
-                                                    fontWeight: FontWeight.w700
-                                                  )
-                                                  ),
-                                                 
-                                                ],
+                                        SizedBox(height: 20,),
+                                        Container(
+                                           
+                                              width: MediaQuery.of(context).size.width * 0.95,
+                                            height: MediaQuery.of(context).size.height * 0.08,
+                                          decoration:
+                                               BoxDecoration(color: Colors.teal,
                                                 ),
+                                            
+                                            child: Padding(
+                                              padding: const EdgeInsets.all(10.0),
+                                              child: Row(
+                                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                              children: [
+                                                Text("Total Price",
+                                                  style: GoogleFonts.poppins(
+                                                  fontWeight: FontWeight.w700
+                                                ),
+                                                ),
+                                                Text(totalPrice.toString(),
+                                                  style: GoogleFonts.poppins(
+                                                  fontWeight: FontWeight.w700
+                                                )
+                                                ),
+                                               
+                                              ],
                                               ),
                                             ),
-                                        ],
-                                      ),
+                                          ),
+                                      ],
                                     ),
                                   ),
                                 ))))

@@ -10,12 +10,14 @@ class UserModel
 
   UserModel({this.phone, this.name, this.id, this.email,this.userType});
 
-  UserModel.fromSnapshot(DataSnapshot snap)
+  UserModel.fromSnapshot(dynamic snap)
   {
-    phone = (snap.value as dynamic)["phone"];
-    name = (snap.value as dynamic)["name"];
-    id = snap.key;
-    email = (snap.value as dynamic)["email"];
-    userType = (snap.value as dynamic)["userType"];
+    phone = snap["phone"];
+    name = snap["name"];
+    id = snap["id"];
+    email = snap["email"];
+    userType = snap["userType"];
   }
+
+  
 }
