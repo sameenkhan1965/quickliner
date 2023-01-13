@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:users_app/assistants/request_assistant.dart';
+import 'package:users_app/global/colors.dart';
 import 'package:users_app/global/map_key.dart';
 import 'package:users_app/models/predicted_places.dart';
 import 'package:users_app/widgets/place_prediction_tile.dart';
@@ -48,128 +49,87 @@ class _SearchPlacesScreenState extends State<SearchPlacesScreen>
   @override
   Widget build(BuildContext context)
   {
+    Size size = MediaQuery.of(context).size;
     return Scaffold(
-      backgroundColor: Colors.black,
-      body: Column(
-        children: [
-          //search place ui
-          Container(
-            height: 160,
-            decoration: const BoxDecoration(
-              color: Colors.black54,
-              boxShadow:
-              [
-                BoxShadow(
-                  color: Colors.white54,
-                  blurRadius: 8,
-                  spreadRadius: 0.5,
-                  offset: Offset(
-                    0.7,
-                    0.7,
-                  ),
-                ),
-              ],
-            ),
-            child: Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: Column(
-                children: [
-
-                  const SizedBox(height: 25.0),
-
-                  Stack(
-                    children: [
-
-                      GestureDetector(
-                        onTap: ()
-                        {
-                          Navigator.pop(context);
-                        },
-                        child: const Icon(
-                          Icons.arrow_back,
-                          color: Colors.grey,
+      backgroundColor: AppColors.whiteColor,
+      appBar: AppBar(
+        backgroundColor: AppColors.primaryColor,
+        title:const Text(
+          "Search & Set DropOff Location",
+          style: TextStyle(
+            fontSize: 16.0,
+            color: AppColors.whiteColor,
+            fontWeight: FontWeight.w700,
+          ),
+        ),
+        elevation: 0,
+      ),
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            /// search place ui
+            Container(
+              height: size.height*0.1,
+              child: Padding(
+                padding:  EdgeInsets.only(left: 25.0,right: 25,top: size.height*0.020),
+                child:Container(
+                  height: 40,
+                  child: TextFormField(
+                    onChanged: (valueTyped)
+                    {
+                      findPlaceAutoCompleteSearch(valueTyped);
+                    },
+                    decoration: InputDecoration(
+                        prefixIcon: Icon(Icons.search,color: AppColors.blackColor,),
+                        fillColor: Colors.white,
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: AppColors.primaryColor),
+                          borderRadius: BorderRadius.circular(20),
                         ),
-                      ),
-
-                      const Center(
-                        child: Text(
-                          "Search & Set DropOff Location",
-                          style: TextStyle(
-                            fontSize: 18.0,
-                            color: Colors.grey,
-                            fontWeight: FontWeight.bold,
-                          ),
+                        enabledBorder:  OutlineInputBorder(
+                          borderSide: BorderSide(color: AppColors.primaryColor),
+                          borderRadius: BorderRadius.circular(20),
                         ),
-                      ),
-                    ],
-                  ),
-
-                  const SizedBox(height: 16.0),
-
-                  Row(
-                    children: [
-
-                      const Icon(
-                        Icons.adjust_sharp,
-                        color: Colors.grey,
-                      ),
-
-                      const SizedBox(width: 18.0,),
-
-                      Expanded(
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: TextField(
-                            onChanged: (valueTyped)
-                            {
-                              findPlaceAutoCompleteSearch(valueTyped);
-                            },
-                            decoration: const InputDecoration(
-                              hintText: "search here...",
-                              fillColor: Colors.white54,
-                              filled: true,
-                              border: InputBorder.none,
-                              contentPadding: EdgeInsets.only(
-                                left: 11.0,
-                                top: 8.0,
-                                bottom: 8.0,
-                              ),
-                            ),
-                          ),
+                        border:  OutlineInputBorder(
+                          borderSide: BorderSide(color: AppColors.primaryColor),
+                          borderRadius: BorderRadius.circular(20),
                         ),
-                      ),
-
-                    ],
+                        // label: Text("Search Brodcast"),
+                        hintText: 'Search here',
+                        hintStyle:TextStyle(
+                            fontSize: 14,
+                            color: Colors.grey.shade500
+                        )
+                    ),
                   ),
-                ],
+                )
               ),
             ),
-          ),
 
-          //display place predictions result
-          (placesPredictedList.length > 0)
-              ? Expanded(
-            child: ListView.separated(
-              itemCount: placesPredictedList.length,
-              physics: ClampingScrollPhysics(),
-              itemBuilder: (context, index)
-              {
-                return PlacePredictionTileDesign(
-                  predictedPlaces: placesPredictedList[index],
-                );
-              },
-              separatorBuilder: (BuildContext context, int index)
-              {
-                return const Divider(
-                  height: 1,
-                  color: Colors.white,
-                  thickness: 1,
-                );
-              },
-            ),
-          )
-              : Container(),
-        ],
+            //display place predictions result
+            (placesPredictedList.length > 0)
+                ? ListView.builder(
+                  itemCount: placesPredictedList.length,
+                  shrinkWrap: true,
+                  physics: ClampingScrollPhysics(),
+                  itemBuilder: (context, index)
+                  {
+                    return PlacePredictionTileDesign(
+                      predictedPlaces: placesPredictedList[index],
+                    );
+                  },
+                  // separatorBuilder: (BuildContext context, int index)
+                  // {
+                  //   return const Divider(
+                  //     height: 1,
+                  //     color: AppColors.primaryColor,
+                  //     thickness: 1,
+                  //   );
+                  // },
+                )
+                : Container(),
+          ],
+        ),
       ),
     );
   }

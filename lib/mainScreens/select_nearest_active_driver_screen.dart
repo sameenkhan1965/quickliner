@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:smooth_star_rating_nsafe/smooth_star_rating.dart';
 import 'package:users_app/assistants/assistant_methods.dart';
+import 'package:users_app/global/colors.dart';
 import 'package:users_app/global/global.dart';
 
 
@@ -48,13 +49,16 @@ class _SelectNearestActiveDriversScreenState extends State<SelectNearestActiveDr
   Widget build(BuildContext context)
   {
     return Scaffold(
-      backgroundColor: Colors.black,
+
+      backgroundColor: AppColors.whiteColor,
       appBar: AppBar(
-        backgroundColor: Colors.white54,
+        elevation: 0,
+        backgroundColor: AppColors.primaryColor,
         title: const Text(
           "Nearest Online Drivers",
           style: TextStyle(
-            fontSize: 18,
+            fontSize: 16,
+            fontWeight: FontWeight.w700
           ),
         ),
         leading: IconButton(
@@ -75,22 +79,31 @@ class _SelectNearestActiveDriversScreenState extends State<SelectNearestActiveDr
         itemCount: dList.length,
         itemBuilder: (BuildContext context, int index)
         {
-          return GestureDetector(
+          // print("dlist------------->> ${dList[index]}");
+          // if(dList[index])
+
+          return dList[index]!=null && dList[index].containsKey("car_details") && dList[index]['ratings']?GestureDetector(
             onTap: ()
             {
               setState(() {
                 chosenDriverId = dList[index]["id"].toString();
               });
+              widget.referenceRideRequest?.child("fareAmount").set(fareAmount);
+
               Navigator.pop(context, "driverChoosed");
             },
             child: Card(
-              color: Colors.grey,
+              color: AppColors.whiteColor,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10)
+              ),
               elevation: 3,
-              shadowColor: Colors.green,
+              // shadowColor: Colors.green,
               margin: const EdgeInsets.all(8),
               child: ListTile(
+                contentPadding: EdgeInsets.all(10),
                 leading: Padding(
-                  padding: const EdgeInsets.only(top: 2.0),
+                  padding: const EdgeInsets.only(top: 5.0,bottom: 5),
                   child: Image.asset(
                     "images/${dList[index]["car_details"]["type"]}.png",
                     width: 70,
@@ -100,10 +113,10 @@ class _SelectNearestActiveDriversScreenState extends State<SelectNearestActiveDr
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     Text(
-                      dList[index]["name"],
+                      dList[index]["name"].toString().toUpperCase(),
                       style: const TextStyle(
                         fontSize: 14,
-                        color: Colors.black54,
+                        color: Colors.black,
                       ),
                     ),
                     Text(
@@ -126,12 +139,12 @@ class _SelectNearestActiveDriversScreenState extends State<SelectNearestActiveDr
                 trailing: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text(
-                      "Rs " + getFareAmountAccordingToVehicleType(index),
-                      style: const TextStyle(
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
+                    // Text(
+                    //   "Rs " + getFareAmountAccordingToVehicleType(index),
+                    //   style: const TextStyle(
+                    //     fontWeight: FontWeight.bold,
+                    //   ),
+                    // ),
                     const SizedBox(height: 2,),
                     Text(
                       tripDirectionDetailsInfo != null ? tripDirectionDetailsInfo!.duration_text! : "",
@@ -154,7 +167,7 @@ class _SelectNearestActiveDriversScreenState extends State<SelectNearestActiveDr
                 ),
               ),
             ),
-          );
+          ):SizedBox();
         },
       ),
     );

@@ -11,20 +11,15 @@ import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:users_app/assistants/assistant_methods.dart';
-import 'package:users_app/authentication/login_screen.dart';
+import 'package:users_app/global/colors.dart';
 import 'package:users_app/global/global.dart';
 import 'package:users_app/infoHandler/app_info.dart';
 import 'package:users_app/mainScreens/rate_driver_screen.dart';
 import 'package:users_app/mainScreens/search_places_screen.dart';
 import 'package:users_app/mainScreens/select_nearest_active_driver_screen.dart';
-import 'package:users_app/models/broadcast_model.dart';
-import 'package:users_app/widgets/my_drawer.dart';
 import 'package:users_app/widgets/progress_dialog.dart';
-import 'package:users_app/configuraton/configuration.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../assistants/geofire_assistant.dart';
-import '../main.dart';
 import '../models/active_nearby_available_drivers.dart';
 import '../widgets/pay_fare_amount_dialog.dart';
 
@@ -85,6 +80,171 @@ class _RequestScreenState extends State<RequestScreen> {
 
 
 
+  // blackThemeGoogleMap() {
+  //   newGoogleMapController!.setMapStyle('''
+  //                   [
+  //                     {
+  //                       "elementType": "geometry",
+  //                       "stylers": [
+  //                         {
+  //                           "color": "#242f3e"
+  //                         }
+  //                       ]
+  //                     },
+  //                     {
+  //                       "elementType": "labels.text.fill",
+  //                       "stylers": [
+  //                         {
+  //                           "color": "#746855"
+  //                         }
+  //                       ]
+  //                     },
+  //                     {
+  //                       "elementType": "labels.text.stroke",
+  //                       "stylers": [
+  //                         {
+  //                           "color": "#242f3e"
+  //                         }
+  //                       ]
+  //                     },
+  //                     {
+  //                       "featureType": "administrative.locality",
+  //                       "elementType": "labels.text.fill",
+  //                       "stylers": [
+  //                         {
+  //                           "color": "#d59563"
+  //                         }
+  //                       ]
+  //                     },
+  //                     {
+  //                       "featureType": "poi",
+  //                       "elementType": "labels.text.fill",
+  //                       "stylers": [
+  //                         {
+  //                           "color": "#d59563"
+  //                         }
+  //                       ]
+  //                     },
+  //                     {
+  //                       "featureType": "poi.park",
+  //                       "elementType": "geometry",
+  //                       "stylers": [
+  //                         {
+  //                           "color": "#263c3f"
+  //                         }
+  //                       ]
+  //                     },
+  //                     {
+  //                       "featureType": "poi.park",
+  //                       "elementType": "labels.text.fill",
+  //                       "stylers": [
+  //                         {
+  //                           "color": "#6b9a76"
+  //                         }
+  //                       ]
+  //                     },
+  //                     {
+  //                       "featureType": "road",
+  //                       "elementType": "geometry",
+  //                       "stylers": [
+  //                         {
+  //                           "color": "#38414e"
+  //                         }
+  //                       ]
+  //                     },
+  //                     {
+  //                       "featureType": "road",
+  //                       "elementType": "geometry.stroke",
+  //                       "stylers": [
+  //                         {
+  //                           "color": "#212a37"
+  //                         }
+  //                       ]
+  //                     },
+  //                     {
+  //                       "featureType": "road",
+  //                       "elementType": "labels.text.fill",
+  //                       "stylers": [
+  //                         {
+  //                           "color": "#9ca5b3"
+  //                         }
+  //                       ]
+  //                     },
+  //                     {
+  //                       "featureType": "road.highway",
+  //                       "elementType": "geometry",
+  //                       "stylers": [
+  //                         {
+  //                           "color": "#746855"
+  //                         }
+  //                       ]
+  //                     },
+  //                     {
+  //                       "featureType": "road.highway",
+  //                       "elementType": "geometry.stroke",
+  //                       "stylers": [
+  //                         {
+  //                           "color": "#1f2835"
+  //                         }
+  //                       ]
+  //                     },
+  //                     {
+  //                       "featureType": "road.highway",
+  //                       "elementType": "labels.text.fill",
+  //                       "stylers": [
+  //                         {
+  //                           "color": "#f3d19c"
+  //                         }
+  //                       ]
+  //                     },
+  //                     {
+  //                       "featureType": "transit",
+  //                       "elementType": "geometry",
+  //                       "stylers": [
+  //                         {
+  //                           "color": "#2f3948"
+  //                         }
+  //                       ]
+  //                     },
+  //                     {
+  //                       "featureType": "transit.station",
+  //                       "elementType": "labels.text.fill",
+  //                       "stylers": [
+  //                         {
+  //                           "color": "#d59563"
+  //                         }
+  //                       ]
+  //                     },
+  //                     {
+  //                       "featureType": "water",
+  //                       "elementType": "geometry",
+  //                       "stylers": [
+  //                         {
+  //                           "color": "#17263c"
+  //                         }
+  //                       ]
+  //                     },
+  //                     {
+  //                       "featureType": "water",
+  //                       "elementType": "labels.text.fill",
+  //                       "stylers": [
+  //                         {
+  //                           "color": "#515c6d"
+  //                         }
+  //                       ]
+  //                     },
+  //                     {
+  //                       "featureType": "water",
+  //                       "elementType": "labels.text.stroke",
+  //                       "stylers": [
+  //                         {
+  //                           "color": "#17263c"
+  //                         }
+  //                       ]
+  //                     }
+  //                   ]
+  //               ''');
+  // }
 
   checkIfLocationPermissionAllowed() async
   {
@@ -485,12 +645,19 @@ class _RequestScreenState extends State<RequestScreen> {
     }
   }
 
-
-
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     createActiveNearByDriverIconMarker();
     return Scaffold(
+      appBar: AppBar(
+        elevation: 0,
+        title: const Text("Solo Ride",style: TextStyle(
+          fontWeight: FontWeight.w700,
+          fontSize: 16,
+          color: Colors.white
+        ),),
+      ),
       body: Stack(
         children: [
 
@@ -520,23 +687,23 @@ class _RequestScreenState extends State<RequestScreen> {
             },
           ),
 
-          Positioned(
-            top: 40,
-            left: 14,
-            child: GestureDetector(
-              onTap: () {
-                //restart-refresh-minimize app progmatically
-                SystemNavigator.pop();
-              },
-              child: const CircleAvatar(
-                backgroundColor: Colors.grey,
-                child: Icon(
-                  Icons.close,
-                  color: Colors.black54,
-                ),
-              ),
-            ),
-          ),
+          // Positioned(
+          //   top: 40,
+          //   left: 14,
+          //   child: GestureDetector(
+          //     onTap: () {
+          //       //restart-refresh-minimize app progmatically
+          //       SystemNavigator.pop();
+          //     },
+          //     child: const CircleAvatar(
+          //       backgroundColor: Colors.grey,
+          //       child: Icon(
+          //         Icons.close,
+          //         color: Colors.black54,
+          //       ),
+          //     ),
+          //   ),
+          // ),
 
           //ui for searching location
           Positioned(
@@ -548,9 +715,9 @@ class _RequestScreenState extends State<RequestScreen> {
               duration: const Duration(milliseconds: 120),
               child: Container(
                 height: searchLocationContainerHeight,
-                decoration: const BoxDecoration(
-                  color: Colors.black87,
-                  borderRadius: BorderRadius.only(
+                decoration:  BoxDecoration(
+                  color: AppColors.primaryColor.withOpacity(0.9),
+                  borderRadius: const BorderRadius.only(
                     topRight: Radius.circular(20),
                     topLeft: Radius.circular(20),
                   ),
@@ -564,8 +731,7 @@ class _RequestScreenState extends State<RequestScreen> {
                       Row(
                         children: [
                           const Icon(
-                            Icons.add_location_alt_outlined, color: Colors
-                              .grey,),
+                            Icons.add_location_alt_outlined, color:AppColors.whiteColor),
                           const SizedBox(width: 12.0,),
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -573,19 +739,19 @@ class _RequestScreenState extends State<RequestScreen> {
                               const Text(
                                 "From",
                                 style: TextStyle(
-                                    color: Colors.grey, fontSize: 12),
+                                    color: AppColors.whiteColor, fontSize: 12),
                               ),
                               Text(
                                 Provider
                                     .of<AppInfo>(context)
                                     .userPickUpLocation != null
-                                    ? (Provider
+                                    ? "${(Provider
                                     .of<AppInfo>(context)
                                     .userPickUpLocation!
-                                    .locationName!).substring(0, 24) + "..."
+                                    .locationName!).substring(0, 24)}..."
                                     : "not getting address",
                                 style: const TextStyle(
-                                    color: Colors.grey, fontSize: 14),
+                                    color: AppColors.whiteColor, fontSize: 14),
                               ),
                             ],
                           ),
@@ -597,7 +763,7 @@ class _RequestScreenState extends State<RequestScreen> {
                       const Divider(
                         height: 1,
                         thickness: 1,
-                        color: Colors.grey,
+                        color: AppColors.whiteColor
                       ),
 
                       const SizedBox(height: 16.0),
@@ -619,7 +785,7 @@ class _RequestScreenState extends State<RequestScreen> {
                         child: Row(
                           children: [
                             const Icon(Icons.add_location_alt_outlined,
-                              color: Colors.grey,),
+                              color: AppColors.whiteColor,),
                             const SizedBox(width: 12.0,),
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
@@ -627,7 +793,7 @@ class _RequestScreenState extends State<RequestScreen> {
                                 const Text(
                                   "To",
                                   style: TextStyle(
-                                      color: Colors.grey, fontSize: 12),
+                                      color:AppColors.whiteColor, fontSize: 12),
                                 ),
                                 Text(
                                   Provider
@@ -639,7 +805,7 @@ class _RequestScreenState extends State<RequestScreen> {
                                       .locationName!
                                       : "Where to go?",
                                   style: const TextStyle(
-                                      color: Colors.grey, fontSize: 14),
+                                      color:AppColors.whiteColor, fontSize: 14),
                                 ),
                               ],
                             ),
@@ -647,7 +813,7 @@ class _RequestScreenState extends State<RequestScreen> {
                         ),
                       ),
 
-                      const SizedBox(height: 10.0),
+                       SizedBox(height: size.height*0.01),
 
                       const Divider(
                         height: 1,
@@ -655,26 +821,40 @@ class _RequestScreenState extends State<RequestScreen> {
                         color: Colors.grey,
                       ),
 
-                      const SizedBox(height: 16.0),
+                      SizedBox(height: size.height*0.02),
 
-                      ElevatedButton(
-                        child: const Text(
-                          "Request a Ride",
-                        ),
-                        onPressed: ()
-                        {
-                          if(Provider.of<AppInfo>(context, listen: false).userDropOffLocation != null)
+                      Container(
+                        width: 250,
+                        height: 50,
+                        child: ElevatedButton(
+                          onPressed: ()
                           {
-                            saveRideRequestInformation();
-                          }
-                          else
-                          {
-                            Fluttertoast.showToast(msg: "Please select destination location");
-                          }
-                        },
-                        style: ElevatedButton.styleFrom(
-                            primary: primaryGreen,
-                            textStyle: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold)
+                            if(Provider.of<AppInfo>(context, listen: false).userDropOffLocation != null)
+                            {
+                              saveRideRequestInformation();
+                            }
+                            else
+                            {
+                              Fluttertoast.showToast(msg: "Please select destination location");
+                            }
+                          },
+                          style: ElevatedButton.styleFrom(
+                              padding: EdgeInsets.all(5),
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10)
+                              ),
+                              primary: Colors.white,
+                              textStyle:  const TextStyle(
+                                  color: AppColors.primaryColor,
+                                  fontSize: 15, fontWeight: FontWeight.bold)),
+                          child: const Text(
+                            "Request a Ride",
+                            style: TextStyle(
+                              color: AppColors.primaryColor,
+                              fontSize: 15,
+                              fontWeight: FontWeight.w500
+                            ),
+                          ),
                         ),
                       ),
 
@@ -685,16 +865,16 @@ class _RequestScreenState extends State<RequestScreen> {
             ),
           ),
 
-          //ui for waiting response from driver
+          /// ui for waiting response from driver
           Positioned(
             bottom: 0,
             left: 0,
             right: 0,
             child: Container(
               height: waitingResponseFromDriverContainerHeight,
-              decoration: const BoxDecoration(
-                color: Colors.black87,
-                borderRadius: BorderRadius.only(
+              decoration:  BoxDecoration(
+                color: AppColors.primaryColor.withOpacity(0.9),
+                borderRadius: const BorderRadius.only(
                   topRight: Radius.circular(20),
                   topLeft: Radius.circular(20),
                 ),
@@ -703,6 +883,7 @@ class _RequestScreenState extends State<RequestScreen> {
                 padding: const EdgeInsets.all(20.0),
                 child: Center(
                   child: AnimatedTextKit(
+                    repeatForever: true,
                     animatedTexts: [
                       FadeAnimatedText(
                         'Waiting for Response\nfrom Driver',
@@ -979,7 +1160,6 @@ class _RequestScreenState extends State<RequestScreen> {
 
 
 
-  //active drivers ko display krne k liye
   initializeGeoFireListener()
   {
     Geofire.initialize("activeDrivers");
@@ -1076,7 +1256,4 @@ class _RequestScreenState extends State<RequestScreen> {
       });
     }
   }
-
-
-
 }

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:users_app/global/colors.dart';
-import 'package:users_app/global/global.dart';
 import 'package:users_app/models/trips_history_model.dart';
 import 'package:users_app/widgets/providers/admin/all_rides_widget_provider.dart';
 import 'package:users_app/widgets/ui/admin/all_rides_filter/ride_detail.dart';
@@ -28,80 +27,50 @@ class _AllRidesWidgetState extends State<AllRidesWidget>
     return DefaultTabController(
       length: 4,
       child: Scaffold(
-          backgroundColor: Colors.teal,
-          body: Column(
-            children: [
-           Padding(
-                        padding: EdgeInsets.all(20),
-                        child: Row(
-                          // mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                             IconButton(onPressed: (){
-                              Navigator.pop(context);
-                            }, icon: Icon(Icons.arrow_back)),
-                            SizedBox(width: getWidth(context)*0.25,),
-                            Text(
-                                                                "Rides",
-                                                                style: TextStyle(
-                                                                    color: Colors.black,
-                                                                    fontWeight: FontWeight.normal,
-                                                                    fontSize: 30),
-                                                              ),
-                          ],
-                        )),
-                    SizedBox(height: MediaQuery.of(context).size.height * 0.05),
-              Expanded(
-                child: Container(
-                  decoration: BoxDecoration(
-                                      color: Colors.white,
-                                      borderRadius: BorderRadius.only(
-                                          topLeft: Radius.circular(60),
-                                          topRight: Radius.circular(60))),
-                  child: Padding(
-                    padding: EdgeInsets.only(top:10.0),
-                    child: SizedBox(
-                       width: MediaQuery.of(context).size.width,
-                                          height:
-                                              MediaQuery.of(context).size.height * 0.65,
-                      child: Column(
-                        children: [
-                         
-                          Expanded(
-                            child: Consumer<AllRidesWigetProvider>(
-                          builder: (context,allRide,child)=>
-                          
-                                
-                                   ListView.separated(
-                                    shrinkWrap: true,
-                                    itemCount: allRide.allRides.length,
-                                    itemBuilder: (context, index) {
-                                      print(allRide.allRides[index].rideType);
-                                      return getRideContainer(allRide.allRides[index]);
-                                      // return Text(allRides.allRides[index].rideType??"",style: TextStyle(color: Colors.black),);
-                                    },
-                                    separatorBuilder: (BuildContext context, int index) {
-                                      return const Divider(
-                                        thickness: 2.0,
-                                        endIndent: 10.0,
-                                        indent: 10.0,
-                                      );
-                                    },
-                                  )
-                               
-                                
-              
-                              
-                            ),
-                          ),
-                        
-                        
-                        ],
-                      ),
-                    ),
+          appBar: AppBar(
+            title: const Text("All Rides"),
+          ),
+          body: Padding(
+            padding: EdgeInsets.all(10.0),
+            child: Column(
+              children: [
+                Consumer<AllRidesWigetProvider>(
+                  builder: (context, tabs, child) => TabBar(
+                      controller: tabController,
+                      isScrollable: true,
+                      tabs: [
+                        ...List.generate(tabs.tabBar.length, (index) {
+                          return getTabView(tabs.tabBar[index]);
+                        }),
+                      ]),
+                ),
+                Expanded(
+                  child: Consumer<AllRidesWigetProvider>(
+                builder: (context,allRide,child)=>TabBarView(controller: tabController, children: [
+                      ...List.generate(allRide.tabBar.length, (index) {
+                        return ListView.separated(
+                          shrinkWrap: true,
+                          itemCount: allRide.allRides.length,
+                          itemBuilder: (context, index) {
+                            print(allRide.allRides[index].rideType);
+                            return getRideContainer(allRide.allRides[index]);
+                            // return Text(allRides.allRides[index].rideType??"",style: TextStyle(color: Colors.black),);
+                          },
+                          separatorBuilder: (BuildContext context, int index) {
+                            return const Divider(
+                              thickness: 2.0,
+                              endIndent: 10.0,
+                              indent: 10.0,
+                            );
+                          },
+                        );
+                      }),
+
+                    ]),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           )),
     );
   }
@@ -112,7 +81,13 @@ class _AllRidesWidgetState extends State<AllRidesWidget>
         Navigator.push(context, MaterialPageRoute(builder: (context)=>RideDetail(tripsHistoryModel: tripsHistoryModel,)));
       },
       child: Container(
-        
+        foregroundDecoration: const BoxDecoration(
+          image: DecorationImage(
+            opacity: 0.2,
+            image:  AssetImage("images/logo.png"),
+
+          ),
+        ),
         margin: const EdgeInsets.symmetric(
           vertical: 5.0,
           horizontal: 2.0,
@@ -121,7 +96,7 @@ class _AllRidesWidgetState extends State<AllRidesWidget>
         width: double.infinity,
         decoration: BoxDecoration(
           border: Border.all(
-            color: AppColors().primaryColor,
+            color: AppColors.primaryColor,
           ),
           borderRadius: BorderRadius.circular(10.0),
           // color: tripsHistoryModel.rideTyp,
@@ -144,7 +119,7 @@ class _AllRidesWidgetState extends State<AllRidesWidget>
 
       padding: const EdgeInsets.symmetric(vertical: 5.0, horizontal: 10.0),
       decoration: BoxDecoration(
-        color: AppColors().primaryColor,
+        color: AppColors.primaryColor,
         borderRadius: BorderRadius.circular(10.0),
       ),
       child: Text(title),

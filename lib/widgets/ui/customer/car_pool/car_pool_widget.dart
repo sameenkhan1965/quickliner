@@ -22,7 +22,6 @@ import 'package:users_app/models/active_nearby_available_drivers.dart';
 import 'package:users_app/widgets/pay_fare_amount_dialog.dart';
 import 'package:users_app/widgets/progress_dialog.dart';
 import 'package:users_app/configuraton/configuration.dart';
-import 'package:users_app/widgets/providers/car_pool_widget_controller.dart';
 import 'package:users_app/widgets/ui/customer/car_pool/car_pool_already_rides.dart';
 
 class CarPoolWidget extends StatefulWidget {
@@ -43,7 +42,7 @@ class _CarPoolWidgetState extends State<CarPoolWidget> {
     zoom: 14.4746,
   );
 
-  double searchLocationContainerHeight = 300;
+  double searchLocationContainerHeight = 260;
   double waitingResponseFromDriverContainerHeight = 0;
   double assignedDriverInfoContainerHeight = 0;
 
@@ -74,7 +73,10 @@ class _CarPoolWidgetState extends State<CarPoolWidget> {
 
   String userRideRequestStatus = "";
   bool requestPositionInfo = true;
-
+  DateTime? startdate;
+  DateTime? enddate;
+  TimeOfDay? pickup_orgin_time;
+  TimeOfDay? pickup_destination_time;
   checkIfLocationPermissionAllowed() async {
     _locationPermission = await Geolocator.requestPermission();
 
@@ -468,8 +470,19 @@ class _CarPoolWidgetState extends State<CarPoolWidget> {
 
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     createActiveNearByDriverIconMarker();
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: AppColors.primaryColor,
+        title: const Text("CarPool Ride",style: TextStyle(
+          color: Colors.white,
+          fontSize: 16,
+          fontWeight: FontWeight.w700
+        ),
+        ),
+        elevation: 0,
+      ),
       body: Stack(children: [
         GoogleMap(
           padding: EdgeInsets.only(bottom: bottomPaddingOfMap),
@@ -496,29 +509,29 @@ class _CarPoolWidgetState extends State<CarPoolWidget> {
           },
         ),
 
-        Positioned(
-          top: 40,
-          left: 14,
-          child: GestureDetector(
-            onTap: () {
-              //restart-refresh-minimize app progmatically
-              // SystemNavigator.pop();
-              Future.delayed(Duration(milliseconds: 10),(){
+        // Positioned(
+        //   top: 40,
+        //   left: 14,
+        //   child: GestureDetector(
+        //     onTap: () {
+        //       //restart-refresh-minimize app progmatically
+        //       // SystemNavigator.pop();
+        //       Future.delayed(Duration(milliseconds: 10),(){
+        //
+        //       Navigator.pop(context);
+        //       });
+        //     },
+        //     child: const CircleAvatar(
+        //       backgroundColor: Colors.grey,
+        //       child: Icon(
+        //         Icons.close,
+        //         color: Colors.black54,
+        //       ),
+        //     ),
+        //   ),
+        // ),
 
-              Navigator.pop(context);
-              });
-            },
-            child: const CircleAvatar(
-              backgroundColor: Colors.grey,
-              child: Icon(
-                Icons.close,
-                color: Colors.black54,
-              ),
-            ),
-          ),
-        ),
-
-        //ui for searching location
+        ///  ui for searching location
         Positioned(
           bottom: 0,
           left: 0,
@@ -528,9 +541,9 @@ class _CarPoolWidgetState extends State<CarPoolWidget> {
             duration: const Duration(milliseconds: 120),
             child: Container(
               height: searchLocationContainerHeight,
-              decoration: const BoxDecoration(
-                color: Colors.black87,
-                borderRadius: BorderRadius.only(
+              decoration:  BoxDecoration(
+                color: AppColors.primaryColor.withOpacity(0.9),
+                borderRadius: const BorderRadius.only(
                   topRight: Radius.circular(20),
                   topLeft: Radius.circular(20),
                 ),
@@ -540,12 +553,12 @@ class _CarPoolWidgetState extends State<CarPoolWidget> {
                     const EdgeInsets.symmetric(horizontal: 24, vertical: 18),
                 child: Column(
                   children: [
-                    //from
+                    ///  from
                     Row(
                       children: [
                         const Icon(
                           Icons.add_location_alt_outlined,
-                          color: Colors.grey,
+                          color: AppColors.whiteColor,
                         ),
                         const SizedBox(
                           width: 12.0,
@@ -556,7 +569,7 @@ class _CarPoolWidgetState extends State<CarPoolWidget> {
                             const Text(
                               "From",
                               style:
-                                  TextStyle(color: Colors.grey, fontSize: 12),
+                                  TextStyle(color:AppColors.whiteColor, fontSize: 12),
                             ),
                             Text(
                               Provider.of<AppInfo>(context)
@@ -565,20 +578,20 @@ class _CarPoolWidgetState extends State<CarPoolWidget> {
                                   ? "${(Provider.of<AppInfo>(context).userPickUpLocation!.locationName!).substring(0, 24)}..."
                                   : "not getting address",
                               style: const TextStyle(
-                                  color: Colors.grey, fontSize: 14),
+                                  color: AppColors.whiteColor, fontSize: 14),
                             ),
                           ],
                         ),
                       ],
                     ),
-                    const SizedBox(height: 10.0),
+                     SizedBox(height: size.height*0.010),
                     const Divider(
                       height: 1,
                       thickness: 1,
-                      color: Colors.grey,
+                      color: AppColors.whiteColor,
                     ),
-                    const SizedBox(height: 16.0),
-                    //to
+                    SizedBox(height: size.height*0.010),
+                    /// to
                     GestureDetector(
                       onTap: () async {
                         //go to search places screen
@@ -596,7 +609,7 @@ class _CarPoolWidgetState extends State<CarPoolWidget> {
                         children: [
                           const Icon(
                             Icons.add_location_alt_outlined,
-                            color: Colors.grey,
+                            color: AppColors.whiteColor,
                           ),
                           const SizedBox(
                             width: 12.0,
@@ -607,7 +620,7 @@ class _CarPoolWidgetState extends State<CarPoolWidget> {
                               const Text(
                                 "To",
                                 style:
-                                    TextStyle(color: Colors.grey, fontSize: 12),
+                                    TextStyle(color:AppColors.whiteColor,fontSize: 12),
                               ),
                               Text(
                                 Provider.of<AppInfo>(context)
@@ -618,25 +631,25 @@ class _CarPoolWidgetState extends State<CarPoolWidget> {
                                         .locationName!
                                     : "Where to go?",
                                 style: const TextStyle(
-                                    color: Colors.grey, fontSize: 14),
+                                    color: AppColors.whiteColor, fontSize: 14),
                               ),
                             ],
                           ),
                         ],
                       ),
                     ),
-                    const SizedBox(height: 10.0),
+                    SizedBox(height: size.height*0.010),
                     const Divider(
                       height: 1,
                       thickness: 1,
-                      color: Colors.grey,
+                      color: AppColors.whiteColor,
                     ),
-                    const SizedBox(height: 16.0),
+                    SizedBox(height: size.height*0.010),
                     Row(
                       children: [
                         const Icon(
                           Icons.event_seat,
-                          color: Colors.grey,
+                          color: AppColors.whiteColor,
                         ),
                         const SizedBox(
                           width: 12.0,
@@ -647,12 +660,12 @@ class _CarPoolWidgetState extends State<CarPoolWidget> {
                             const Text(
                               "No of Seats",
                               style:
-                                  TextStyle(color: Colors.grey, fontSize: 12),
+                                  TextStyle(color:AppColors.whiteColor,fontSize: 12),
                             ),
                             Text(
                               '${noOfSeat}',
                               style: const TextStyle(
-                                  color: Colors.grey, fontSize: 14),
+                                  color: AppColors.whiteColor, fontSize: 14),
                             ),
                           ],
                         ),
@@ -663,69 +676,95 @@ class _CarPoolWidgetState extends State<CarPoolWidget> {
                                 noOfSeat++;
                               });
                             }:null,
-                            icon: Icon(Icons.add,color:AppColors().whiteColor)),
+                            icon: Icon(Icons.add,color:AppColors.whiteColor)),
                         IconButton(
                             onPressed: noOfSeat>1 ? () {
                               setState(() {
                                 noOfSeat--;
                               });
                             }:null,
-                            icon: Icon(Icons.remove,color:AppColors().whiteColor,))
+                            icon: Icon(Icons.remove,color:AppColors.whiteColor,))
                       ],
                     ),
 
                     const Divider(
                       height: 1,
                       thickness: 1,
-                      color: Colors.grey,
+                      color: AppColors.whiteColor,
                     ),
 
-                    const SizedBox(height: 16.0),
+
+                    SizedBox(height: size.height*0.010),
+
 
                     Row(
-                      mainAxisSize: MainAxisSize.min,
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      // mainAxisSize: MainAxisSize.min,
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
-                        ElevatedButton(
-                          onPressed: () {
-
-                              Navigator.push(context, MaterialPageRoute(builder: (context)=>CarPoolAlreadyRides()));
-                              // saveRideRequestInformation();
-
-                          },
-                          style: ElevatedButton.styleFrom(
-                              primary: primaryGreen,
-                              textStyle: const TextStyle(
-                                  fontSize: 16, fontWeight: FontWeight.bold)),
-                          child: const Text(
-
-                            "Already \n Available Rides",
-                            textAlign: TextAlign.center,
-                          ),
-                        ),
-                        const SizedBox(width: 20,),
-                        ElevatedButton(
-                          onPressed: () {
-                            if (Provider.of<AppInfo>(context, listen: false)
-                                    .userDropOffLocation !=
-                                null) {
-                              saveRideRequestInformation();
-                              Navigator.pop(context);
-                            } else {
-                              Fluttertoast.showToast(
-                                  msg: "Please select destination location");
-                            }
-                          },
-                          style: ElevatedButton.styleFrom(
-                              primary: primaryGreen,
-                              textStyle: const TextStyle(
-                                  fontSize: 16, fontWeight: FontWeight.bold)),
-                          child: const Text(
-                            "Create Ride",
+                        // /// already have ride button is here
+                        // Container(
+                        //   height:50,
+                        //   width: 150,
+                        //   child: ElevatedButton(
+                        //     onPressed: () {
+                        //
+                        //         Navigator.push(context, MaterialPageRoute(builder: (context)=>CarPoolAlreadyRides()));
+                        //         // saveRideRequestInformation();
+                        //
+                        //     },
+                        //     style: ElevatedButton.styleFrom(
+                        //         padding: EdgeInsets.all(5),
+                        //       shape: RoundedRectangleBorder(
+                        //         borderRadius: BorderRadius.circular(10)
+                        //       ),
+                        //         primary: Colors.white,
+                        //         textStyle:  const TextStyle(
+                        //           color: AppColors.primaryColor,
+                        //             fontSize: 15, fontWeight: FontWeight.bold)),
+                        //     child:Text(
+                        //       "Already Available \n Rides",
+                        //       style:TextStyle(
+                        //           color: AppColors.primaryColor,
+                        //           fontSize: 15, fontWeight: FontWeight.bold),
+                        //       textAlign: TextAlign.center,
+                        //     ),
+                        //   ),
+                        // ),
+                        /// create ride button ishere
+                        Container(
+                          height: 50,
+                          width: 300,
+                          child: ElevatedButton(
+                            onPressed: () {
+                              if (Provider.of<AppInfo>(context, listen: false).userDropOffLocation != null) {
+                                saveRideRequestInformation();
+                                Navigator.pop(context);
+                              } else {
+                                Fluttertoast.showToast(
+                                    msg: "Please select destination location");
+                              }
+                            },
+                            style: ElevatedButton.styleFrom(
+                              padding: EdgeInsets.all(5),
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10)
+                                ),
+                                primary: Colors.white,
+                                textStyle:  const TextStyle(
+                                    color: AppColors.primaryColor,
+                                    fontSize: 15, fontWeight: FontWeight.bold)),
+                            child: const Text(
+                              "Create Ride ",
+                              style:TextStyle(
+                                  color: AppColors.primaryColor,
+                                  fontSize: 15, fontWeight: FontWeight.bold),
+                            ),
                           ),
                         ),
                       ],
                     ),
+
+
                   ],
                 ),
               ),
@@ -733,7 +772,7 @@ class _CarPoolWidgetState extends State<CarPoolWidget> {
           ),
         ),
 
-        //ui for waiting response from driver
+        ///ui for waiting response from driver
         Positioned(
           bottom: 0,
           left: 0,
@@ -777,7 +816,7 @@ class _CarPoolWidgetState extends State<CarPoolWidget> {
           ),
         ),
 
-        //ui for displaying assigned driver information
+        /// ui for displaying assigned driver information
         Positioned(
             bottom: 0,
             left: 0,
@@ -892,6 +931,63 @@ class _CarPoolWidgetState extends State<CarPoolWidget> {
     );
   }
 
+
+  startDate() async {
+    DateTime? dateTime;
+    dateTime = await showDatePicker(
+        currentDate: startdate,
+        context: context,
+        initialEntryMode: DatePickerEntryMode.calendarOnly,
+        initialDate: DateTime.now(),
+        firstDate: DateTime.now(),
+        lastDate: DateTime(
+            DateTime.now().year, DateTime.now().month + 6, DateTime.now().day));
+    setState(() {
+      startdate = dateTime;
+    });
+    return startdate;
+  }
+
+  endDate() async {
+    DateTime? dateTime;
+    dateTime = await showDatePicker(
+        currentDate: enddate,
+        context: context,
+        initialEntryMode: DatePickerEntryMode.calendarOnly,
+        initialDate: DateTime.now(),
+        firstDate: DateTime.now(),
+        lastDate: DateTime(
+            DateTime.now().year, DateTime.now().month + 6, DateTime.now().day));
+    setState(() {
+      enddate = dateTime;
+    });
+    return enddate;
+  }
+
+  pickup_origin_Time() async {
+    TimeOfDay? timeOfDay;
+    timeOfDay = await showTimePicker(
+        initialEntryMode: TimePickerEntryMode.dialOnly,
+        context: context,
+        initialTime: TimeOfDay.now());
+    setState(() {
+      pickup_orgin_time = timeOfDay;
+    });
+    return pickup_orgin_time;
+  }
+
+
+  pickup_destination_Time() async {
+    TimeOfDay? timeOfDay;
+    timeOfDay = await showTimePicker(
+        initialEntryMode: TimePickerEntryMode.dialOnly,
+        context: context,
+        initialTime: TimeOfDay.now());
+    setState(() {
+      pickup_destination_time = timeOfDay;
+    });
+    return pickup_destination_time;
+  }
   Future<void> drawPolyLineFromOriginToDestination() async {
     var originPosition =
         Provider.of<AppInfo>(context, listen: false).userPickUpLocation;
@@ -1078,7 +1174,7 @@ class _CarPoolWidgetState extends State<CarPoolWidget> {
   }
 
   displayActiveDriversOnUsersMap() {
-    setState(() {
+
       markersSet.clear();
       circlesSet.clear();
 
@@ -1102,7 +1198,7 @@ class _CarPoolWidgetState extends State<CarPoolWidget> {
       setState(() {
         markersSet = driversMarkerSet;
       });
-    });
+
   }
 
   createActiveNearByDriverIconMarker() {

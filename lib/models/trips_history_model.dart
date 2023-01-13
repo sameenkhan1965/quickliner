@@ -5,8 +5,15 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class TripsHistoryModel
 {
+  String? key;
   String? time;
   String? originAddress;
+  String? scheduleDate;
+  String? scheduletime;
+  String? startDate;
+  String? endDate;
+  String? startTimeO;
+  String? startTimeD;
   String? destinationAddress;
   String? status;
   String? fareAmount;
@@ -28,14 +35,21 @@ class TripsHistoryModel
     this.driverName,
     this.seats,
     this.rideType,
+    this.scheduleDate,
+    this.scheduletime,
     required this.origin,
     required this.destination,
     this.driverId="",
+    this.endDate,
+    this.startDate,
+    this.startTimeD,
+    this.startTimeO,
+    this.key,
   });
 
   TripsHistoryModel.fromSnapshot(DataSnapshot dataSnapshot)
   {
-    print("dataSnapshot");
+    // print("${(dataSnapshot.value as Map)}");
     print(dataSnapshot.value);
     time = (dataSnapshot.value as Map)["time"];
     originAddress = (dataSnapshot.value as Map)["originAddress"];
@@ -47,6 +61,11 @@ class TripsHistoryModel
     rideType = (dataSnapshot.value as Map)["rideType"];
     seats = (dataSnapshot.value as Map)["noOfSeats"];
     driverId = (dataSnapshot.value as Map)["driverId"];
+    startDate = (dataSnapshot.value as Map)["startDate"];
+    startTimeO = (dataSnapshot.value as Map)["pickupOriginTime"];
+    endDate = (dataSnapshot.value as Map)["endDate"];
+    startTimeD = (dataSnapshot.value as Map)["pickupDestinationTime"];
+
   }
 
   TripsHistoryModel.fromDynamic(dynamic dataSnapshot)
@@ -65,5 +84,11 @@ class TripsHistoryModel
     destination= dataSnapshot["destination"];
     origin= dataSnapshot["origin"];
     driverId=dataSnapshot["driverId"];
+    scheduletime=dataSnapshot['scheduleTime'];
+    scheduleDate=dataSnapshot['scheduleDate'];
+    startDate = dataSnapshot["startDate"];
+    startTimeO = dataSnapshot["pickupOriginTime"];
+    endDate = dataSnapshot["endDate"];
+    startTimeD = dataSnapshot["pickupDestinationTime"];
   }
 }

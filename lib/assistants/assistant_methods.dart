@@ -17,7 +17,6 @@ import 'package:http/http.dart' as http;
 
 class AssistantMethods
 {
-  // static ;
   static Future<String> searchAddressForGeographicCoOrdinates(Position position, context) async
   {
     String apiUrl = "https://maps.googleapis.com/maps/api/geocode/json?latlng=${position.latitude},${position.longitude}&key=$mapKey";
@@ -81,28 +80,16 @@ class AssistantMethods
 
     return directionDetailsInfo;
   }
-  
-  
+
   static double calculateFareAmountFromOriginToDestination(DirectionDetailsInfo directionDetailsInfo)
   {
-  var totalPrice;
-    FirebaseDatabase.instance.ref()
-          .child("Fare").child('Solo')
-          .once()
-          .then((snap){
-            if(snap.snapshot!=null){
- totalPrice =(snap.snapshot.value as Map)['total_price'];
-   print("totalPrice: $totalPrice");
-          
-    }
-    });
     double timeTraveledFareAmountPerMinute = (directionDetailsInfo.duration_value! / 60) * 0.1;
     double distanceTraveledFareAmountPerKilometer = (directionDetailsInfo.duration_value! / 1000) * 0.1;
 
     //1 USD = 120
     double fareAmount = timeTraveledFareAmountPerMinute + distanceTraveledFareAmountPerKilometer;
-    double totalFareAmount = fareAmount * totalPrice;
-     print("totalFareAmount: totalFareAmount");
+    double totalFareAmount = fareAmount * 120;
+
     return double.parse(totalFareAmount.toStringAsFixed(1));
   }
 
@@ -199,10 +186,6 @@ class AssistantMethods
           Provider.of<AppInfo>(context, listen: false).updateOverAllTripsHistoryInformation(eachTripHistory);
         }
       });
-    }
-
-  void readTotalPrice()async{
- 
     }
   }
 }

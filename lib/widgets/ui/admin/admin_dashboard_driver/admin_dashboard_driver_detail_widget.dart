@@ -58,18 +58,18 @@ class _DashboardDriverDetailWidgetState
 
   Widget getDiverInfo() {
     return ListTile(
-      tileColor: AppColors().primaryColor,
+      tileColor: AppColors.primaryColor,
       subtitle: Text("Name"),
       title: Text(widget.driverData.name ?? ""),
       trailing: CircleAvatar(
-          backgroundColor: AppColors().whiteColor,
+          backgroundColor: AppColors.whiteColor,
           child: IconButton(
               onPressed: () {
                 getCall(widget.driverData.phone ?? "");
               },
               icon: Icon(
                 Icons.call,
-                color: AppColors().primaryColor,
+                color: AppColors.primaryColor,
               ))),
     );
   }
@@ -77,18 +77,18 @@ class _DashboardDriverDetailWidgetState
   WidgetCarInfo()
   {
     return ListTile(
-      tileColor: AppColors().primaryColor,
+      tileColor: AppColors.primaryColor,
       subtitle: Text("car Type"),
       title: Text(widget.driverData.car_type ?? ""),
       trailing: CircleAvatar(
-          backgroundColor: AppColors().whiteColor,
+          backgroundColor: AppColors.whiteColor,
           child: IconButton(
               onPressed: () {
                 getCall(widget.driverData.phone ?? "");
               },
               icon: Icon(
                 Icons.call,
-                color: AppColors().primaryColor,
+                color: AppColors.primaryColor,
               ))),
     );
   }

@@ -35,7 +35,7 @@ class _RideDetailState extends State<RideDetail> {
       initialCameraPosition: _kGooglePlex,
       polylines: {
         Polyline(
-          color: AppColors().primaryColor,
+          color: AppColors.primaryColor,
           startCap: Cap.roundCap,
           geodesic: true,
           jointType: JointType.round,
