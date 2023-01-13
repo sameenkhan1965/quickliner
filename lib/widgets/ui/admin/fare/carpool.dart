@@ -89,42 +89,39 @@ class _CarPOOLFareState extends State<CarPOOLFare> {
                                                     topRight:
                                                         Radius.circular(50),
                                                   )),
-                                              child: Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .spaceAround,
-                                                children: [
-                                                  Text(
-                                                    "Petrol Price",
-                                                    style: TextStyle(
-                                                        fontWeight:
-                                                            FontWeight.bold,
-                                                        fontSize: 18),
-                                                  ),
-                                                  Container(
-                                                    height: 100,
-                                                    width: 150,
-                                                    child: Padding(
-                                                      padding: const EdgeInsets.only(top:18.0),
-                                                      child: TextFormField(
-                                                        controller: petrolPrice,
-                                                          keyboardType: TextInputType.number,
-                                                          decoration:
-                                                              InputDecoration(
-                                                            hintText: "Enter petrol Price",
-                                                            border: InputBorder.none
-                                                          
-                                                          
+                                              child: Padding(
+                                                padding: const EdgeInsets.all(8.0),
+                                                child: Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment
+                                                          .start,
+                                                  children: [
+                                                    
+                                                    Container(
+                                                      height: 100,
+                                                      width: 150,
+                                                      child: Padding(
+                                                        padding: const EdgeInsets.only(top:18.0),
+                                                        child: TextFormField(
+                                                          controller: petrolPrice,
+                                                            keyboardType: TextInputType.number,
+                                                            decoration:
+                                                                InputDecoration(
+                                                              hintText: "Enter petrol Price",
+                                                              border: InputBorder.none
+                                                            
+                                                            
+                                                            ),
+                                                            onEditingComplete: () => petrol=petrolPrice.text as int,
+                                                            style: TextStyle(
+                                                                fontWeight:
+                                                                    FontWeight.bold,
+                                                                fontSize: 18),
                                                           ),
-                                                          onEditingComplete: () => petrol=petrolPrice.text as int,
-                                                          style: TextStyle(
-                                                              fontWeight:
-                                                                  FontWeight.bold,
-                                                              fontSize: 18),
-                                                        ),
+                                                      ),
                                                     ),
-                                                  ),
-                                                ],
+                                                  ],
+                                                ),
                                               ),
                                             ),
                                             
@@ -147,75 +144,100 @@ class _CarPOOLFareState extends State<CarPOOLFare> {
                                               child: Row(
                                                 mainAxisAlignment:
                                                     MainAxisAlignment
-                                                        .spaceAround,
+                                                        .start,
                                                 children: [
-                                                  SizedBox(
-                                                    width:
-                                                        MediaQuery.of(context)
-                                                                .size
-                                                                .width *
-                                                            0.3,
-                                                    height:
-                                                        MediaQuery.of(context)
-                                                                .size
-                                                                .height *
-                                                            0.08,
-                                                    child: TextFormField(
-                                                      
-                                                      controller: moneyPerKM,
-                                                      onEditingComplete: () => money=moneyPerKM.text as int,
-                                                      keyboardType: TextInputType.number,
-                                                      decoration:
-                                                          InputDecoration(
-                                                        hintText: "Enter Money/km",
-                                                        border: InputBorder.none
-                                                      
-                                                      
+                                                  Padding(
+                                                    padding: const EdgeInsets.all(8.0),
+                                                    child: SizedBox(
+                                                      width:
+                                                          MediaQuery.of(context)
+                                                                  .size
+                                                                  .width *
+                                                              0.3,
+                                                      height:
+                                                          MediaQuery.of(context)
+                                                                  .size
+                                                                  .height *
+                                                              0.08,
+                                                      child: TextFormField(
+                                                        
+                                                        controller: moneyPerKM,
+                                                        onEditingComplete: () => money=moneyPerKM.text as int,
+                                                        keyboardType: TextInputType.number,
+                                                        decoration:
+                                                            InputDecoration(
+                                                          hintText: "Enter Money/km",
+                                                          border: InputBorder.none
+                                                        
+                                                        
+                                                        ),
+                                                        style: TextStyle(
+                                                            fontWeight:
+                                                                FontWeight.bold,
+                                                            fontSize: 18),
                                                       ),
-                                                      style: TextStyle(
-                                                          fontWeight:
-                                                              FontWeight.bold,
-                                                          fontSize: 18),
-                                                    ),
-                                                  
-                                                  
-                                                  ),
-                                                  SizedBox(
-                                                    width:
-                                                        MediaQuery.of(context)
-                                                                .size
-                                                                .width *
-                                                            0.29,
-                                                    height:
-                                                        MediaQuery.of(context)
-                                                                .size
-                                                                .height *
-                                                            0.08,
-                                                    child: TextFormField(
-                                                      
-                                                      keyboardType: TextInputType.number,
-                                                      controller: distancePerkm,
-                                                      
-                                                      decoration:
-                                                          InputDecoration(
-                                                        hintText: "Enter Distance",
-                                                        border: InputBorder.none
-                                                      
-                                                      
-                                                      ),
-                                                      style: TextStyle(
-                                                          fontWeight:
-                                                              FontWeight.bold,
-                                                          fontSize: 18),
+                                                    
+                                                    
                                                     ),
                                                   ),
-                                                 
-                                                 
                                                   
                                                 ],
                                               ),
                                             ),
                                             SizedBox(height: 10,),
+                                            Container(
+                                              width: MediaQuery.of(context)
+                                                      .size
+                                                      .width *
+                                                  0.95,
+                                              height: MediaQuery.of(context)
+                                                      .size
+                                                      .height *
+                                                  0.10,
+                                              decoration: BoxDecoration(
+                                                color: Colors.amberAccent,
+                                              ),
+                                              child: Row(
+                                                mainAxisAlignment: MainAxisAlignment.start,
+                                                children: [
+                                                  Padding(
+                                                    padding: const EdgeInsets.all(8.0),
+                                                    child: SizedBox(
+                                                            width:
+                                                                MediaQuery.of(context)
+                                                                        .size
+                                                                        .width *
+                                                                    0.29,
+                                                            height:
+                                                                MediaQuery.of(context)
+                                                                        .size
+                                                                        .height *
+                                                                    0.08,
+                                                            child: TextFormField(
+                                                              
+                                                              keyboardType: TextInputType.number,
+                                                              controller: distancePerkm,
+                                                              
+                                                              decoration:
+                                                                  InputDecoration(
+                                                                hintText: "Enter Distance",
+                                                                border: InputBorder.none
+                                                              
+                                                              
+                                                              ),
+                                                              style: TextStyle(
+                                                                  fontWeight:
+                                                                      FontWeight.bold,
+                                                                  fontSize: 18),
+                                                            ),
+                                                          ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                             SizedBox(height: 10,),    
+                                                 
+                                                  
                                             Container(
                                               width: MediaQuery.of(context)
                                                       .size
@@ -238,20 +260,14 @@ class _CarPOOLFareState extends State<CarPOOLFare> {
                                               child: Row(
                                                 mainAxisAlignment:
                                                     MainAxisAlignment
-                                                        .spaceAround,
+                                                        .start,
                                                 children: [
-                                                  Text(
-                                                    "No of Seats",
-                                                    style: TextStyle(
-                                                        fontWeight:
-                                                            FontWeight.bold,
-                                                        fontSize: 18),
-                                                  ),
+                                                 
                                                   Container(
                                                     height: 100,
                                                     width: 150,
                                                     child: Padding(
-                                                      padding: const EdgeInsets.only(top:18.0),
+                                                      padding: const EdgeInsets.only(top:18.0, left: 10),
                                                       child: TextFormField(
                                                         controller: noofSeatsController,
                                                           keyboardType: TextInputType.number,
@@ -270,8 +286,14 @@ class _CarPOOLFareState extends State<CarPOOLFare> {
                                                         ),
                                                     ),
                                                   ),
-                                                  IconButton(
-                                                    
+                                                  
+                                                  
+                                                ],
+                                              ),
+                                            ),
+                                            SizedBox(height: 10,),
+                                            ElevatedButton(
+child: Text("Add"),                                                    
                                                     onPressed: (){
                                                       
                                                       distance= int.parse(distancePerkm.text);
@@ -307,38 +329,32 @@ User? firebaseUser;
                                                     //  MaterialPageRoute(builder: ((context) => 
                                                     //  CarPOOLFare())));
 
-                                                  }, icon: Icon(Icons.send))
-                                                 
-                                                  
-                                                ],
-                                              ),
-                                            ),
+                                                  },)
+                                                 ,
                                               SizedBox(height: 20,),
                                             Container(
          
-            width: MediaQuery.of(context).size.width * 0.35,
-          height: MediaQuery.of(context).size.height * 0.18,
+            width: MediaQuery.of(context).size.width * 0.95,
+          height: MediaQuery.of(context).size.height * 0.08,
         decoration:
-             BoxDecoration(color: Colors.teal, borderRadius: BorderRadius.circular(35)),
+             BoxDecoration(color: Colors.teal, ),
           
-          child: Center(
-            
-            child: Column(
-               mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text("Total Price",
-                style: GoogleFonts.poppins(
-                fontWeight: FontWeight.w700
-              ),
-              ),
-              Text(totalPrice.toString(),
-                style: GoogleFonts.poppins(
-                fontWeight: FontWeight.w700
-              )
-              ),
-             
-            ],
-          )),
+          child: Column(
+             mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text("Total Price",
+              style: GoogleFonts.poppins(
+              fontWeight: FontWeight.w700
+            ),
+            ),
+            Text(totalPrice.toString(),
+              style: GoogleFonts.poppins(
+              fontWeight: FontWeight.w700
+            )
+            ),
+           
+          ],
+          ),
         ),
       
       
